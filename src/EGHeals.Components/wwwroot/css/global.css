@@ -1,0 +1,179 @@
+﻿
+/*
+the common breakpoints for widths of devices :
+
+    1 - 320px — 480px: Mobile devices
+    2 - 481px — 768px: iPads, Tablets
+    3 - 769px — 1024px: landscape tablets
+    4 - 1025px — 1200px: small laptops
+    5 - 1201px — 1600px: big laptops
+    6 - 1601px and more —  large screens, TV
+
+*/
+
+/*@font-face {
+    font-family: 'Titillium';
+    src: url('./fonts/TitilliumWeb-Regular.ttf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Titillium';
+    src: url('./fonts/TitilliumWeb-Bold.ttf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'El Messiri';
+    src: url('./fonts/ElMessiri-Regular.ttf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'El Messiri';
+    src: url('./fonts/ElMessiri-Bold.ttf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}*/
+
+:root {
+    --color-primary-light: #336AE9;
+    --color-primary-dark: #0F52BA;
+    --color-secondary-light: #FE7912;
+    --color-secondary-dark: #F74B00;
+    --color-very-light-gray: #FCFBFC;
+    --color-light-gray: #F2F2F2;
+    --color-dark-gray: #ABABAB;
+    --color-very-dark-gray: #707070;
+}
+
+*,
+*::after,
+*::before {
+    margin: 0rem;
+    padding: 0rem;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    /*    font-family: "Titillium", serif;*/
+    /*    font-weight: 400;*/
+    margin: 2.5rem;
+    background-color: var(--color-primary-dark);
+    color: var(--color-text);
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+body [dir="rtl"] {
+/*    font-family: "El Messiri", serif;*/
+}
+
+.page-blur {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+::-webkit-scrollbar {
+    width: 0.6rem;
+}
+
+::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary-light)
+}
+
+a:active,
+a:visited,
+a:link {
+    text-decoration: none;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+input[type="date"],
+textarea,
+.select-input {
+    border: none;
+    border: 0.13rem solid var(--color-primary-dark);
+    outline: none;
+    border-radius: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-inline-end: 1rem;
+    padding-inline-start: 2.5rem;
+    margin: 0rem;
+    font-size: 1.2rem;
+    width: 100%;
+    background-color: transparent;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+    background-color: white;
+    border: 0.13rem solid var(--color-secondary-light);
+}
+
+h1{
+    outline : none;
+}
+
+/****************************** Media Query **********************************/
+
+@media only screen and (max-width: 480px) {
+    html {
+        font-size: 9px;
+    }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    html {
+        font-size: 11px;
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1200px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1600px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (min-width: 1601px) {
+    html {
+        font-size: 18px;
+    }
+}

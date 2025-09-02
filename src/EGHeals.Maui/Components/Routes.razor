@@ -1,6 +1,30 @@
-﻿<Router AppAssembly="@typeof(MauiProgram).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-</Router>
+﻿@using EGHeals.Components.Components.SplashScreen;
+
+<CascadingAuthenticationState>
+    @if (!isAppReady)
+    {
+        <SplashScreen OnCompleted="HandleInitializationCompleted" />
+    }
+    else
+    {
+        <Router AppAssembly="@typeof(MauiProgram).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            </Found>
+        </Router>
+    }
+</CascadingAuthenticationState>
+
+
+
+@code {
+
+    private bool isAppReady = false;
+
+    private void HandleInitializationCompleted()
+    {
+        isAppReady = true;
+        StateHasChanged();
+    }
+}

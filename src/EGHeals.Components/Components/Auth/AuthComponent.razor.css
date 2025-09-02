@@ -1,0 +1,209 @@
+﻿.auth {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+
+.auth__side--left {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.auth__desc {
+    margin-top: -5rem;
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    padding-inline-start: 1.5rem;
+}
+
+.auth h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    display: flex;
+}
+
+.auth__healthcare {
+    color: var(--color-primary-light);
+    margin-inline-end: 0.8rem;
+}
+
+.auth h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-very-dark-gray);
+}
+
+.auth p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    width: 90%;
+    margin: 0rem;
+    margin-bottom: 2.0rem;
+}
+
+::deep .auth__btn {
+    width: 15rem;
+}
+
+.auth__ribbon {
+    grid-row: 3;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.auth__ribbon-container {
+    margin-top: -12rem;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-row-gap: 2rem;
+    width: 20rem;
+}
+
+.auth__circle {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--color-primary-light);
+    border-radius: 100%;
+    margin: 0rem 1rem;
+}
+
+.auth__side--right {
+    position: relative;
+    /*    overflow: clip;*/
+}
+
+.auth__img-container {
+    width: 42rem;
+    height: 42rem;
+    border-radius: 100%;
+    position: absolute;
+    top: 47.5%;
+    inset-inline-start: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.auth__solid-circle {
+    height: 180%;
+    width: 200%;
+    background-color: White;
+    border-radius: 100%;
+    position: absolute;
+    inset-inline-start: 0rem;
+    bottom: 0rem;
+    transform: translate(0.3%, 50%);
+    border: 0.12rem solid var(--color-primary-dark);
+}
+
+.auth__outer-circle {
+    height: 170%;
+    width: 197%;
+    background-color: #85CEEA;
+    border-radius: 100%;
+    position: absolute;
+    bottom: 0rem;
+    inset-inline-start: 0rem;
+    transform: translate(1%, 50%);
+}
+
+.auth__inner-circle {
+    height: 150%;
+    width: 195%;
+    background-color: var(--color-primary-light);
+    border-radius: 100%;
+    position: absolute;
+    bottom: 0rem;
+    inset-inline-start: 0rem;
+    transform: translate(2%, 50%);
+}
+
+::deep .auth__icon {
+    border-radius: 100%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+::deep .auth__icon--clinic {
+    top: 3rem;
+    inset-inline-start: 4rem;
+    background-color: var(--color-primary-light);
+}
+
+::deep .auth__icon--radiology {
+    top: 9rem;
+    inset-inline-start: -1rem;
+    background-color: var(--color-secondary-dark);
+}
+
+::deep .auth__icon--lab {
+    top: 16rem;
+    inset-inline-start: -3.5rem;
+    background-color: #00644D;
+}
+
+::deep .auth__icon--pharmacy {
+    top: 23.75rem;
+    inset-inline-start: -3.5rem;
+    background-color: #C42B1C;
+}
+
+.auth__img-content {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    overflow: clip;
+}
+
+.auth img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.auth__plus {
+    position: absolute;
+    color: white;
+}
+
+.auth__plus--1 {
+    bottom: 15%;
+    inset-inline-start: 16%;
+    font-size: 2.7rem;
+}
+
+.auth__plus--2 {
+    bottom: 5%;
+    inset-inline-start: 9%;
+    font-size: 3.8rem;
+}
+
+::deep .svg-icon-container {
+    width: 2.8rem;
+    height: 2.8rem;
+}
+
+::deep .svg-icon-path {
+    fill: white;
+}
+
+.auth__logo {
+    /*position: absolute;
+    top: 1.5rem;
+    inset-inline-start: 0rem;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-primary-dark);
+}
+
+.logo-content {
+    display: flex;
+    justify-content: start;
+    padding: 1rem;
+    padding-bottom: 0rem;
+}

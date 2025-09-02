@@ -1,0 +1,42 @@
+@using EGHeals.Components.Models.Navigations
+
+<li class="list-item @(NavMenuItem.IsActive ? "active" : string.Empty)">
+
+    <a href="@NavMenuItem.Address" class="list-item__title-link" @onclick="@(() => OnItemClicked.InvokeAsync((NavMenuItem, null)))">
+        <i class="@NavMenuItem.Icon"></i>
+        <span class="list-item__title-name">@NavMenuItem.Title</span>
+        @if (NavMenuItem.Counter > 0)
+        {
+            <span class="list-item__data">@(NavMenuItem.Counter > 99 ? "99+" : NavMenuItem.Counter.ToString())</span>
+        }
+        @if (NavMenuItem.NavSubMenuItems is not null)
+        {
+            <i class="fa-solid fa-angle-down arrow"></i>
+        }
+    </a>
+
+    @if (NavMenuItem.NavSubMenuItems is not null)
+    {
+        <div class="list-item__submenu @(NavMenuItem.IsExpanded ? "expanded" : string.Empty)">
+            @foreach (var subNaveMenuItem in NavMenuItem.NavSubMenuItems)
+            {
+                <a href="@subNaveMenuItem.Address" class="list-item__submenu-link @(subNaveMenuItem.IsActive ? "active" : string.Empty)" @onclick="@(() => OnItemClicked.InvokeAsync((subNaveMenuItem, NavMenuItem)))">
+                    @subNaveMenuItem.Title
+                    @if (subNaveMenuItem.Counter > 0)
+                    {
+                        <span class="list-item__data">@(subNaveMenuItem.Counter > 99 ? "99+" : subNaveMenuItem.Counter.ToString())</span>
+                    }
+                </a>
+            }
+        </div>
+    }
+</li>
+
+@code {
+
+    [Parameter]
+    public NavMenuItem NavMenuItem { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<(NavMenuItem Item, NavMenuItem? Parent)> OnItemClicked { get; set; }
+}

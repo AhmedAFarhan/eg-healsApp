@@ -1,0 +1,37 @@
+﻿.splash {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: calc(100vh - 5rem);
+}
+
+.splash ::deep .icon-content {
+    color: white;
+}
+
+::deep .title {
+    font-size: 2.5rem;
+}
+
+.splash ::deep .icon-content h1 {
+    color: red !important;
+}
+
+.splash ::deep .logo-wrapper {
+    background-color: white;
+    border-radius: 100%;
+    padding: 1.0rem;
+    margin-bottom: 0.5rem;
+}
+
+
+::deep .svg-app-icon-container {
+    width: 4rem;
+    height: 4rem;
+}
+
+::deep .svg-app-icon-path {
+    fill: var(--color-primary-dark);
+}

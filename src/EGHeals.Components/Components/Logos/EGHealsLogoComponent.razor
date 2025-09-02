@@ -1,0 +1,24 @@
+<div class="auth__logo @Class">
+    <GlassWrapperUI Class="@($"logo-wrapper {Wrapper}")">
+        <EGHealsIcon ContainerClass="@($"svg-app-icon-container {ContainerClass}")" PathClass="@($"svg-app-icon-path {PathClass}")" />
+    </GlassWrapperUI>
+    <h4 class="@HeaderClass">EGHeals</h4>
+</div> 
+
+@code{
+
+    [Parameter]
+    public string? HeaderClass { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter]
+    public string? Wrapper { get; set; }
+
+    [Parameter]
+    public string? ContainerClass { get; set; }
+
+    [Parameter]
+    public string? PathClass { get; set; }
+}

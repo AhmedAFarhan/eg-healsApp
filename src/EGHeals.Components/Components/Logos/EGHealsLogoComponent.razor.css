@@ -1,0 +1,22 @@
+﻿.auth__logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-primary-dark);
+}
+
+    .auth__logo ::deep .logo-wrapper {
+        background-color: var(--color-primary-dark);
+        border-radius: 100%;
+        padding: 0.75rem;
+    }
+
+::deep .svg-app-icon-container {
+    width: 2rem;
+    height: 2rem;
+}
+
+::deep .svg-app-icon-path {
+    fill: white;
+}

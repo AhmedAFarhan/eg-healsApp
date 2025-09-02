@@ -64,4 +64,12 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\EGHeals.Components\EGHeals.Components.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Components\Pages\" />
+    </ItemGroup>
+
 </Project>

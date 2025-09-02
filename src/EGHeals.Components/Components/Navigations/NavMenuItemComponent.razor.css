@@ -1,0 +1,92 @@
+﻿
+.list-item {
+    font-size: 1.3rem;
+    margin: 0rem 0.75rem;
+}
+
+    .list-item i {
+        margin-inline-end: 0.75rem;
+        font-size: 1.5rem;
+    }
+
+    .list-item a {
+        display: block;
+        padding: 0.75rem 0.25rem 0.75rem 0.75rem;
+        font-weight: 600;
+        color: var(--color-very-dark-gray);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-radius: 0.5rem;
+    }
+
+        .list-item a .arrow {
+            margin-inline-start: auto;
+            font-size: 1.4rem;
+        }
+
+    .list-item.active .list-item__title-link {
+        color: var(--color-primary-dark);
+        background-color: #DAEFF7;
+    }
+
+.list-item__data {
+    display: inline-block;
+    background-color: red;
+    margin-inline-start: 1.5rem;
+    color: white;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    box-shadow: inset 4px 4px 5px rgba(255,255,255,0.3), inset -4px -4px 5px rgba(0,0,0,0.1);
+}
+/* ---------------- Submenu ------------- */
+.list-item__submenu {
+    padding: 0;
+    padding-inline-start: 2.6rem;
+    overflow: hidden;
+    max-height: 0;
+    transition: all .35s ease;
+}
+
+    .list-item__submenu a {
+        position: relative;
+        padding: 0.4rem 0.25rem 0.4rem 0.75rem;
+    }
+
+        .list-item__submenu a:first-child {
+            margin-top: 0.75rem;
+        }
+
+.list-item.active .list-item__submenu.expanded {
+    max-height: 15rem;
+}
+
+.list-item__title-name {
+    transition: opacity 0.3s ease-in-out;
+    white-space: nowrap;
+}
+
+.list-item__submenu-link:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+
+.list-item__submenu-link.active {
+    color: var(--color-primary-dark);
+    background-color: #DAEFF7;
+}
+
+.list-item__submenu a::before {
+    content: "";
+    position: absolute;
+    top: -1rem;
+    inset-inline-start: -1.5rem;
+    width: 1.5rem;
+    height: 100%;
+    border-inline-start: 2px solid #CDCDCD;
+    border-bottom: 2px solid #CDCDCD;
+    border-end-start-radius: 0.5rem;
+}

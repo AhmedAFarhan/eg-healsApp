@@ -1,0 +1,93 @@
+﻿.sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding: 1rem 0rem;
+    background-color: white;
+    z-index: 10;
+    border-inline-end: 1px solid var(--color-dark-gray);
+    /*    overflow : hidden;*/
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+::deep .sidebar__logo-dimensions {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-inline-end: 0.5rem;
+}
+
+::deep .sidebar__logo-container {
+    fill: var(--color-primary-light);
+}
+
+::deep .sidebar__logo-path {
+    fill: white;
+}
+
+.sidebar__logo {
+    transition: all 0.3s ease-in-out;
+}
+
+    .sidebar__logo p {
+        padding: 0rem;
+        margin: 0rem;
+        font-family: 'ReemKufi Regular', sans-serif;
+        font-size: 1.8rem;
+        color: var(--color-primary-light);
+        font-weight: 600;
+    }
+
+.sidebar.collapsed .sidebar__logo {
+    opacity: 0;
+}
+
+/* --------- List ------------ */
+nav {
+    height: 100%;
+    overflow: hidden;
+}
+
+.sidebar-list {
+    list-style-type: none;
+    padding: 3rem 0 10rem 0;
+    height: 100%;
+    overflow: auto;
+}
+
+    .sidebar-list::-webkit-scrollbar {
+        display: none;
+    }
+
+.sidebar__slider-btn {
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-primary-light);
+    cursor: pointer;
+    font-size: 1.3rem;
+    position: absolute;
+    top: 0.5rem;
+    inset-inline-start: 0.5rem;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.collapsed .sidebar__slider-btn {
+    transform: rotate(180deg);
+}
+
+
+::deep .trivvo-logo {
+    width: 7.0rem;
+    height: 2.0rem;
+    margin-inline-end: 0.3rem;
+    animation: none;
+}

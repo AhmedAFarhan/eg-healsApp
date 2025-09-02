@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,6 +21,17 @@ namespace EGHeals.Maui.WinUI
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            base.OnLaunched(args);
+
+            var window = (MauiWinUIWindow)Application.Windows[0].Handler.PlatformView;
+            var appWindow = window.AppWindow;
+
+            // Set window style to frameless
+            appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+        }
     }
 
 }

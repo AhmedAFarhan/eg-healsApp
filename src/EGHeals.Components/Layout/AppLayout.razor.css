@@ -1,0 +1,27 @@
+﻿.layout {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    height: calc(100vh - 5rem);
+    border-radius: 0.75rem;
+    overflow: clip;
+    transition: grid-template-columns 0.3s ease-in-out;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+}
+
+    .layout.authorized {
+        grid-template-columns: 16rem auto 0rem;
+        grid-template-rows: 5.5rem auto;
+    }
+
+main {
+    padding: 0rem;
+    background-color: var(--color-very-light-gray);
+    overflow: hidden;
+    position: relative;
+}
+
+    main.authorized {
+        grid-column: 2;
+        grid-row: 2;
+    }

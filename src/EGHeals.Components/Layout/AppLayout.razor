@@ -1,0 +1,43 @@
+@using System.Globalization
+@using EGHeals.Components.Components.Navigations
+
+<div class="layout @PageCssClass" dir="@dir">
+
+    <AuthorizeView>
+        <Authorized>
+            <NavMenu />
+            @*<NavActionsMenu />*@
+        </Authorized>
+    </AuthorizeView>
+
+    <main class="@PageCssClass">
+        @ChildContent
+    </main>
+
+</div>
+
+@code{
+
+    private string dir = string.Empty;
+
+    private bool IsAuthenticated { get; set; }
+
+    private string PageCssClass => IsAuthenticated ? "authorized" : string.Empty;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = default!;
+
+    [CascadingParameter] 
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Set direction based on culture
+        var culture = CultureInfo.CurrentUICulture.Name;
+        dir = culture.StartsWith("ar") ? "rtl" : "ltr";
+
+        // Check authentication state
+        var authState = await AuthenticationStateTask;
+        IsAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+    }
+}

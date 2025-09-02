@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using EGHeals.Components;
 
 namespace EGHeals.Maui
 {
@@ -16,8 +17,10 @@ namespace EGHeals.Maui
 
             builder.Services.AddMauiBlazorWebView();
 
+            builder.Services.AddComponentsServices();
+
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
 
