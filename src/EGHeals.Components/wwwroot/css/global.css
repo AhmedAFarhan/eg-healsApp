@@ -140,6 +140,31 @@ h1{
     outline : none;
 }
 
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar,
+::-webkit-scrollbar {
+    width: 0.6rem; /* scrollbar width */
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+    background-color: transparent; /* track color */
+}
+
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary-light);
+    box-shadow: inset 4px 4px 5px rgba(255,255,255,0.3), inset -4px -4px 5px rgba(0,0,0,0.1);
+    border-radius: 0.20rem;
+    cursor : pointer;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover {
+
+}
+
+
 /****************************** Media Query **********************************/
 
 @media only screen and (max-width: 480px) {

@@ -1,0 +1,16 @@
+﻿.nav {
+    grid-column: 2;
+    background-color: white;
+    padding: 0rem 2rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-dark-gray);
+}
+
+.nav__list {
+    display: flex;
+    list-style-type: none;
+    margin: 0rem;
+    padding: 0rem;
+    margin-inline-start: auto;
+}

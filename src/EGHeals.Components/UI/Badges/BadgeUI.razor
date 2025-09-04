@@ -1,0 +1,16 @@
+
+@if (Value > 0)
+{
+    <div class="badge @Class">@(Value > 99 ? "99+" : Value)</div>
+}
+
+
+
+@code{
+
+    [Parameter]
+    public int Value { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+}

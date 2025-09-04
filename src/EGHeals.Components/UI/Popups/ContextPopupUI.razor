@@ -1,0 +1,53 @@
+@using Microsoft.JSInterop
+
+@inject IJSRuntime jsRuntime;
+@implements IAsyncDisposable
+
+<div class="popup">
+    @ChildContent
+</div>
+
+
+@code{
+
+    private DotNetObjectReference<ContextPopupUI>? objRef;
+    private IJSObjectReference? jsHandler;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] 
+    public EventCallback OnCollapse { get; set; }
+
+    private async Task DisposeJsHandler()
+    {
+        if(jsHandler is not null)
+        {
+            await jsHandler.InvokeVoidAsync("dispose");
+            await jsHandler.DisposeAsync();
+            jsHandler = null;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && jsHandler is null)
+        {
+            objRef ??= DotNetObjectReference.Create(this);
+            jsHandler = await jsRuntime.InvokeAsync<IJSObjectReference>("popInterop.registerGlobalOutsideClick", objRef);
+        }
+    }
+
+    [JSInvokable]
+    public async Task ClosePopup()
+    {
+        await OnCollapse.InvokeAsync();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await DisposeJsHandler();
+        objRef?.Dispose();
+        objRef = null;
+    }
+}

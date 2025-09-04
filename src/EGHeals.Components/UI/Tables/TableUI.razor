@@ -1,0 +1,80 @@
+@typeparam T
+
+<div class="table-container">
+    <table class="table-container__table">
+        <thead>
+            @HeaderTemplate
+        </thead>
+        <tbody>
+            @if (IsInitialLoading)
+            {
+                @* Show skeleton rows instead of data *@
+                @for (int i = 0; i < SkeletonRows; i++)
+                {
+                    <TableRow>
+                        @for (int j = 0; j < SkeletonColumns; j++)
+                        {
+                            <TableData>
+                                <Skeleton Height="2.0rem" />
+                            </TableData>
+                        }
+                    </TableRow>
+                }
+            }
+            @*else if (Items is null || !Items.Any()) *@
+            else if (!HasData)
+            {
+                <TableRow class="row-empty-state">
+                    <td colspan="@SkeletonColumns" class="table-container__empty-state">
+                        No items
+                    </td>
+                </TableRow>
+            }
+            else
+            {
+                @RowTemplate
+            }
+        </tbody>
+    </table>
+    @if (IsLoading && !IsInitialLoading)
+    {
+        <BarLoading IsCentralized="true" />
+    }
+
+</div>
+
+@code 
+{
+    [Parameter] public bool HasData { get; set; }
+    // [Parameter] public IEnumerable<T>? Items { get; set; }
+
+    /// <summary>
+    /// True only during first load (before any data is fetched).
+    /// </summary>
+    [Parameter] public bool IsInitialLoading { get; set; }
+
+    /// <summary>
+    /// True when refreshing/changing page but table is already rendered.
+    /// </summary>
+    [Parameter] public bool IsLoading { get; set; }
+
+    /// <summary>
+    /// Number of skeleton rows to show on init.
+    /// </summary>
+    [Parameter] public int SkeletonRows { get; set; } = 5;
+
+    /// <summary>
+    /// Number of skeleton columns to show on init.
+    /// </summary>
+    [Parameter] public int SkeletonColumns { get; set; } = 3;
+
+    /// <summary>
+    /// Custom header template (thead content).
+    /// </summary>
+    [Parameter] public RenderFragment? HeaderTemplate { get; set; }
+
+    /// <summary>
+    /// Custom row template (tbody content).
+    /// </summary>
+    [Parameter] public RenderFragment? RowTemplate { get; set; }
+}

@@ -1,0 +1,21 @@
+﻿.nav__item{
+    position : relative;
+}
+
+.nav__item:not(:last-child) {
+    margin-inline-end: 2.5rem;
+}
+
+.nav__btn {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-very-dark-gray);
+    font-size: 1.6rem;
+}
+
+::deep .nav__badge {
+    position: absolute;
+    top: -0.9rem;
+    inset-inline-start : 0.5rem;
+}

@@ -1,0 +1,14 @@
+﻿.badge {
+    background-color: red;
+    box-shadow: inset 4px 4px 5px rgba(255,255,255,0.3), inset -4px -4px 5px rgba(0,0,0,0.1);
+    color: white;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    border-radius: 1rem;
+/*    position: absolute;
+    top: -0.9rem;
+    inset-inline-start: 0.5rem;*/
+}

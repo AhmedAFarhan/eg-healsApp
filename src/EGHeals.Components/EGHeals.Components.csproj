@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\Index\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

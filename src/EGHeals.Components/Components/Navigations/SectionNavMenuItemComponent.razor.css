@@ -9,40 +9,31 @@
         font-size: 1.5rem;
     }
 
-    .list-item a {
-        display: block;
-        padding: 0.75rem 0.25rem 0.75rem 0.75rem;
-        font-weight: 600;
-        color: var(--color-very-dark-gray);
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border-radius: 0.5rem;
-    }
-
-        .list-item a .arrow {
-            margin-inline-start: auto;
-            font-size: 1.4rem;
-        }
-
-    .list-item.active .list-item__title-link {
-        color: var(--color-primary-dark);
-        background-color: #DAEFF7;
-    }
-
-.list-item__data {
-    display: inline-block;
-    background-color: red;
-    margin-inline-start: 1.5rem;
-    color: white;
-    border-radius: 1rem;
-    font-size: 0.9rem;
+.list-item a {
+    display: block;
+    padding: 0.75rem 0.25rem 0.75rem 0.75rem;
+    font-weight: 600;
+    color: var(--color-very-dark-gray);
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    width: 2.5rem;
-    box-shadow: inset 4px 4px 5px rgba(255,255,255,0.3), inset -4px -4px 5px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
 }
+
+.list-item a .arrow {
+    margin-inline-start: auto;
+    font-size: 1.4rem;
+}
+
+.list-item.active .list-item__title-link {
+    color: var(--color-primary-dark);
+    background-color: #DAEFF7;
+}
+
+::deep .list-item__badge {
+    margin-inline-start: 1.5rem;
+}
+
 /* ---------------- Submenu ------------- */
 .list-item__submenu {
     padding: 0;

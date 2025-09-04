@@ -1,0 +1,23 @@
+<li class="nav__item">
+    <button class="nav__btn" @onclick="TogglePopupHandler"><i class="@FontAwesomeIcon"></i></button>
+    @if (showPopup)
+    {
+        <ContextPopupUI OnCollapse="TogglePopupHandler">
+            @ChildContent
+        </ContextPopupUI>
+    }
+    <BadgeUI Class="nav__badge" Value="100" />
+</li>
+
+@code{
+
+    private bool showPopup = false;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? FontAwesomeIcon { get; set; }
+
+    private void TogglePopupHandler() => showPopup ^= true;
+}

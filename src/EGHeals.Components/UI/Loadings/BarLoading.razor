@@ -1,1 +1,18 @@
-<div class="loader"></div>
+<div class="loader-container @(IsCentralized ? "centralized" : "")">
+    <div class="loader @(ColorClass)"></div>
+</div>
+
+
+@code {
+
+    [Parameter] public LoaderColor Color { get; set; } = LoaderColor.PRIMARY;
+
+    [Parameter] public bool IsCentralized { get; set; } = true;
+
+    private string ColorClass => Color switch
+    {
+        LoaderColor.PRIMARY => "primary-color",
+        LoaderColor.SECONDARY => "secondary-color",
+        _ => "primary-color"
+    };
+}

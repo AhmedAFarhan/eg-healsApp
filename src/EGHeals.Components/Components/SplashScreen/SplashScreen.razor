@@ -1,6 +1,6 @@
 <div class="splash">
     <EGHealsLogoComponent Class="icon-content" HeaderClass="title" Wrapper="logo-wrapper" ContainerClass="svg-app-icon-container" PathClass="svg-app-icon-path" />
-    <BarLoading />
+    <BarLoading IsCentralized="false"/>
 </div>
 
 @code {
@@ -10,7 +10,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(5000);
+        await Task.Delay(0);
 
         // Notify App.razor when done
         await OnCompleted.InvokeAsync();
