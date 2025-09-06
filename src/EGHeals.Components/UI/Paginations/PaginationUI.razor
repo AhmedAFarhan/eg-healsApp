@@ -1,0 +1,105 @@
+
+<div class="pagination">
+    <ul>
+        @if (TotalPages <= 1)
+        {
+            // Always render page 1 as active
+            <li class="numb active">
+                <button>1</button>
+            </li>
+        }
+        else
+        {
+            if (Page > 1)
+            {
+                <li class="prev">
+                    <button @onclick="() => SelectPage(Page - 1)">
+                        <span><i class="fas fa-angle-left"></i> Previous</span>
+                    </button>
+                </li>
+            }
+
+            if (TotalPages <= 5)
+            {
+                // Show all pages without dots
+                for (int i = 1; i <= TotalPages; i++)
+                {
+                    var currentPage = i;
+
+                    <li class="numb @(Page == i ? "active" : "")">
+                        <button @onclick="() => SelectPage(currentPage)">
+                            @i
+                        </button>
+                    </li>
+                }
+            }
+            else
+            {
+                // Sliding window with dots
+                long beforePages = Page - 1;
+                long afterPages = Page + 1;
+
+                if (Page == TotalPages) beforePages -= 2;
+                else if (Page == TotalPages - 1) beforePages -= 1;
+
+                if (Page == 1) afterPages += 2;
+                else if (Page == 2) afterPages += 1;
+
+                if (Page > 2)
+                {
+                    <li class="numb"><button @onclick="() => SelectPage(1)">1</button></li>
+                    if (Page > 3)
+                    {
+                        <li class="dots"><span>...</span></li>
+                    }
+                }
+
+                for (long pageLength = beforePages; pageLength <= afterPages; pageLength++)
+                {
+                    if (pageLength < 1 || pageLength > TotalPages) continue;
+
+                    var currentPage = pageLength;
+                    <li class="numb @(Page == pageLength ? "active" : "")">
+                        <button @onclick="() => SelectPage(currentPage)" disabled="@(Page == currentPage)">
+                            @pageLength
+                        </button>
+                    </li>
+                }
+
+                if (Page < TotalPages - 1)
+                {
+                    if (Page < TotalPages - 2)
+                    {
+                        <li class="dots"><span>...</span></li>
+                    }
+                    <li class="numb"><button @onclick="() => SelectPage(TotalPages)">@TotalPages</button></li>
+                }
+            }
+
+            if (Page < TotalPages)
+            {
+                <li class="next">
+                    <button @onclick="() => SelectPage(Page + 1)">
+                        <span>Next <i class="fas fa-angle-right"></i></span>
+                    </button>
+                </li>
+            }
+        }
+  
+    </ul>
+</div>
+
+@code{
+
+    [Parameter] public long Page { get; set; }
+
+    [Parameter] public long TotalPages { get; set; }
+
+    [Parameter] public EventCallback<long> OnPageChanged { get; set; }
+
+    private async Task SelectPage(long newPage)
+    {
+        Page = newPage;
+        await OnPageChanged.InvokeAsync(Page);
+    }
+}

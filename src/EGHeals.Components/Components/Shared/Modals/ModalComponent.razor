@@ -1,0 +1,87 @@
+@using EGHeals.Components.Models.ModalPopups
+@inject ModalPopupService ModalPopupService
+
+@if (isVisible)
+{
+    <DialogPopupUI OnClick="ModalPopupService.Close">
+        <div class="modal__header">
+            @if (!string.IsNullOrEmpty(title))
+            {
+                <p class="modal__title">@title</p>
+            }
+            @if (!string.IsNullOrEmpty(desc))
+            {
+                <p class="modal__desc">@desc</p>
+            }
+        </div>
+        <div class="modal__body">
+            <CascadingValue Value="context">
+                @content
+            </CascadingValue>
+        </div>
+        @if (!string.IsNullOrEmpty(errMsg))
+        {
+            <div class="modal__msg modal__msg--err">Error</div>
+        }
+        @if (!string.IsNullOrEmpty(successMsg))
+        {
+            <div class="modal__msg modal__msg--success">Success</div>
+        }
+        @if (isLoading)
+        {
+            <BarLoading IsCentralized="true" />
+        }
+    </DialogPopupUI>
+}
+
+@code
+{
+    private bool isVisible;
+    private bool isLoading;
+    private string? title;
+    private string? desc;
+    private string errMsg = string.Empty;
+    private string successMsg = string.Empty;
+    private RenderFragment? content;
+    private ModalContext context = new();
+
+    protected override void OnInitialized()
+    {
+        context = new ModalContext
+        {
+            StartLoading = () => { isLoading = true; StateHasChanged(); },
+            StopLoading = () => { isLoading = false; StateHasChanged(); },
+            SetError = (msg) => { errMsg = msg.Message; StateHasChanged(); },
+            SetSuccess = (msg) => { successMsg = msg; StateHasChanged(); },
+            Close = ModalPopupService.Close
+        };
+
+        ModalPopupService.OnShow += Show;
+        ModalPopupService.OnClose += Close;
+    }
+
+    private void Show(RenderFragment modalContent, string? modalTitle = null, string? modalDesc = null)
+    {
+        title = modalTitle;
+        desc = modalDesc;
+        content = modalContent;
+        isVisible = true;
+        StateHasChanged();
+    }
+
+    private bool Close()
+    {
+        if (isLoading) return false;
+
+        isVisible = false;
+        isLoading = false;
+        title = null;
+        desc = null;
+        errMsg = string.Empty;
+        successMsg = string.Empty;
+        content = null;
+        StateHasChanged();
+
+        return true;
+    }
+}

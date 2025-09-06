@@ -1,0 +1,45 @@
+<div class="search">
+    <input @bind-value="@Search" @bind-value:event="oninput" @onkeypress="@HandleKeyPress" type="text" placeholder="Search..." />
+    <button class="filter-btn" @onclick="OnTogglePopupHandler">
+        <span>@FilterBy</span>
+        <i class="fa-solid fa-angle-down arrow"></i>
+        @if (showPopup)
+        {
+            <ContextPopupUI Class="search__context-popup" OnCollapse="OnTogglePopupHandler">
+                <ul>
+                    <li @onclick="@(() => OnFilteredChangedHandler("Ahmed"))">Ahmed</li>
+                    <li @onclick="@(() => OnFilteredChangedHandler("Dina"))">Dina</li>
+                    <li @onclick="@(() => OnFilteredChangedHandler("Youssef"))">Youssef</li>
+                </ul>
+            </ContextPopupUI>
+        }
+    </button>
+    <button class="search__btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+</div>
+
+@code {
+
+    private bool showPopup = false;
+
+    [Parameter]
+    public EventCallback<string> OnSearch { get; set; }
+
+    public string FilterBy { get; set; } = "None";
+
+    public bool SHowFilter { get; set; } = false;
+
+    public string? Search { get; set; }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            // Handle Enter key press here
+            await OnSearch.InvokeAsync(Search);
+        }
+    }
+
+    private void OnTogglePopupHandler() => showPopup ^= true;
+
+    private void OnFilteredChangedHandler(string val) => FilterBy = val;
+}

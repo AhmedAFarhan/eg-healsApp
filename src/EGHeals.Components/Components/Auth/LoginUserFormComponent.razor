@@ -1,0 +1,39 @@
+﻿@using EGHeals.Components.Models.Exceptions
+@using EGHeals.Components.Models.ModalPopups
+@using EGHeals.Models.Dtos.Users
+
+@inject TaskHandlerService TaskHandlerService
+
+<EditForm Model="User" OnValidSubmit="OnValidSubmitHandler">
+   <DataAnnotationsValidator/>
+   <VerticalAlignmentWrapper>
+        <TextInputUI FontAwesomeIcon="fa-solid fa-user" Label="Username*" Placeholder="Enter your username" @bind-Value="User.Username" ValidationFor="@(() => User.Username)" />
+        <PasswordInputUI FontAwesomeIcon="fa-solid fa-lock-keyhole" Label="Password*" Placeholder="Enter your password" @bind-Value="User.Password" ValidationFor="@(() => User.Password)" />
+        <MainButtonUI IsSubmit="true">Login</MainButtonUI>       
+   </VerticalAlignmentWrapper>
+</EditForm>
+
+@code
+{
+    private LoginUserRequestDto User = new();
+
+    [CascadingParameter] public ModalContext Modal { get; set; } = default!;
+
+    private async Task OnValidSubmitHandler()
+    {
+        await TaskHandlerService.RunAsync(async () =>
+        {
+            await Task.Delay(5000);
+            throw new CustomException(string.Empty, "Something went wrong");
+        }, 
+        setLoading: Modal.StartLoading,
+        stopLoading: Modal.StopLoading,
+        setError : Modal.SetError,
+        setSuccess : () => Modal.SetSuccess?.Invoke("Success"));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+}

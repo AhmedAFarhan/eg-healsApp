@@ -5,7 +5,7 @@
     background-color: white;
     z-index: 10;
     border-inline-end: 1px solid var(--color-dark-gray);
-    /*    overflow : hidden;*/
+        overflow : hidden;
     position: relative;
     z-index: 1;
 }
@@ -60,9 +60,9 @@ nav {
     overflow: auto;
 }
 
-    .sidebar-list::-webkit-scrollbar {
-        display: none;
-    }
+.sidebar-list::-webkit-scrollbar {
+    display: none;
+}
 
 .sidebar__slider-btn {
     border: none;

@@ -1,22 +1,55 @@
 @using System.Globalization
 @using EGHeals.Components.Components.Navigations
+@using EGHeals.Components.Components.Shared.Modals
+@using EGHeals.Components.Models.Exceptions
+@using EGHeals.Components.Components.SplashScreen;
 
-<div class="layout @PageCssClass" dir="@dir">
+@inject ModalPopupService ModalPopupService
+@inject LoadingService LoadingService
+@inject GlobalExceptionService GlobalExceptionService
 
-    <AuthorizeView>
-        <Authorized>
-            <MainNavMenuComponent />
-            <SectionNavMenuComponent />
-        </Authorized>
-    </AuthorizeView>
+<ErrorBoundary @ref="currentErrorBoundary">
+    <ErrorContent Context="error">
+        <ErrorBoundaryModalComponent CurrentErrorBoundary="currentErrorBoundary" Exception="error" />
+    </ErrorContent>
+    <ChildContent>
+        @if (!isAppReady)
+        {
+            <SplashScreen OnCompleted="HandleInitializationCompleted" />
+        }
+        else
+        {
+            <div class="layout @PageCssClass @(isModalPopupActive ? "blurred" : string.Empty)" dir="@dir">
+                <AuthorizeView>
+                    <Authorized>
+                        <MainNavMenuComponent />
+                        <SectionNavMenuComponent />
+                    </Authorized>
+                </AuthorizeView>
 
-    <main class="@PageCssClass">
-        @ChildContent
-    </main>
+                <main class="@PageCssClass">
+                    @ChildContent
+                    @if (isLoading)
+                    {
+                        <BarLoading IsCentralized="true" Color="LoaderColor.SECONDARY" IsOverlayed="true" />
+                    }
 
-</div>
+                </main>
+            </div>
+        }
+
+        <ModalComponent />
+
+    </ChildContent>
+</ErrorBoundary>
 
 @code{
+
+    private bool isAppReady = false;
+
+    private bool isModalPopupActive = false;
+
+    private bool isLoading = false;
 
     private string dir = string.Empty;
 
@@ -24,14 +57,63 @@
 
     private string PageCssClass => IsAuthenticated ? "authorized" : string.Empty;
 
+    private ErrorBoundary? currentErrorBoundary;
+
     [Parameter]
     public RenderFragment ChildContent { get; set; } = default!;
 
     [CascadingParameter] 
     private Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
 
+    private void HandleInitializationCompleted()
+    {
+        isAppReady = true;
+        StateHasChanged();
+    }
+
+    private void OnBlurChangedHandler(bool state)
+    {
+        isModalPopupActive = state;
+        StateHasChanged();
+    }
+
+    private void OnLoadingChangedHandler(bool state)
+    {
+        isLoading = state;
+        StateHasChanged();
+    }
+
+    private void OnExceptionHandler(CustomException ex)
+    {
+        ModalPopupService.Show(builder =>
+        {
+            builder.OpenComponent<MessageBoxComponent>(0);
+
+            // String parameters
+            builder.AddAttribute(1, "Title", ex.Title);
+            builder.AddAttribute(2, "BtnText", "Ok");
+
+            // Enum parameter
+            builder.AddAttribute(3, "Type", MsgBoxType.ERROR);
+
+            // Child content
+            builder.AddAttribute(4, "ChildContent", (RenderFragment)(childBuilder =>
+            {
+                childBuilder.AddContent(0, ex.Message);
+            }));
+
+            builder.CloseComponent();
+        });
+    }
+
     protected override async Task OnInitializedAsync()
     {
+        ModalPopupService.OnStateChanged += OnBlurChangedHandler;
+
+        LoadingService.OnStateChanged += OnLoadingChangedHandler;
+
+        GlobalExceptionService.OnException += OnExceptionHandler;
+
         // Set direction based on culture
         var culture = CultureInfo.CurrentUICulture.Name;
         dir = culture.StartsWith("ar") ? "rtl" : "ltr";

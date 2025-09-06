@@ -1,0 +1,35 @@
+@if (IsLoading)
+{
+    @if (Skeleton is not null)
+    {
+        @Skeleton
+    }
+    else
+    {
+        <div class="loading-container__default">
+            Loading...
+        </div>
+    }
+}
+else
+{
+    @ChildContent
+}
+
+@code {
+
+    /// <summary>
+    /// Determines whether to show skeleton/loading state.
+    /// </summary>
+    [Parameter] public bool IsLoading { get; set; }
+
+    /// <summary>
+    /// Skeleton or loading UI to render when IsLoading is true.
+    /// </summary>
+    [Parameter] public RenderFragment? Skeleton { get; set; }
+
+    /// <summary>
+    /// The main UI to render when IsLoading is false.
+    /// </summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

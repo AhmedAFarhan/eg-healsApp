@@ -1,0 +1,49 @@
+﻿.message-box{
+    font-size : 1.25rem;
+/*    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;*/
+}
+
+.message-box__header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.message-box ::deep .wrapper {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-end: 0.5rem;
+}
+
+.message-box ::deep .wrapper.info {
+    background-color: var(--color-primary-light);
+}
+
+.message-box ::deep .wrapper.warning {
+    background-color: var(--color-secondary-light);
+}
+
+.message-box ::deep .wrapper.error {
+    background-color: var(--color-tertiary-light);
+}
+
+.message-box i {
+    color : white;
+    font-size: 1.5rem;
+}
+
+.message-box__desc {
+    font-size: 1.3rem;
+    margin-bottom : 1.0rem;
+    max-width : 30rem;
+/*    text-align : center;*/
+}

@@ -10,9 +10,7 @@
     border-right: none;
     border-left: none;
     font-size: 1.2rem;
-    background-color: #F0F0F0;
-    /*    background-color: var(--color-primary-light);
-    color : white;*/
+    background-color: var(--color-light-gray);
 }
 
 th:first-child {

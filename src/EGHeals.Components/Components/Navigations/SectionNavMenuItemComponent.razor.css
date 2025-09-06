@@ -1,13 +1,13 @@
 ﻿
 .list-item {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin: 0rem 0.75rem;
 }
 
-    .list-item i {
-        margin-inline-end: 0.75rem;
-        font-size: 1.5rem;
-    }
+.list-item i {
+    margin-inline-end: 0.75rem;
+    font-size: 1.3rem;
+}
 
 .list-item a {
     display: block;

@@ -1,6 +1,6 @@
 ﻿.row {
     margin: 0rem;
-    padding: 0.25rem;
+    padding: 0.25rem 0rem;
     display: table;
     width: 100%;
     table-layout: fixed;

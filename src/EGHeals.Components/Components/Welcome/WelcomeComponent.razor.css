@@ -1,5 +1,6 @@
-﻿.test{
-    background-color : red;
-    width : 5rem;
-    height : 2rem;
+﻿.page-content {
+    height: 100%;
+    display : grid;
+    grid-template-rows : auto 1fr auto;
+    row-gap : 1rem;
 }

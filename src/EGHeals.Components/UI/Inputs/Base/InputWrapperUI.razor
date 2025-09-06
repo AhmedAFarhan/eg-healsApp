@@ -1,0 +1,36 @@
+<div class="input-control">
+    <div class="input">
+        <label for="@Id">@Label</label>
+        <div class="input__content">
+            <i class="@FontAwesomeIcon icon"></i>
+            @ChildContent
+        </div>
+    </div>
+    @if (@ShowValidationErrors)
+    {
+        <div class="err">@ValidationMessages.FirstOrDefault()</div>
+    }
+</div>
+
+@code{
+    [Parameter]
+    public string Id { get; set; } = default!;
+
+    [Parameter]
+    public string Label { get; set; } = default!;
+
+    [Parameter]
+    public string FontAwesomeIcon { get; set; } = default!;
+
+    [Parameter]
+    public bool ShowValidationErrors { get; set; }
+
+    [Parameter]
+    public List<string> ValidationMessages { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment Icon { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment @ChildContent { get; set; } = default!;
+}

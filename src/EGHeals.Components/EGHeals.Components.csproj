@@ -20,4 +20,8 @@
     <Folder Include="Pages\Index\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EGHeals.Models\EGHeals.Models.csproj" />
+  </ItemGroup>
+
 </Project>

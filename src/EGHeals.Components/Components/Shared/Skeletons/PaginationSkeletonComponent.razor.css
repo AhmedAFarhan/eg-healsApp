@@ -1,0 +1,8 @@
+﻿.pagination-skeleton {
+    width: 30rem;
+    height: 3rem;
+}
+
+.pagination-skeleton ::deep .skeleton {
+    border-radius: 5rem;
+}

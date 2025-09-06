@@ -66,14 +66,22 @@
     background-color: var(--color-primary-light);
 }
 
-    .btn-primary:hover {
-        background-color: var(--color-primary-dark);
-    }
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+}
 
 .btn-secondary {
     background-color: var(--color-secondary-light);
 }
 
-    .btn-secondary:hover {
-        background-color: var(--color-secondary-dark);
-    }
+.btn-secondary:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+.btn-tertiary {
+    background-color: var(--color-tertiary-light);
+}
+
+.btn-tertiary:hover {
+    background-color: var(--color-tertiary-dark);
+}

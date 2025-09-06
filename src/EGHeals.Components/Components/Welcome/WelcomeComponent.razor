@@ -1,5 +1,8 @@
 
-<PageUI>
+<div class="page-content">
+    <div>
+        actions
+    </div>
     <TableUI T="User"
              IsInitialLoading="IsInitialLoading"
              IsLoading="IsRefreshing"
@@ -7,24 +10,32 @@
              SkeletonRows="6"
              SkeletonColumns="3">
         <HeaderTemplate>
-            <TableRow>
-                <TableHeader>ID</TableHeader>
-                <TableHeader>Name</TableHeader>
-                <TableHeader>Email</TableHeader>
-            </TableRow>
+            <TableRowUI>
+                <TableHeaderUI>ID</TableHeaderUI>
+                <TableHeaderUI>Name</TableHeaderUI>
+                <TableHeaderUI>Email</TableHeaderUI>
+            </TableRowUI>
         </HeaderTemplate>
         <RowTemplate>
             @foreach (var user in Users ?? Enumerable.Empty<User>())
             {
-                <TableRow>
-                    <TableData>@user.Id</TableData>
-                    <TableData>@user.Name</TableData>
-                    <TableData>@user.Email</TableData>
-                </TableRow>
+                <TableRowUI>
+                    <TableDataUI>@user.Id</TableDataUI>
+                    <TableDataUI>@user.Name</TableDataUI>
+                    <TableDataUI>@user.Email</TableDataUI>
+                </TableRowUI>
             }
         </RowTemplate>
     </TableUI>
-</PageUI>
+    <SkeltonLoadingContainer IsLoading="IsInitialLoading">
+        <Skeleton>
+            <PaginationSkeletonComponent />
+        </Skeleton>
+        <ChildContent>
+            <PaginationUI TotalPages="20" Page="5" />
+        </ChildContent>
+    </SkeltonLoadingContainer>
+</div>
 
 @code {
 
@@ -43,7 +54,7 @@
 
         var users = new List<User>();
 
-        for (int i = 1; i <= 0; i++)
+        for (int i = 1; i <= 50; i++)
         {
             users.Add(new User
             {

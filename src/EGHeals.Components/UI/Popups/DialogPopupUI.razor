@@ -1,0 +1,13 @@
+<div class="dialog-content">
+    <div class="dialog__overlay" @onclick="@OnClick"></div>
+    <div class="dialog__popup">
+        @ChildContent
+    </div>
+</div>
+
+@code{
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public EventCallback OnClick { get; set; }
+}

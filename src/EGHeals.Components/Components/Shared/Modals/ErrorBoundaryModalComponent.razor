@@ -1,0 +1,13 @@
+<DialogPopupUI>
+    <MessageBoxComponent Title="Err" Type="MsgBoxType.ERROR" OnClick="OnResetComponentHandler">
+        @Exception?.Message
+    </MessageBoxComponent>
+</DialogPopupUI>
+
+@code{
+
+    [Parameter] public ErrorBoundary? CurrentErrorBoundary { get; set; }
+    [Parameter] public Exception? Exception { get; set; }
+
+    private void OnResetComponentHandler() => CurrentErrorBoundary?.Recover();
+}

@@ -1,0 +1,14 @@
+@using EGHeals.Components.UI.Inputs.Base;
+@inherits EGHeals.Components.UI.Inputs.Base.InputBase<string>
+
+<InputWrapperUI FontAwesomeIcon="@FontAwesomeIcon" Id="@Id" Label="@Label" ShowValidationErrors="@ShowValidationErrors" ValidationMessages="@ValidationMessages">
+    <input id="@Id" type="text" class="@ValidationClass" @bind="BindValue" @oninput="HandleInput" placeholder="@Placeholder" />
+</InputWrapperUI>
+
+@code {
+
+    private void HandleInput(ChangeEventArgs e)
+    {
+        BindValue = e.Value?.ToString();
+    }
+}

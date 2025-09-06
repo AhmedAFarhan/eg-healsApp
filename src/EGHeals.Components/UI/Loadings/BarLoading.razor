@@ -1,4 +1,5 @@
 <div class="loader-container @(IsCentralized ? "centralized" : "")">
+    <div class="loading-overlay @(IsOverlayed ? "centralized" : "")"></div>
     <div class="loader @(ColorClass)"></div>
 </div>
 
@@ -8,6 +9,8 @@
     [Parameter] public LoaderColor Color { get; set; } = LoaderColor.PRIMARY;
 
     [Parameter] public bool IsCentralized { get; set; } = true;
+
+    [Parameter] public bool IsOverlayed { get; set; } = false;
 
     private string ColorClass => Color switch
     {

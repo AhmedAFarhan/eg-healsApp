@@ -2,7 +2,8 @@
 {
     public enum MainButtonVariant
     {
-        PRIMARY = 0,
-        SECONDARY = 1,
+        PRIMARY,
+        SECONDARY,
+        TERTIARY
     }
 }

@@ -48,6 +48,8 @@ the common breakpoints for widths of devices :
     --color-primary-dark: #0F52BA;
     --color-secondary-light: #FE7912;
     --color-secondary-dark: #F74B00;
+    --color-tertiary-light: #C42B1C;
+    --color-tertiary-dark: #A62C1D;
     --color-very-light-gray: #FCFBFC;
     --color-light-gray: #F2F2F2;
     --color-dark-gray: #ABABAB;
@@ -133,7 +135,7 @@ input[type="password"]:focus,
 input[type="date"]:focus,
 textarea:focus {
     background-color: white;
-    border: 0.13rem solid var(--color-secondary-light);
+    border: 0.13rem solid var(--color-secondary-dark);
 }
 
 h1{

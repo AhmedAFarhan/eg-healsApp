@@ -1,14 +1,16 @@
 @using EGHeals.Components.Components.Auth;
 @using EGHeals.Components.Components.Welcome;
 
-<AuthorizeView>
-    <Authorized>
-        <WelcomeComponent />
-    </Authorized>
-    <NotAuthorized>
-        <AuthComponent />
-    </NotAuthorized>
-</AuthorizeView>
+<PageUI>
+    <AuthorizeView>
+        <Authorized>
+            <WelcomeComponent />
+        </Authorized>
+        <NotAuthorized>
+            <AuthComponent />
+        </NotAuthorized>
+    </AuthorizeView>
+</PageUI>
 
 @code {
 
