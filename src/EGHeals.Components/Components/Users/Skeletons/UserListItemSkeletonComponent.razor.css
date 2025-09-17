@@ -1,0 +1,33 @@
+﻿.user{
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+    padding : 0rem;
+    padding-top : 2rem;
+}
+
+.user ::deep .user__icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 100%;
+    margin-bottom : 1rem;
+}
+
+.user ::deep .user__username {
+    margin-bottom: 0.5rem;
+}
+
+.user ::deep .user__role {
+    margin-bottom: 1rem;
+}
+
+.user__actions {
+    padding: 0.0rem 0.5rem;
+    margin-bottom : 1rem;
+    display: flex;
+    width: 100%;
+    display : grid;
+    grid-template-columns : 1fr 1fr;
+    gap : 0.5rem;
+}

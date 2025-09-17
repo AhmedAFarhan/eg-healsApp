@@ -6,6 +6,6 @@ namespace BuildingBlocks.DataAccessAbstraction.UnitOfWork
     {
         IBaseRepository<T> GetRepository<T>() where T : class;
         TRepository GetCustomRepository<TRepository>() where TRepository : class;
-        Task SaveChangesAsync();
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

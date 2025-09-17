@@ -5,7 +5,7 @@ namespace EGHeals.Components.Security
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
-        private readonly bool isAuthenticated = true;
+        private readonly bool isAuthenticated = false;
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {

@@ -1,30 +1,32 @@
-﻿using EGHeals.Components.Models.Exceptions;
+﻿using BuildingBlocks.Exceptions;
 
 namespace EGHeals.Components.Services
 {
     public class TaskHandlerService
     {
-        public async Task RunAsync(Func<Task> taskFunc, Action? setLoading = null, Action? stopLoading = null, Action<CustomException>? setError = null, Action? setSuccess = null)
+        public async Task RunAsync(Func<Task> taskFunc, Action? setLoading = null, Action? stopLoading = null, Action<AppException>? setError = null, Action<string>? setSuccess = null, string? SuccessMsg = null)
         {
             try
             {
-                //setError?.Invoke(string.Empty);
+                setError?.Invoke(null);
+
+                setSuccess?.Invoke(string.Empty);
 
                 setLoading?.Invoke();
 
+                await Task.Delay(2000);
+
                 await taskFunc();
 
-                setSuccess?.Invoke();
+                setSuccess?.Invoke(SuccessMsg);
             }
-            catch (CustomException ex)
+            catch (AppException ex)
             {
-                //var customEx = new CustomException {Title = "Error" ,Description = ex.Message };
                 setError?.Invoke(ex);
             }
             finally
             {
-                stopLoading?.Invoke();
-               
+                stopLoading?.Invoke();               
             }
         }
 

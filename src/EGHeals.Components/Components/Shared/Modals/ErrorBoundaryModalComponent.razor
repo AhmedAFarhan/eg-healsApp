@@ -1,5 +1,6 @@
+@using BuildingBlocks.Exceptions
 <DialogPopupUI>
-    <MessageBoxComponent Title="Err" Type="MsgBoxType.ERROR" OnClick="OnResetComponentHandler">
+    <MessageBoxComponent Title="Unhandled Exception" Type="MsgBoxType.ERROR" OnClick="OnResetComponentHandler">
         @Exception?.Message
     </MessageBoxComponent>
 </DialogPopupUI>

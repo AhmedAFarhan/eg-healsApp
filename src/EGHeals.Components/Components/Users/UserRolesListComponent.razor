@@ -1,0 +1,16 @@
+<GridUI Columns="1" Class="@Class" ContainerClass="@ContainerClass">
+    @for (int i = 0; i < 1; i++)
+    {
+        <UserRoleListItemComponent />
+    }
+</GridUI>
+@code {
+
+    [Parameter] public bool IsLoading { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+
+    [Parameter] public string? ContainerClass { get; set; }
+
+
+}

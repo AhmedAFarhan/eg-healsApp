@@ -21,11 +21,11 @@
         </div>
         @if (!string.IsNullOrEmpty(errMsg))
         {
-            <div class="modal__msg modal__msg--err">Error</div>
+            <div class="modal__msg modal__msg--err">@errMsg</div>
         }
         @if (!string.IsNullOrEmpty(successMsg))
         {
-            <div class="modal__msg modal__msg--success">Success</div>
+            <div class="modal__msg modal__msg--success">@successMsg</div>
         }
         @if (isLoading)
         {
@@ -51,7 +51,7 @@
         {
             StartLoading = () => { isLoading = true; StateHasChanged(); },
             StopLoading = () => { isLoading = false; StateHasChanged(); },
-            SetError = (msg) => { errMsg = msg.Message; StateHasChanged(); },
+            SetError = (ex) => { errMsg = ex is null ? string.Empty :  ex.Message; StateHasChanged(); },
             SetSuccess = (msg) => { successMsg = msg; StateHasChanged(); },
             Close = ModalPopupService.Close
         };

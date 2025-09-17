@@ -11,5 +11,6 @@
 
         public UserRoleId UserRoleId { get; private set; } = default!;
         public RolePermissionId RolePermissionId { get; private set; } = default!;
+        public RolePermission RolePermission { get; private set; } = default!;/* NAVAIGATION PROPERTY */
     }
 }

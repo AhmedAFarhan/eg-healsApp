@@ -1,0 +1,10 @@
+﻿.user-page{
+    display : grid;
+    grid-template-rows : auto 1fr auto;
+    height : 100%;
+    gap : 1.0rem;
+}
+
+::deep .user-page__add-btn {
+    justify-self: start;
+}

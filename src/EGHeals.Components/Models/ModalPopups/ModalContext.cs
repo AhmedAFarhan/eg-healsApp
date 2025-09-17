@@ -1,4 +1,4 @@
-﻿using EGHeals.Components.Models.Exceptions;
+﻿using BuildingBlocks.Exceptions;
 
 namespace EGHeals.Components.Models.ModalPopups
 {
@@ -6,7 +6,7 @@ namespace EGHeals.Components.Models.ModalPopups
     {
         public Action? StartLoading { get; set; }
         public Action? StopLoading { get; set; }
-        public Action<CustomException>? SetError { get; set; }
+        public Action<AppException>? SetError { get; set; }
         public Action<string>? SetSuccess { get; set; }
         public Action? Close { get; set; }
     }

@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using EGHeals.Components;
-
+﻿using EGHeals.Components;
+using EGHeals.Components.PlatformTargets;
+using EGHeals.Maui.PlatformTargets;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using EGHeals.Application;
 namespace EGHeals.Maui
 {
     public static class MauiProgram
@@ -15,9 +18,16 @@ namespace EGHeals.Maui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
+            // Add appsettings.json explicitly
+            builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
             builder.Services.AddMauiBlazorWebView();
 
-            builder.Services.AddComponentsServices();
+            builder.Services.AddSingleton<IPlatformTarget, PlatformTarget>();
+
+            builder.Services.AddApplicationServices();
+
+            builder.Services.AddComponentsServices(builder.Configuration);
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();

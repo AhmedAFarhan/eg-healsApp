@@ -1,7 +1,7 @@
-<div class="skeleton @CssClass" style="width:@Width; height:@Height;"></div>
+<div class="skeleton @Class" style="width:@Width; height:@Height;"></div>
 
 @code {
     [Parameter] public string Width { get; set; } = "100%";
     [Parameter] public string Height { get; set; } = "100%";
-    [Parameter] public string CssClass { get; set; } = "";
+    [Parameter] public string? Class { get; set; }
 }

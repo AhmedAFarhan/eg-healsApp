@@ -1,8 +1,10 @@
-﻿@using EGHeals.Components.Models.Exceptions
+﻿@using EGHeals.Application.Dtos.Users
+@using EGHeals.Application.Features.Users.Commands.Login
 @using EGHeals.Components.Models.ModalPopups
 @using EGHeals.Models.Dtos.Users
 
 @inject TaskHandlerService TaskHandlerService
+@inject ISender sender
 
 <EditForm Model="User" OnValidSubmit="OnValidSubmitHandler">
    <DataAnnotationsValidator/>
@@ -23,17 +25,15 @@
     {
         await TaskHandlerService.RunAsync(async () =>
         {
-            await Task.Delay(5000);
-            throw new CustomException(string.Empty, "Something went wrong");
+            var command = new LoginCommand(new LoginUserDto(User.Username, User.Password));
+
+            var result = await sender.Send(command);
         }, 
         setLoading: Modal.StartLoading,
         stopLoading: Modal.StopLoading,
         setError : Modal.SetError,
-        setSuccess : () => Modal.SetSuccess?.Invoke("Success"));
+        setSuccess: Modal.SetSuccess,
+        SuccessMsg: "Hello");
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-
-    }
 }

@@ -1,0 +1,23 @@
+@using EGHeals.Components.Components.Users.Skeletons
+<GridUI Columns="4">
+    @if (IsLoading)
+    {
+        @for (int i = 0; i < 6; i++)
+        {
+            <UserListItemSkeletonComponent />
+        }        
+    }
+    else
+    {
+        @for (int i = 0; i < 6; i++)
+        {
+            <UserListItemComponent />
+        }
+    }    
+</GridUI>
+
+@code{
+
+    [Parameter] public bool IsLoading { get; set; }
+
+}

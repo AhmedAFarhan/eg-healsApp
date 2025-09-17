@@ -1,0 +1,29 @@
+<CardUI Class="@CardClass">
+    <div class="card-content @Class">
+        <button class="card-content__action"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+        @ChildContent
+        <div class="card-content__actions">
+            <button class="card-content__edit" @onclick="OnFirstAction">
+                <span><i class="fa-regular fa-pen-to-square"></i></span>
+                <span>Edit</span>
+            </button>
+            <button class="card-content__delete" @onclick="OnSecondAction">
+                <span><i class="fa-regular fa-trash-xmark"></i></span>
+                <span>Delete</span>
+            </button>
+        </div>
+    </div>
+</CardUI>
+
+@code{
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+
+    [Parameter] public string? CardClass { get; set; }
+
+    [Parameter] public EventCallback OnFirstAction { get; set; }
+
+    [Parameter] public EventCallback OnSecondAction { get; set; }
+}

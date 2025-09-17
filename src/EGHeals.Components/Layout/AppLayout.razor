@@ -1,7 +1,7 @@
 @using System.Globalization
+@using BuildingBlocks.Exceptions
 @using EGHeals.Components.Components.Navigations
 @using EGHeals.Components.Components.Shared.Modals
-@using EGHeals.Components.Models.Exceptions
 @using EGHeals.Components.Components.SplashScreen;
 
 @inject ModalPopupService ModalPopupService
@@ -26,20 +26,16 @@
                         <SectionNavMenuComponent />
                     </Authorized>
                 </AuthorizeView>
-
                 <main class="@PageCssClass">
                     @ChildContent
                     @if (isLoading)
                     {
                         <BarLoading IsCentralized="true" Color="LoaderColor.SECONDARY" IsOverlayed="true" />
                     }
-
                 </main>
             </div>
         }
-
         <ModalComponent />
-
     </ChildContent>
 </ErrorBoundary>
 
@@ -83,8 +79,10 @@
         StateHasChanged();
     }
 
-    private void OnExceptionHandler(CustomException ex)
+    private void OnExceptionHandler(AppException ex)
     {
+        if (ex is null) return;
+
         ModalPopupService.Show(builder =>
         {
             builder.OpenComponent<MessageBoxComponent>(0);

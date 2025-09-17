@@ -1,0 +1,37 @@
+﻿.card-content{
+    display : flex;
+    flex-direction : column;
+}
+
+.card-content button{
+    border: none;
+    outline: none;
+    background-color : transparent;
+}
+
+.card-content__action {
+    margin-inline-start: auto;
+    margin-inline-end: 0.25rem;
+    margin-top: 0.5rem;
+    padding : 0rem 0.75rem;
+    font-size: 1.4rem;
+    color: var(--color-very-dark-gray);
+}
+
+.card-content__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 0.1rem solid #E1E1E1;
+    font-size: 1.1rem;
+    margin-top: 1.0rem;
+}
+
+.card-content__actions span {
+    color: var(--color-very-dark-gray);
+    font-weight: 600;
+}
+
+.card-content .card-content__edit {
+    padding: 0.5rem 1rem;
+    border-inline-end: 0.1rem solid #E1E1E1;
+}

@@ -1,0 +1,38 @@
+﻿.user{
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+}
+
+.user__icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 100%;
+    background-color: var(--color-primary-light);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.75rem;
+    margin-bottom: 0.3rem;
+}
+
+.user__username {
+    font-size: 1.4rem;
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    margin-bottom : 0.7rem;
+}
+
+.user__roles{
+    font-size : 1.1rem;
+}
+
+.user__role {
+    background-color: var(--color-light-gray);
+    padding: 0.25rem 1rem;
+    border-radius: 0.25rem;
+    color: var(--color-very-dark-gray);
+    font-weight : 600;
+}

@@ -1,0 +1,9 @@
+﻿.pagination-skeleton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pagination-skeleton ::deep .pagination-skeleton__pagination {
+    border-radius: 5rem;
+}

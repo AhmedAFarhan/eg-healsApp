@@ -1,0 +1,30 @@
+﻿.permission {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1.25rem;
+}
+
+.permission ::deep .permission__icon-wrapper {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 100%;
+    background-color: var(--color-primary-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.permission ::deep .permission__receptionist-svg-icon-container {
+}
+
+.permission ::deep .permission__receptionist-svg-icon-path {
+    fill: white;
+}
+
+.permission__name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-very-dark-gray);
+}

@@ -1,0 +1,46 @@
+﻿.roles-page {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 18rem 1fr;
+    height: 100%;
+    column-gap: 1.5rem;
+    row-gap : 1rem;
+}
+
+.roles-page ::deep .roles-page__back-btn {
+    justify-self: start;
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.roles-page ::deep .roles-page__save-btn {
+    justify-self: end;
+    width: 13rem;
+    grid-row: 3;
+    grid-column: 2;
+}
+
+.roles-page__permissions-text {
+    justify-self: start;
+    background-color: var(--color-secondary-light);
+    color : white;
+    font-weight : 600;
+    font-size : 1.3rem;
+    padding : 0rem 2rem;
+    grid-row: 1;
+    grid-column: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.roles-page ::deep .roles-page__grid-container {
+       box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+/*    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;*/
+    border-radius: 0.75rem;
+    background-color : white;
+}
+.roles-page ::deep .roles-page__grid {
+    padding: 1.0rem;
+    
+}

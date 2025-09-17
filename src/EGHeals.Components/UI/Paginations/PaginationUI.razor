@@ -1,5 +1,13 @@
 
 <div class="pagination">
+    <div class="pagination__results">
+        <span class="pagination__start">1</span>
+        <span>-</span>
+        <span class="pagination__end">50</span>
+        <span>Of</span>
+        <span class="pagination__result">1250</span>
+        <span>Records</span>
+    </div>
     <ul>
         @if (TotalPages <= 1)
         {
@@ -10,14 +18,11 @@
         }
         else
         {
-            if (Page > 1)
-            {
-                <li class="prev">
-                    <button @onclick="() => SelectPage(Page - 1)">
-                        <span><i class="fas fa-angle-left"></i> Previous</span>
-                    </button>
-                </li>
-            }
+            <li class="prev @(Page > 1 ? "active" : string.Empty)">
+                <button @onclick="() => SelectPage(Page - 1)" disabled="@(Page == 1)">
+                    <span><i class="fas fa-angle-left"></i> Previous</span>
+                </button>
+            </li>
 
             if (TotalPages <= 5)
             {
@@ -76,14 +81,11 @@
                 }
             }
 
-            if (Page < TotalPages)
-            {
-                <li class="next">
-                    <button @onclick="() => SelectPage(Page + 1)">
-                        <span>Next <i class="fas fa-angle-right"></i></span>
-                    </button>
-                </li>
-            }
+            <li class="next @(Page < TotalPages ? "active" : string.Empty)">
+                <button @onclick="() => SelectPage(Page + 1)" disabled="@(Page == TotalPages)">
+                    <span>Next <i class="fas fa-angle-right"></i></span>
+                </button>
+            </li>
         }
   
     </ul>

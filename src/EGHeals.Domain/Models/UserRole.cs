@@ -14,6 +14,7 @@
 
         public SystemUserId SystemUserId { get; private set; } = default!;
         public RoleId RoleId { get; private set; } = default!;
+        public Role Role { get; private set; } = default!; /* NAVAIGATION PROPERTY */
 
         public void AddPermission(RolePermissionId rolePermissionId)
         {

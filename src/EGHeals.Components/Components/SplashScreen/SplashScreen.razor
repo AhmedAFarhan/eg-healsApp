@@ -1,3 +1,8 @@
+@using EGHeals.Infrastructure.Helpers
+@inject DataBaseSetup DataBaseSetup
+@inject DatabaseSimulator DatabaseSimulator
+@inject IPlatformTarget PlatformTarget
+
 <div class="splash">
     <EGHealsLogoComponent Class="icon-content" HeaderClass="title" Wrapper="logo-wrapper" ContainerClass="svg-app-icon-container" PathClass="svg-app-icon-path" />
     <BarLoading IsCentralized="false" Color="LoaderColor.SECONDARY" />
@@ -11,6 +16,15 @@
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(0);
+
+        if (PlatformTarget.Platform == PlatformType.MAUI)
+        {
+            await DataBaseSetup.SetupAsync();
+        }
+        else
+        {
+            DatabaseSimulator.InitDb();
+        }
 
         // Notify App.razor when done
         await OnCompleted.InvokeAsync();

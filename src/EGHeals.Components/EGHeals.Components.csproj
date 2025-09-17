@@ -17,10 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Radiology\" />
     <Folder Include="Pages\Index\" />
+    <Folder Include="UI\Buttons\Skeletons\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EGHeals.Application\EGHeals.Application.csproj" />
+    <ProjectReference Include="..\EGHeals.Infrastructure\EGHeals.Infrastructure.csproj" />
     <ProjectReference Include="..\EGHeals.Models\EGHeals.Models.csproj" />
   </ItemGroup>
 

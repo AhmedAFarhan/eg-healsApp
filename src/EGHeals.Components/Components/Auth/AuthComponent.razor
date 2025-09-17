@@ -1,4 +1,4 @@
-@using EGHeals.Components.Models.Exceptions
+@using BuildingBlocks.Exceptions
 @inject ModalPopupService ModalPopupService
 @inject TaskHandlerService TaskHandlerService
 @inject LoadingService LoadingService
@@ -17,9 +17,7 @@
             <h3>Integrated Platform for Medical Operations</h3>
             <p>Our healthcare platform is designed to create a connected, technology-driven medical community. Whether you manage a medical center, clinic, laboratory, or pharmacy, this system helps you streamline operations, improve efficiency, and stay connected with patients and partners. By subscribing, you can easily manage your daily activities while benefiting from powerful features that simplify workflows and enhance the overall healthcare experience.</p>
             <MainButtonUI OnClick="OnLoginHandler" Class="auth__btn">Login</MainButtonUI>
-            <MainButtonUI Variant="MainButtonVariant.SECONDARY" OnClick="OnTestHandler">Test</MainButtonUI>
-            <MainButtonUI Variant="MainButtonVariant.TERTIARY" OnClick="OnTestHandler2">Test2</MainButtonUI>
-            <MainButtonUI Variant="MainButtonVariant.TERTIARY" OnClick="OnTestHandler3">Test3</MainButtonUI>
+  @*           <MainButtonUI OnClick="OnTestHandler" Class="auth__btn">Login2</MainButtonUI> *@
         </div>
         <div class="auth__ribbon">
             <div class="auth__ribbon-container">
@@ -78,7 +76,7 @@
         await TaskHandlerService.RunAsync(async () =>
         {
             await Task.Delay(3000);
-            throw new CustomException("Server Error", "Something went wrong");
+            throw new AppException("Server Error",500, "Something went wrong");
         }, 
         setLoading: LoadingService.Show,
         stopLoading: LoadingService.Hide,
@@ -111,7 +109,7 @@
 
     private void OnTestHandler3()
     {
-        throw new Exception("Something went wrong");
+        throw new AppException(string.Empty, 500, "Something went wrong");
     }
 
 }
