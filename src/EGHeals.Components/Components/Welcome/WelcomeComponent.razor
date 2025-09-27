@@ -1,7 +1,9 @@
+@using EGHeals.Components.Security
+@inject AuthenticationStateProvider AuthStateProvider
 
 <div class="page-content">
     <div>
-        actions
+        <button @onclick="@Logout">Logout</button>
     </div>
     <TableUI T="User"
              IsInitialLoading="IsInitialLoading"
@@ -79,6 +81,11 @@
         IsRefreshing = false;
 
         StateHasChanged();
+    }
+
+    private void Logout()
+    {
+        (AuthStateProvider as CustomAuthStateProvider)?.NotifyUserLogout();
     }
 
     public class User

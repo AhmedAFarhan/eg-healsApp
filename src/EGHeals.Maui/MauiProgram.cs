@@ -1,9 +1,11 @@
-﻿using EGHeals.Components;
-using EGHeals.Components.PlatformTargets;
+﻿using BuildingBlocks.DataAccess.PlatformTargets;
+using EGHeals.Application;
+using EGHeals.Application.Contracts.Users;
+using EGHeals.Components;
+using EGHeals.Components.Identity;
 using EGHeals.Maui.PlatformTargets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using EGHeals.Application;
 namespace EGHeals.Maui
 {
     public static class MauiProgram

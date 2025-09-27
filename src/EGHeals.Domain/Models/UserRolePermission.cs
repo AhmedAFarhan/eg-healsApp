@@ -1,6 +1,6 @@
 ﻿namespace EGHeals.Domain.Models
 {
-    public class UserRolePermission : SystemEntity<UserRolePermissionId>
+    public class UserRolePermission : Entity<UserRolePermissionId>
     {
         internal UserRolePermission(UserRoleId userRoleId, RolePermissionId rolePermissionId)
         {

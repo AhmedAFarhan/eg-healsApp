@@ -1,16 +1,33 @@
+@using EGHeals.Models.Dtos.Users
 <GridUI Columns="1" Class="@Class" ContainerClass="@ContainerClass">
-    @for (int i = 0; i < 1; i++)
+    @if (Roles is null)
     {
-        <UserRoleListItemComponent />
+        <div>skeleton...</div>
+        @* @for (int i = 0; i < 6; i++)
+        {
+            <UserListItemSkeletonComponent />
+        } *@
     }
+    else if (!Roles.Any())
+    {
+        <div>No Items Found!</div>
+    }
+    else
+    {
+        @foreach (var user in Roles.ToList())
+        {
+            <UserRoleListItemComponent />
+        }
+    } 
 </GridUI>
 @code {
 
     [Parameter] public bool IsLoading { get; set; }
 
+    [Parameter] public IEnumerable<UserRoleResponseDto> Roles { get; set; } = default!;
+
     [Parameter] public string? Class { get; set; }
 
     [Parameter] public string? ContainerClass { get; set; }
-
 
 }

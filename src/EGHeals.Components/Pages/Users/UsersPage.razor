@@ -1,7 +1,12 @@
+@using BuildingBlocks.DataAccessAbstraction.Queries
+@using BuildingBlocks.Pagination
+@using EGHeals.Application.Features.Users.Queries.GetSubUsersByOwnership
 @using EGHeals.Domain.Models
+@using EGHeals.Models.Dtos.Users
+
 @inject TaskHandlerService TaskHandlerService
 @inject GlobalExceptionService GlobalExceptionService
-@inject DatabaseSimulator DatabaseSimulator
+@inject ISender sender
 
 <PageUI>
     <div class="user-page">
@@ -13,13 +18,13 @@
                 <MainButtonUI Class="user-page__add-btn">New User</MainButtonUI>
             </ChildContent>
         </SkeltonLoadingContainer>        
-        <UserListComponent IsLoading="isInit" />
+        <UserListComponent Users="users"/>
         <SkeltonLoadingContainer IsLoading="isInit">
             <Skeleton>
                 <PaginationSkeletonUI />
             </Skeleton>
             <ChildContent>
-                <PaginationUI TotalPages="20" Page="5" />
+                <PaginationUI TotalPages="@totalPages" Page="1" />
             </ChildContent>
         </SkeltonLoadingContainer>
     </div>
@@ -28,16 +33,32 @@
 @code{
 
     private bool isInit = false;
-    private IEnumerable<SystemUser> users = default!;
+    private long totalPages = 0;
+    private IEnumerable<SubUserResponseDto> users = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        await TaskHandlerService.RunAsync(async () =>
+        var result = await TaskHandlerService.RunAsync<EGResponse<PaginatedResult<SubUserResponseDto>>>(async () =>
         {
-            users = DatabaseSimulator.SystemUsers;
+            //var query = new GetSubUsersByOwnershipQuery(new PaginationRequest());
+            var query = new GetSubUsersByOwnershipQuery(new QueryOptions<SystemUser>());
+
+            var response = await sender.Send(query);
+
+            var result = response.Adapt<EGResponse<PaginatedResult<SubUserResponseDto>>>();
+
+            return result;
         },
         setLoading: () => isInit = true,
         stopLoading: () => isInit = false,
         setError: GlobalExceptionService.Handle);
+
+        if (result is not null && result.Success)
+        {
+            users = result.Data.Data;
+            var count = result.Data.Count;
+            var pageSize = result.Data.PageSize;
+            totalPages = (long)Math.Ceiling(count / (double)pageSize);
+        }        
     }
 }

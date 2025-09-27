@@ -7,6 +7,7 @@
 @inject ModalPopupService ModalPopupService
 @inject LoadingService LoadingService
 @inject GlobalExceptionService GlobalExceptionService
+@inject AuthenticationStateProvider AuthStateProvider
 
 <ErrorBoundary @ref="currentErrorBoundary">
     <ErrorContent Context="error">
@@ -104,6 +105,21 @@
         });
     }
 
+    private void OnAuthenticationStateChanged(Task<AuthenticationState> task)
+    {
+        InvokeAsync(async () =>
+        {
+            var authState = await task;
+            UpdateAuthenticationState(authState);
+            StateHasChanged();
+        });
+    }
+
+    private void UpdateAuthenticationState(AuthenticationState authState)
+    {
+        IsAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         ModalPopupService.OnStateChanged += OnBlurChangedHandler;
@@ -112,12 +128,15 @@
 
         GlobalExceptionService.OnException += OnExceptionHandler;
 
+        AuthStateProvider.AuthenticationStateChanged += OnAuthenticationStateChanged;
+
         // Set direction based on culture
         var culture = CultureInfo.CurrentUICulture.Name;
         dir = culture.StartsWith("ar") ? "rtl" : "ltr";
 
         // Check authentication state
         var authState = await AuthenticationStateTask;
-        IsAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+
+        UpdateAuthenticationState(authState);
     }
 }

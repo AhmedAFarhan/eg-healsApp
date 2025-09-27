@@ -23,6 +23,8 @@
 }
 
 .modal__msg {
+    padding: 0rem;
+    margin: 0rem;
     margin-top: 0.75rem;
     font-size: 1.1rem;
     font-weight: 600;
@@ -36,4 +38,8 @@
 
 .modal__msg--success {
     color: #18BA2A;
+}
+
+ul.modal__msg { 
+    list-style-type: none;
 }

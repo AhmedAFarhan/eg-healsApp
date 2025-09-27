@@ -1,6 +1,6 @@
 ﻿namespace EGHeals.Domain.Models
 {
-    public class UserRole : SystemAggregate<UserRoleId>
+    public class UserRole : Entity<UserRoleId>
     {
         private readonly List<UserRolePermission> _userRolePermissions = new();
         public IReadOnlyList<UserRolePermission> UserRolePermissions => _userRolePermissions.AsReadOnly();
@@ -14,13 +14,16 @@
 
         public SystemUserId SystemUserId { get; private set; } = default!;
         public RoleId RoleId { get; private set; } = default!;
+
         public Role Role { get; private set; } = default!; /* NAVAIGATION PROPERTY */
 
-        public void AddPermission(RolePermissionId rolePermissionId)
+        public UserRolePermission AddPermission(RolePermissionId rolePermissionId)
         {
             var userRolePermission = new UserRolePermission(Id, rolePermissionId);
 
             _userRolePermissions.Add(userRolePermission);
+
+            return userRolePermission;
         }
         public void RemovePermission(RolePermissionId rolePermissionId)
         {

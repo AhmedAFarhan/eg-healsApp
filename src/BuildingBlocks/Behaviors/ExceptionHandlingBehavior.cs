@@ -1,8 +1,9 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
+using FluentValidation;
 using MediatR;
 using Microsoft.Data.SqlClient;
-using System.ComponentModel.DataAnnotations;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BuildingBlocks.Behaviors
 {
@@ -16,28 +17,34 @@ namespace BuildingBlocks.Behaviors
             }
             catch (Exception exception)
             {
-                (string Title, int StatusCode, string Detail) details = exception switch
+                (string Title, int StatusCode, List<string> Errors) details = exception switch
                 {
-                    NotFoundException => (exception.GetType().Name, 404, exception.Message),
-                    BadRequestException => (exception.GetType().Name, 400, exception.Message),
-                    InternalServerErrorException => (exception.GetType().Name, 500, exception.Message),
-                    ValidationException => (exception.GetType().Name, 400, exception.Message),
+                    NotFoundException => (exception.GetType().Name, 404, new List<string> { exception.Message }),
+                    BadRequestException => (exception.GetType().Name, 400, new List<string> { exception.Message }),
+                    InternalServerErrorException => (exception.GetType().Name, 500, new List<string> { exception.Message }),
+                    ValidationException => HandleValidationException((ValidationException)exception),
                     SqlException => HandleSqlException((SqlException)exception),
-                    _ => (exception.GetType().Name, 500, exception.Message),
+                    _ => (exception.GetType().Name, 500, new List<string> { exception.Message }),
                 };
 
-                var appException = new AppException(details.Title, details.StatusCode, details.Detail);
+                var appException = new AppException(details.Title, details.StatusCode, details.Errors);
 
                 throw appException;
             }
         }
-        private (string Title, int StatusCode, string Detail) HandleSqlException(SqlException sqlException)
+        private (string Title, int StatusCode, List<string> Errors) HandleValidationException(ValidationException validationException)
+        {
+            var errors = validationException.Errors.Select(error => $"{error.Severity}").ToList();
+
+            return ("Validation Error", 400, errors);
+        }
+        private (string Title, int StatusCode, List<string> Errors) HandleSqlException(SqlException sqlException)
         {
             return sqlException.Number switch
             {
-                2601 or 2627 => ("Unique Constraint Violation", 409, "A record with the same value already exists."), // Unique constraint
-                547 => ("Foreign Key Violation",409, "A related record is preventing this operation."), // Foreign key violation
-                _ => ("Database Error", 500, $"A database error occurred")
+                2601 or 2627 => ("Unique Constraint Violation", 409, new List<string> { "A record with the same value already exists." }), // Unique constraint
+                547 => ("Foreign Key Violation",409, new List<string> { "A related record is preventing this operation." }), // Foreign key violation
+                _ => ("Database Error", 500, new List<string> { "A database error occurred." })
             };
         }
     }

@@ -1,23 +1,29 @@
 @using EGHeals.Components.Components.Users.Skeletons
+@using EGHeals.Models.Dtos.Users
 <GridUI Columns="4">
-    @if (IsLoading)
+    @if (Users is null)
     {
         @for (int i = 0; i < 6; i++)
         {
             <UserListItemSkeletonComponent />
-        }        
+        }
+    }
+    else if (!Users.Any())
+    {
+        <div>No Items Found!</div>
     }
     else
     {
-        @for (int i = 0; i < 6; i++)
+        @foreach (var user in Users.ToList())
         {
-            <UserListItemComponent />
+            <UserListItemComponent User="user" />
         }
-    }    
+    } 
 </GridUI>
 
 @code{
 
     [Parameter] public bool IsLoading { get; set; }
 
+    [Parameter] public IEnumerable<SubUserResponseDto> Users { get; set; } = default!;
 }

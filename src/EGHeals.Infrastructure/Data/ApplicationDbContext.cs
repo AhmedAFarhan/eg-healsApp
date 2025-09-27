@@ -4,6 +4,8 @@ namespace EGHeals.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        public bool IsSeeding { get; set; } = false;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<SystemUser> SystemUsers => Set<SystemUser>();

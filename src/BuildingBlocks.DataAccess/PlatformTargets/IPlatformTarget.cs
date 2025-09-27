@@ -1,4 +1,4 @@
-﻿namespace EGHeals.Components.PlatformTargets
+﻿namespace BuildingBlocks.DataAccess.PlatformTargets
 {
     public interface IPlatformTarget
     {

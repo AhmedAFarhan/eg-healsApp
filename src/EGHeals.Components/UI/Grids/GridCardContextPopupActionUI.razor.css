@@ -1,0 +1,26 @@
+﻿.action{
+    font-size : 1.2rem;
+}
+
+.action__btn{
+    border : none;
+    outline : none;
+    background-color : transparent;
+    width : 100%;
+    display : flex;
+    justify-content : start;
+    align-items : center;
+    padding : 0rem 1rem;
+}
+
+.action__icon{
+    margin-inline-end : 0.5rem;
+}
+
+.action__icon{
+    font-size : 1.4rem;
+}
+
+.action__btn:hover {
+    color: var(--color-primary-dark);
+}

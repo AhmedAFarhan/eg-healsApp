@@ -7,7 +7,7 @@ namespace BuildingBlocks.Domain.Abstractions.Interfaces
     {
         Guid CreatedBy { get; set; }
         Guid? LastModifiedBy { get; set; }
-        OwnerId OwnerId { get; set; }
-        SystemUserId SystemUserId { get; set; }
+        Guid? DeletedBy { get; set; }
+        SystemUserId OwnershipId { get; set; }
     }
 }

@@ -1,8 +1,10 @@
-﻿.user{
-    display : flex;
-    flex-direction : column;
-    justify-content : center;
-    align-items : center;
+﻿.user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0rem 2rem;
+    margin-bottom : 1rem;
 }
 
 .user__icon {
@@ -23,16 +25,31 @@
     color: var(--color-primary-dark);
     font-weight: 600;
     margin-bottom : 0.7rem;
+    
 }
 
-.user__roles{
-    font-size : 1.1rem;
+.user__roles-container{
+    display : flex;
+}
+
+.user__role-title{
+    margin-inline-end : 0.25rem;
+}
+
+.user__roles {
+    margin: 0rem;
+    padding: 0rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    list-style-type: none;
+    gap : 0.5rem;
 }
 
 .user__role {
-    background-color: var(--color-light-gray);
     padding: 0.25rem 1rem;
     border-radius: 0.25rem;
+    font-weight: 600;   
+    background-color: var(--color-light-gray);
     color: var(--color-very-dark-gray);
-    font-weight : 600;
+   
 }

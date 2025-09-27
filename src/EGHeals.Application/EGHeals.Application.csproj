@@ -16,8 +16,4 @@
     <ProjectReference Include="..\EGHeals.Domain\EGHeals.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\Users\" />
-  </ItemGroup>
-
 </Project>

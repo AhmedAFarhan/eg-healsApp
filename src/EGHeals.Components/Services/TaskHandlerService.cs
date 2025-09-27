@@ -30,27 +30,35 @@ namespace EGHeals.Components.Services
             }
         }
 
-        //public async Task<T?> RunAsync<T>(Func<Task<T>> taskFunc, Action<bool>? setLoading = null, Func<Exception, Task>? onError = null)
-        //{
-        //    try
-        //    {
-        //        setLoading?.Invoke(true);
-        //        ErrorMessage = null;
+        public async Task<T?> RunAsync<T>(Func<Task<T>> taskFunc, Action? setLoading = null, Action? stopLoading = null, Action<AppException>? setError = null, Action<string>? setSuccess = null, string? SuccessMsg = null)
+        {
+            try
+            {
+                setError?.Invoke(null);
 
-        //        return await taskFunc();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ErrorMessage = ex.Message;
-        //        if (onError is not null)
-        //            await onError(ex);
-        //        return default;
-        //    }
-        //    finally
-        //    {
-        //        setLoading?.Invoke(false);
-        //    }
-        //}
+                setSuccess?.Invoke(string.Empty);
+
+                setLoading?.Invoke();
+
+                await Task.Delay(2000);
+
+                var result = await taskFunc();
+
+                setSuccess?.Invoke(SuccessMsg);
+
+                return result;
+            }
+            catch (AppException ex)
+            {
+                setError?.Invoke(ex);
+
+                return default;
+            }
+            finally
+            {
+                stopLoading?.Invoke();               
+            }
+        }
     }
 
 }

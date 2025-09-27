@@ -1,0 +1,10 @@
+@using EGHeals.Components.Pages.Users
+
+@page "/user-roles/{id:guid}"
+
+<UserRolesPage UserId="@Id"/>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+}
+

@@ -30,6 +30,9 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -55,6 +58,9 @@ namespace EGHeals.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -85,11 +91,17 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AdminId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasMaxLength(150)
@@ -101,9 +113,15 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Mobile")
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
+
+                    b.Property<Guid>("OwnershipId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -122,8 +140,6 @@ namespace EGHeals.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdminId");
-
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
@@ -131,6 +147,8 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     b.HasIndex("Mobile")
                         .IsUnique()
                         .HasFilter("[Mobile] IS NOT NULL");
+
+                    b.HasIndex("OwnershipId");
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -146,11 +164,26 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OwnershipId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
@@ -159,6 +192,8 @@ namespace EGHeals.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnershipId");
 
                     b.HasIndex("RoleId");
 
@@ -176,11 +211,26 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OwnershipId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RolePermissionId")
                         .HasColumnType("uniqueidentifier");
@@ -189,6 +239,8 @@ namespace EGHeals.Infrastructure.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnershipId");
 
                     b.HasIndex("RolePermissionId");
 
@@ -210,12 +262,19 @@ namespace EGHeals.Infrastructure.Data.Migrations
                 {
                     b.HasOne("EGHeals.Domain.Models.SystemUser", null)
                         .WithMany()
-                        .HasForeignKey("AdminId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("OwnershipId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EGHeals.Domain.Models.UserRole", b =>
                 {
+                    b.HasOne("EGHeals.Domain.Models.SystemUser", null)
+                        .WithMany()
+                        .HasForeignKey("OwnershipId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("EGHeals.Domain.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -233,6 +292,12 @@ namespace EGHeals.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("EGHeals.Domain.Models.UserRolePermission", b =>
                 {
+                    b.HasOne("EGHeals.Domain.Models.SystemUser", null)
+                        .WithMany()
+                        .HasForeignKey("OwnershipId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("EGHeals.Domain.Models.RolePermission", "RolePermission")
                         .WithMany()
                         .HasForeignKey("RolePermissionId")

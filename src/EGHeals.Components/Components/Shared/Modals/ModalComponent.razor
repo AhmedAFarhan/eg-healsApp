@@ -19,9 +19,14 @@
                 @content
             </CascadingValue>
         </div>
-        @if (!string.IsNullOrEmpty(errMsg))
+        @if (errors is not null)
         {
-            <div class="modal__msg modal__msg--err">@errMsg</div>
+            <ul class="modal__msg">
+                @foreach(var error in errors)
+                {
+                    <li class="modal__msg--err">@error</li>
+                }
+            </ul>
         }
         @if (!string.IsNullOrEmpty(successMsg))
         {
@@ -40,7 +45,7 @@
     private bool isLoading;
     private string? title;
     private string? desc;
-    private string errMsg = string.Empty;
+    private List<string>? errors = default!;
     private string successMsg = string.Empty;
     private RenderFragment? content;
     private ModalContext context = new();
@@ -51,7 +56,16 @@
         {
             StartLoading = () => { isLoading = true; StateHasChanged(); },
             StopLoading = () => { isLoading = false; StateHasChanged(); },
-            SetError = (ex) => { errMsg = ex is null ? string.Empty :  ex.Message; StateHasChanged(); },
+            SetError = (ex) => 
+            { 
+                errors = ex switch
+                {
+                    null => null,
+                    { Errors: null } => new List<string> { ex.Message },
+                    _ => ex.Errors
+                };
+                StateHasChanged(); 
+            },
             SetSuccess = (msg) => { successMsg = msg; StateHasChanged(); },
             Close = ModalPopupService.Close
         };
@@ -77,7 +91,7 @@
         isLoading = false;
         title = null;
         desc = null;
-        errMsg = string.Empty;
+        errors = null;
         successMsg = string.Empty;
         content = null;
         StateHasChanged();

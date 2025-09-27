@@ -7,3 +7,5 @@ global using EGHeals.Domain.Models;
 global using BuildingBlocks.Exceptions;
 global using BuildingBlocks.Pagination;
 global using BuildingBlocks.Responses;
+global using BuildingBlocks.Domain.ValueObjects;
+global using BuildingBlocks.DataAccessAbstraction.Models;

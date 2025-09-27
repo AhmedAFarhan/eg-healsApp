@@ -1,10 +1,12 @@
 ﻿@using EGHeals.Application.Dtos.Users
 @using EGHeals.Application.Features.Users.Commands.Login
 @using EGHeals.Components.Models.ModalPopups
+@using EGHeals.Components.Security
 @using EGHeals.Models.Dtos.Users
 
 @inject TaskHandlerService TaskHandlerService
 @inject ISender sender
+@inject AuthenticationStateProvider AuthStateProvider
 
 <EditForm Model="User" OnValidSubmit="OnValidSubmitHandler">
    <DataAnnotationsValidator/>
@@ -23,17 +25,27 @@
 
     private async Task OnValidSubmitHandler()
     {
-        await TaskHandlerService.RunAsync(async () =>
+        var result = await TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
         {
             var command = new LoginCommand(new LoginUserDto(User.Username, User.Password));
 
-            var result = await sender.Send(command);
+            var response = await sender.Send(command);
+
+            var result = response.Adapt<EGResponse<UserResponseDto>>();
+
+            return result;
         }, 
         setLoading: Modal.StartLoading,
         stopLoading: Modal.StopLoading,
-        setError : Modal.SetError,
-        setSuccess: Modal.SetSuccess,
-        SuccessMsg: "Hello");
-    }
+        setError : Modal.SetError);
 
+        //user authorization
+        if (result is not null && result.Success)
+        {
+            // Notify Blazor
+            (AuthStateProvider as CustomAuthStateProvider)?.NotifyUserAuthentication(result.Data);
+
+            Modal.Close();
+        }
+    }
 }

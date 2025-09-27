@@ -2,8 +2,9 @@
 
 namespace EGHeals.Application.Features.Users.Commands.Login
 {
-    public record LoginCommand(LoginUserDto UserLogin) : ICommand<LoginResult>;
-    public record LoginResult(string token);
+    public record LoginCommand(LoginUserDto UserLogin) : ICommand<EGResponse<UserDto>>;
+    //public record LoginResult(EGResponse<string> Response);
+    //public record LoginResult(string token);
 
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {

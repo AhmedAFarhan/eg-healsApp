@@ -7,6 +7,8 @@
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasConversion(id => id.Value, dbId => SystemUserId.Of(dbId));
 
+            builder.Property(x => x.OwnershipId).HasConversion(id => id.Value, dbId => SystemUserId.Of(dbId));
+
             builder.HasIndex(x => x.Username).IsUnique();
             builder.Property(x => x.Username).HasMaxLength(150).IsRequired();
 
@@ -18,13 +20,14 @@
 
             builder.Property(x => x.UserType).HasDefaultValue(UserType.ADMIN).HasConversion(enums => enums.ToString(), dbEnums => (UserType)Enum.Parse(typeof(UserType), dbEnums));
 
-            builder.Property(x => x.AdminId).HasConversion(id => id == null ? (Guid?)null : id.Value, dbId => dbId.HasValue ? SystemUserId.Of(dbId.Value) : null);
+
+            //builder.Property(x => x.OwnedBy).HasConversion(id => id == null ? (Guid?)null : id.Value, dbId => dbId.HasValue ? SystemUserId.Of(dbId.Value) : null);
 
             /*************************** Relationships ****************************/
 
             builder.HasMany(o => o.UserRoles).WithOne().HasForeignKey(tb => tb.SystemUserId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne<SystemUser>().WithMany().HasForeignKey(x => x.AdminId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne<SystemUser>().WithMany().HasForeignKey(x => x.OwnershipId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

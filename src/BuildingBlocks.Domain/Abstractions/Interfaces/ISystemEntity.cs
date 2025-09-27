@@ -8,6 +8,7 @@
     {
         DateTime CreatedAt { get; set; }
         DateTime? LastModifiedAt { get; set; }
+        DateTime? DeletedAt { get; set; }
         bool IsDeleted { get; set; }
     }
 }

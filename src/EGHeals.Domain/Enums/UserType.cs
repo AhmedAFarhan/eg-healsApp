@@ -2,7 +2,8 @@
 {
     public enum UserType
     {
-        ADMIN=0,
-        SUBUSER=1
+        SUPER_ADMIN = 0,
+        ADMIN = 1,
+        SUBUSER = 2,
     }
 }

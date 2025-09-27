@@ -1,4 +1,4 @@
-﻿using EGHeals.Components.PlatformTargets;
+﻿using BuildingBlocks.DataAccess.PlatformTargets;
 
 namespace EGHeals.Maui.PlatformTargets
 {

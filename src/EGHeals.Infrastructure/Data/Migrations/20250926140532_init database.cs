@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EGHeals.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initdatabase : Migration
+    public partial class initdatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,6 +19,7 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -36,17 +37,21 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     Mobile = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserType = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "ADMIN"),
-                    AdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OwnershipId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SystemUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SystemUsers_SystemUsers_AdminId",
-                        column: x => x.AdminId,
+                        name: "FK_SystemUsers_SystemUsers_OwnershipId",
+                        column: x => x.OwnershipId,
                         principalTable: "SystemUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -61,6 +66,7 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     RolePermissionType = table.Column<string>(type: "nvarchar(450)", nullable: false, defaultValue: "READ"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -82,7 +88,12 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     SystemUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OwnershipId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -94,6 +105,12 @@ namespace EGHeals.Infrastructure.Data.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_SystemUsers_OwnershipId",
+                        column: x => x.OwnershipId,
+                        principalTable: "SystemUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserRoles_SystemUsers_SystemUserId",
                         column: x => x.SystemUserId,
@@ -110,7 +127,12 @@ namespace EGHeals.Infrastructure.Data.Migrations
                     UserRoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RolePermissionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OwnershipId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -122,6 +144,12 @@ namespace EGHeals.Infrastructure.Data.Migrations
                         principalTable: "RolePermissions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRolePermissions_SystemUsers_OwnershipId",
+                        column: x => x.OwnershipId,
+                        principalTable: "SystemUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserRolePermissions_UserRoles_UserRoleId",
                         column: x => x.UserRoleId,
@@ -143,11 +171,6 @@ namespace EGHeals.Infrastructure.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SystemUsers_AdminId",
-                table: "SystemUsers",
-                column: "AdminId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SystemUsers_Email",
                 table: "SystemUsers",
                 column: "Email",
@@ -162,10 +185,20 @@ namespace EGHeals.Infrastructure.Data.Migrations
                 filter: "[Mobile] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SystemUsers_OwnershipId",
+                table: "SystemUsers",
+                column: "OwnershipId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SystemUsers_Username",
                 table: "SystemUsers",
                 column: "Username",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRolePermissions_OwnershipId",
+                table: "UserRolePermissions",
+                column: "OwnershipId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRolePermissions_RolePermissionId",
@@ -176,6 +209,11 @@ namespace EGHeals.Infrastructure.Data.Migrations
                 name: "IX_UserRolePermissions_UserRoleId",
                 table: "UserRolePermissions",
                 column: "UserRoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_OwnershipId",
+                table: "UserRoles",
+                column: "OwnershipId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",

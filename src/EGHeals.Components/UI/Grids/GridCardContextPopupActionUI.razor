@@ -1,0 +1,16 @@
+
+<li class="action">
+    <button class="action__btn" @onclick="@OnClick">
+        <span class="action__icon"><i class="@Icon"></i></span>
+        <span class="action__text">@Text</span>
+    </button>
+</li>
+
+@code{
+
+    [Parameter] public string Text { get; set; } = default!;
+
+    [Parameter] public string Icon { get; set; } = default!;
+
+    [Parameter] public EventCallback OnClick { get; set; } = default!;
+}

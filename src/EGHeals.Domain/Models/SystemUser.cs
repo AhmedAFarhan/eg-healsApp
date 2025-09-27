@@ -1,6 +1,6 @@
 ﻿namespace EGHeals.Domain.Models
 {
-    public class SystemUser : SystemAggregate<SystemUserId>
+    public class SystemUser : Aggregate<SystemUserId>
     {
         private readonly List<UserRole> _userRoles = new();
         public IReadOnlyList<UserRole> UserRoles => _userRoles.AsReadOnly();
@@ -10,22 +10,20 @@
         public string? Mobile { get; private set; } = default!;
         public string PasswordHash { get; private set; } = default!;
         public UserType UserType { get; set; } = UserType.ADMIN;
-        public SystemUserId? AdminId { get; set; } = default!;
 
-        public static SystemUser Create(string username, string? email, string? mobile, string passwordHash, UserType userType, SystemUserId? adminId)
+        public static SystemUser Create(SystemUserId id, string username, string? email, string? mobile, string passwordHash, UserType userType)
         {
             //Domain model validation
             Validation(username, email, mobile, passwordHash);           
 
             var user = new SystemUser
             {
-                Id = SystemUserId.Of(Guid.NewGuid()),
+                Id = id,
                 Username = username,
                 Email = email,
                 Mobile = mobile,
                 PasswordHash = passwordHash,
                 UserType = userType,
-                AdminId = adminId
             };
 
             return user;

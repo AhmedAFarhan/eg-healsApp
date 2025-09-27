@@ -1,23 +1,49 @@
 <CardUI Class="@CardClass">
     <div class="card-content @Class">
-        <button class="card-content__action"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+        @if (PopupActions is not null)
+        {
+            <div class="card-content__action-content">
+                <button class="card-content__action" @onclick="@OnTogglePopupHandler"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                @if (showPopup)
+                {
+                    <ContextPopupUI Class="card-content__context-popup" OnCollapse="OnTogglePopupHandler">
+                        <ul>
+                            @PopupActions
+                        </ul>
+                    </ContextPopupUI>
+                }
+            </div>
+        }
         @ChildContent
-        <div class="card-content__actions">
-            <button class="card-content__edit" @onclick="OnFirstAction">
-                <span><i class="fa-regular fa-pen-to-square"></i></span>
-                <span>Edit</span>
-            </button>
-            <button class="card-content__delete" @onclick="OnSecondAction">
-                <span><i class="fa-regular fa-trash-xmark"></i></span>
-                <span>Delete</span>
-            </button>
-        </div>
+        @if (OnFirstAction.HasDelegate || OnSecondAction.HasDelegate)
+        {
+            <div class="card-content__actions">
+                @if (OnFirstAction.HasDelegate)
+                {
+                    <button class="card-content__action--1" @onclick="OnFirstAction">
+                        <span><i class="fa-regular fa-pen-to-square"></i></span>
+                        <span>Edit</span>
+                    </button>
+                }
+                @if (OnSecondAction.HasDelegate)
+                {
+                    <button class="card-content__action--2" @onclick="OnSecondAction">
+                        <span><i class="fa-regular fa-trash-xmark"></i></span>
+                        <span>Delete</span>
+                    </button>
+                }               
+            </div>
+        }         
     </div>
 </CardUI>
 
 @code{
 
+    private bool showPopup = false;
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public RenderFragment? PopupActions { get; set; }
 
     [Parameter] public string? Class { get; set; }
 
@@ -26,4 +52,6 @@
     [Parameter] public EventCallback OnFirstAction { get; set; }
 
     [Parameter] public EventCallback OnSecondAction { get; set; }
+
+    private void OnTogglePopupHandler() => showPopup ^= true;
 }

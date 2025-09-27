@@ -6,7 +6,7 @@
         public IReadOnlyList<RolePermission> Permissions => _permissions.AsReadOnly();
 
         public string Name { get; private set; } = default!;
-        public static Role Create(string name)
+        public static Role Create(RoleId id, string name)
         {
             //Domain model validation
             ArgumentException.ThrowIfNullOrWhiteSpace(name);
@@ -16,7 +16,7 @@
 
             var role = new Role
             {
-                Id = RoleId.Of(Guid.NewGuid()),
+                Id = id,
                 Name = name,
             };
 

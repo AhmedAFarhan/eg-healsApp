@@ -1,8 +1,19 @@
+@using EGHeals.Application.Features.Users.Queries.GetUserByIdByOwnership
+@using EGHeals.Models.Dtos.Users
+
+@inject GlobalExceptionService GlobalExceptionService
+@inject TaskHandlerService TaskHandlerService
+@inject NavigationManager NavigationManager
+@inject ISender sender
+
 <PageUI>
     <div class="roles-page">
-        <MainButtonUI Class="roles-page__back-btn">Back To Users</MainButtonUI>
-        <div class="roles-page__permissions-text">permission kind</div>
-        <UserRolesListComponent Class="roles-page__grid" ContainerClass="roles-page__grid-container" />
+        <MainButtonUI Class="roles-page__back-btn" OnClick="@OnShowUsersHandler">Back To Users</MainButtonUI>
+        <div class="roles-page__info">
+            <div class="roles-page__info-text">permission kind</div>
+            <div class="roles-page__info-text">permission kind</div>
+        </div>        
+        <UserRolesListComponent Roles="roles" Class="roles-page__grid" ContainerClass="roles-page__grid-container" />
         <UserPermissionsListComponent Class="roles-page__grid" ContainerClass="roles-page__grid-container" />
         <MainButtonUI Class="roles-page__save-btn">Save</MainButtonUI>
     </div>
@@ -10,4 +21,41 @@
 
 @code{
 
+    private bool isInit = false;
+    private IEnumerable<UserRoleResponseDto> roles = default!;
+    private IEnumerable<UserRolePermissionResponseDto> permissions = default!;
+
+    [Parameter] public Guid UserId { get; set; }
+
+    private void OnShowUsersHandler()
+    {
+        NavigationManager.NavigateTo("/users");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Get user roles and permissions
+        var result = await TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
+        {
+            var query = new GetSubUserRolesByOwnershipQuery(UserId);
+
+            var response = await sender.Send(query);
+
+            var result = response.Adapt<EGResponse<UserResponseDto>>();
+
+            return result;
+        },
+        setLoading: () => isInit = true,
+        stopLoading: () => isInit = false,
+        setError: GlobalExceptionService.Handle);
+
+         //Get defined system roles and permissions
+
+
+        if (result is not null && result.Success)
+        {
+            roles = result.Data.UserRoles;
+            permissions = result.Data.UserRoles.First().UserRolePermissions;
+        }
+    }
 }
