@@ -4,7 +4,7 @@
     min-width: 0;
     text-align: center;
     overflow-wrap: break-word;
-    word-break: break-word;
+    word-break: break-word;    
 }
 
 .card-content button{
@@ -20,15 +20,18 @@
     margin-top: 0.5rem;
 }
 
-.card-content__action {   
+.card-content__content{
+    margin-bottom : 1rem;
+}
+
+.card-content__action {
     padding: 0rem 0.75rem;
     font-size: 1.4rem;
     color: var(--color-very-dark-gray);
 }
 
 .card-content__actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     border-top: 0.1rem solid #E1E1E1;
     font-size: 1.1rem;
 }
@@ -45,6 +48,7 @@
 .card-content .card-content__action--1,
 .card-content .card-content__action--2 {
     padding: 0.5rem 1rem;
+    width : 100%;
 }
 
 .card-content ::deep .card-content__context-popup {

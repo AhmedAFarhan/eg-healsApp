@@ -10,10 +10,8 @@ namespace EGHeals.Application.Features.Users.Queries.GetUserByIdByOwnership
         {
             var repo = unitOfWork.GetCustomRepository<IUserRepository>();
 
-            var adminId = Guid.NewGuid();
-
             //CHECK IF USER EXIST
-            var user = await repo.GetSubUserRolesByOwnershipAsync(query.SubUserId, adminId, cancellationToken);
+            var user = await repo.GetSubUserRolesAsync(userId: query.SubUserId,cancellationToken: cancellationToken);
             if (user is null)
             {
                 throw new NotFoundException("User not found");

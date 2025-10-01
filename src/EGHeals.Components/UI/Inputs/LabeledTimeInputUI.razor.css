@@ -1,0 +1,46 @@
+﻿.time-container {
+
+}
+
+.time-picker {
+    position: relative;
+}
+
+.time-picker label {
+    color: red;
+    position: absolute;
+    top: 48%;
+    inset-inline-start: 0;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-very-dark-gray);
+    margin-inline-start : 1rem;
+}
+
+.time-picker i{
+    margin-inline-end : 0.25rem;
+}
+
+.err {
+    color: red;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0rem;
+    max-width: 30rem;
+}
+
+.time-picker input {
+    padding-inline-end: 1rem;
+    padding-inline-start: 1rem;
+    background-color: var(--color-light-gray);
+    border-color: transparent;
+    text-align: right;
+}
+
+/*input[type="time"] {
+    
+    */
+/*    background-color: #F8FAFB;*/
+/*}*/
+

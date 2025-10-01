@@ -41,7 +41,9 @@ namespace EGHeals.Infrastructure.Helpers
 
             var passwordHasher = new PasswordHasher<SystemUser>();
 
-            var adminRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Admin");
+            var superAdminRole = Role.Create(RoleId.Of(Guid.NewGuid()), "SuperAdmin");
+
+            var adminRole = Role.Create(RoleId.Of(Guid.NewGuid()), "RadiologistAdmin");
 
             var receptionistRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Receptionist");
             receptionistRole.AddPermission(RolePermissionType.READ);
@@ -58,23 +60,37 @@ namespace EGHeals.Infrastructure.Helpers
             accountantRole.AddPermission(RolePermissionType.DELETE);
             accountantRole.AddPermission(RolePermissionType.WRITE);
 
+            var superAdminUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "superadmin", null, null, passwordHasher.HashPassword(null, "010011"), UserType.SUPER_ADMIN);
+            superAdminUser.OwnershipId = superAdminUser.Id;
+            var superAdminUserRole = superAdminUser.AddUserRole(superAdminRole.Id);
+            superAdminUserRole.OwnershipId = superAdminUser.Id;
+
             var adminUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "admin", null, null, passwordHasher.HashPassword(null, "010011012"), UserType.ADMIN);
-            adminUser.AddUserRole(adminRole.Id);
+            adminUser.OwnershipId = adminUser.Id;
+            var adminUserRole = adminUser.AddUserRole(adminRole.Id);
+            adminUserRole.OwnershipId = adminUser.Id;
 
             var subUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "subuser", null, null, passwordHasher.HashPassword(null, "123"), UserType.SUBUSER);
+            subUser.OwnershipId = adminUser.Id;
             var userRole = subUser.AddUserRole(receptionistRole.Id);
+            userRole.OwnershipId = adminUser.Id;
+
             foreach (var permission in receptionistRole.Permissions)
             {
-                userRole.AddPermission(permission.Id);
+                var userRolePermission = userRole.AddPermission(permission.Id);
+                userRolePermission.OwnershipId = adminUser.Id;
             }
 
+            database.Insert<Role>(superAdminRole);
             database.Insert<Role>(adminRole);
             database.Insert<Role>(receptionistRole);
             database.Insert<Role>(radiologistRole);
             database.Insert<Role>(accountantRole);
 
+            database.Insert<SystemUser>(superAdminUser);
             database.Insert<SystemUser>(adminUser);
             database.Insert<SystemUser>(subUser);
+
         }
 
         private async Task SetupSqlDatabase()

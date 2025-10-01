@@ -1,0 +1,23 @@
+@using EGHeals.Components.UI.Inputs.Base;
+@inherits EGHeals.Components.UI.Inputs.Base.InputBase<TimeSpan>
+
+<div class="time-container">
+    <div class="time-picker">
+        <label for="@Id">
+            @if (!string.IsNullOrEmpty(FontAwesomeIcon))
+            {
+                <span><i class="@FontAwesomeIcon"></i></span>
+            }
+            <span>@Label</span>
+        </label>
+        <input type="time" id="@Id" name="lunch" value="12:00">
+    </div>
+    @if (@ShowValidationErrors)
+    {
+        <div class="err">@ValidationMessages.FirstOrDefault()</div>
+    }
+</div>
+
+@code{
+    [Parameter] public string? Class { get; set; }
+}

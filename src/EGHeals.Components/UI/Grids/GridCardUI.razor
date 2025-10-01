@@ -14,7 +14,9 @@
                 }
             </div>
         }
-        @ChildContent
+        <div class="card-content__content">
+            @ChildContent
+        </div>
         @if (OnFirstAction.HasDelegate || OnSecondAction.HasDelegate)
         {
             <div class="card-content__actions">
@@ -22,14 +24,14 @@
                 {
                     <button class="card-content__action--1" @onclick="OnFirstAction">
                         <span><i class="fa-regular fa-pen-to-square"></i></span>
-                        <span>Edit</span>
+                        <span>@FirstActionText</span>
                     </button>
                 }
                 @if (OnSecondAction.HasDelegate)
                 {
                     <button class="card-content__action--2" @onclick="OnSecondAction">
                         <span><i class="fa-regular fa-trash-xmark"></i></span>
-                        <span>Delete</span>
+                        <span>@SecondActionText</span>
                     </button>
                 }               
             </div>
@@ -52,6 +54,10 @@
     [Parameter] public EventCallback OnFirstAction { get; set; }
 
     [Parameter] public EventCallback OnSecondAction { get; set; }
+
+    [Parameter] public string FirstActionText { get; set; } = "Edit";
+
+    [Parameter] public string SecondActionText { get; set; } = "Delete";
 
     private void OnTogglePopupHandler() => showPopup ^= true;
 }

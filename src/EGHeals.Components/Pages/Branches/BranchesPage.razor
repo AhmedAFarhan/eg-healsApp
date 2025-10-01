@@ -1,0 +1,33 @@
+@using EGHeals.Components.Components.Branches.Forms
+@using EGHeals.Components.Components.Branches;
+@inject ModalPopupService ModalPopupService
+
+<PageUI>
+    <div class="branch-definition">
+        <TabsUI>
+            <TabItemUI Title="Home">
+                <p>Welcome to the Home tab!</p>
+            </TabItemUI>
+            <TabItemUI Title="Profile">
+                <p>This is your Profile info.</p>
+            </TabItemUI>
+            <TabItemUI Title="Settings">
+                <p>Change your settings here.</p>
+            </TabItemUI>
+        </TabsUI>
+@*         <WorkingDaysListComponent /> *@
+    </div>
+</PageUI>
+
+
+@code{
+
+    // private void OnAddNewBranchHandler()
+    // {
+    //     ModalPopupService.Show(builder =>
+    //     {
+    //         builder.OpenComponent<AddNewBranchFormComponent>(0);
+    //         builder.CloseComponent();
+    //     }, "Let’s set up your new branch!", "Fill in the details below to get started.");
+    // }
+}

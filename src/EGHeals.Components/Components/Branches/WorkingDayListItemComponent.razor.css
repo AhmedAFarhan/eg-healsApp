@@ -1,0 +1,42 @@
+﻿.day-card {
+}
+
+.day-card__details {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--color-very-dark-gray);
+    border-bottom: 0.1rem solid #D7D7D7;
+    padding: 0.75rem;
+}
+
+.day-card__name{    
+    font-weight : 600;
+    margin-inline-start : 0.5rem;
+}
+
+.day-card .day-card__availability {
+    margin-inline-start : auto;
+    display : grid;
+    grid-template-columns : auto auto;
+    gap : 0.5rem;
+}
+
+.day-card__hours-content {
+    padding: 0.5rem 0.75rem 1rem 0.75rem;
+}
+
+.day-card__hours {
+    margin-top : 0.5rem
+}
+
+.day-card__day-hour {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.day-card__day-hour:not(:last-child){
+    margin-bottom : 0.75rem;
+}

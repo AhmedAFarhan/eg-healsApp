@@ -69,6 +69,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Components\Pages\Branches\" />
       <Folder Include="Components\Pages\Users\" />
     </ItemGroup>
 

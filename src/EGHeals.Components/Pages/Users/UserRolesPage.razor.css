@@ -1,7 +1,7 @@
 ﻿.roles-page {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    grid-template-columns: 18rem 1fr;
+    grid-template-columns: 21rem 1fr;
     height: 100%;
     column-gap: 1.5rem;
     row-gap : 1rem;

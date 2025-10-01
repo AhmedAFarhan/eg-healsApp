@@ -1,0 +1,28 @@
+<div class="flip @Class @(IsFlipped ? "flipped" : "")">
+    <!-- Front (original icon) -->
+    <div class="flip__inner @InnerClass @(IsHorizontal ? "flip__inner--horizontal" : "flip__inner--vertical")">
+        <div class="flip__front">
+            @Front
+        </div>        
+        <!-- Back (new state, could be another icon/text) -->
+        <div class="flip__back @(IsHorizontal ? "flip__back--horizontal" : "flip__back--vertical")">
+            @Back
+        </div>
+    </div>
+    
+</div>
+
+@code{
+
+    [Parameter] public bool IsFlipped { get; set; } = false;
+
+    [Parameter] public bool IsHorizontal { get; set; } = false;
+
+    [Parameter] public RenderFragment Front { get; set; } = default!;
+
+    [Parameter] public RenderFragment Back { get; set; } = default!;
+
+    [Parameter] public string? Class { get; set; } = default!;
+
+    [Parameter] public string? InnerClass { get; set; } = default!;
+}

@@ -1,6 +1,9 @@
 <div class="input-control">
     <div class="input">
-        <label for="@Id">@Label</label>
+        @if (!string.IsNullOrEmpty(Label))
+        {
+            <label for="@Id">@Label</label>   
+        }
         <div class="input__content">
             <i class="@FontAwesomeIcon icon"></i>
             @ChildContent

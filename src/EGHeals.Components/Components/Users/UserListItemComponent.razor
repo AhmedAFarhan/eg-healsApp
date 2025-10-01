@@ -16,13 +16,15 @@
                     {
                         <li class="user__role">@role.RoleName</li>
                     }
-                </ul>                
+                </ul>
             </div>
         </div>
     </ChildContent>
 </GridCardUI>
 
 @code{
+
+    [Parameter] public bool InInit { get; set; } = false;
 
     [Parameter] public SubUserResponseDto User { get; set; } = default!;
 

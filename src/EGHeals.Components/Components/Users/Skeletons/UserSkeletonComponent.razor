@@ -1,0 +1,25 @@
+<CardUI>
+    <div class="user">
+        <SkeletonUI Class="user__icon" Height="5rem" Width="5rem"/>
+        <SkeletonUI Class="user__title" Height="1.5rem" Width="8rem" />
+        @for (int i = 0; i < DescNum; i++)
+        {
+            <SkeletonUI Class="user__desc" Height="1rem" Width="5rem" />
+
+        }        
+        <div class="user__actions">
+            @for (int i = 0; i < ActionsNum; i++)
+            {
+                <SkeletonUI Class="user__action" Height="2.0rem" />
+
+            }
+        </div>
+       
+    </div>
+</CardUI>
+
+@code{
+
+    [Parameter] public int ActionsNum { get; set; } = 2;
+    [Parameter] public int DescNum { get; set; } = 1;
+}

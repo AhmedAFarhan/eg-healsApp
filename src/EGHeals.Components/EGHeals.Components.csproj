@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Components\Radiology\" />
     <Folder Include="Pages\Index\" />
-    <Folder Include="UI\Buttons\Skeletons\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,13 +1,19 @@
-<GridUI Columns="5" ContainerClass="@ContainerClass" Class="@Class">
-    @for (int i = 0; i < 3; i++)
-    {
+@using EGHeals.Components.Components.Users.Skeletons
+@using EGHeals.Models.Dtos.Users
+<GridUI Columns="5" ContainerClass="@ContainerClass" Class="@Class" Items="Permissions">
+    <SkeletonContent>
+        <UserSkeletonComponent ActionsNum="1" DescNum="0"/>
+    </SkeletonContent>
+    <CardContent Context="permission">
         <UserPermissionListItemComponent />
-    }
+    </CardContent>
 </GridUI>
 
 @code {
 
     [Parameter] public bool IsLoading { get; set; }
+
+    [Parameter] public IEnumerable<UserRolePermissionResponseDto> Permissions { get; set; } = default!;
 
     [Parameter] public string? ContainerClass { get; set; }
 

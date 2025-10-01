@@ -200,7 +200,7 @@ namespace BuildingBlocks.DataAccess.Repository
 
         /************************************** Helper methods ***************************************/
 
-        protected async Task<IQueryable<T>> ApplyOwnership(IQueryable<T> query, bool ignoreOwnership)
+        protected async Task<IQueryable<T>> ApplyOwnership(IQueryable<T> query, bool ignoreOwnership = false)
         {
             if (!ignoreOwnership)
             {

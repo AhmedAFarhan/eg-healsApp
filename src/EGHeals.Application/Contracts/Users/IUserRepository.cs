@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.Domain.ValueObjects;
-using System.Linq.Expressions;
+﻿using BuildingBlocks.DataAccessAbstraction.Queries;
 
 namespace EGHeals.Application.Contracts.Users
 {
@@ -9,8 +8,16 @@ namespace EGHeals.Application.Contracts.Users
 
         Task<SystemUser?> GetUserCredentialsAsync(string username, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<SystemUser>> GetSubUsersByOwnershipAsync(int pageIndex = 1, int pageSize = 50, string? filterQuery = null, string? filterValue = null, bool ascending = true, Expression<Func<SystemUser, object>>? orderBy = null, CancellationToken cancellationToken = default);
+        Task<IEnumerable<SystemUser>> GetSubUsersAsync(QueryOptions<SystemUser> options,
+                                                                               bool ignoreOwnership = false,
+                                                                               CancellationToken cancellationToken = default);
 
-        Task<SystemUser?> GetSubUserRolesByOwnershipAsync(Guid userId, Guid adminId, CancellationToken cancellationToken = default);
+        Task<long> GetSubUsersCountAsync(QueryFilters<SystemUser> filters,
+                                                                 bool ignoreOwnership = false,
+                                                                 CancellationToken cancellationToken = default);
+
+        Task<SystemUser?> GetSubUserRolesAsync(Guid userId,
+                                               bool ignoreOwnership = false,
+                                               CancellationToken cancellationToken = default);
     }
 }

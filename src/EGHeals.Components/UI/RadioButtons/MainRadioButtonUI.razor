@@ -1,0 +1,17 @@
+<div class="checkbox @Class">
+    @if (!string.IsNullOrEmpty(Text))
+    {
+        <div class="checkbox-label">@Text</div>
+    }
+    <input type="checkbox" id="check"/>    
+    <GlassWrapperUI Class="button-wrapper">
+        <label for="check" class="button"></label>
+    </GlassWrapperUI>
+</div>
+
+@code{
+
+    [Parameter] public string? Text { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+}

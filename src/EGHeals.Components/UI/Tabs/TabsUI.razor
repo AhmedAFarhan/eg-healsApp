@@ -1,0 +1,46 @@
+﻿<div class="tab">
+    <ul class="tab__list">
+        @for (var i = 0; i < tabItems.Count; i++)
+        {
+            var index = i;
+
+            <li class="tab__item">
+                <button class="@(i == ActiveIndex ? "active" : "")" @onclick="() => SetActive(index)">
+                    <span><i class="@tabItems[i].Icon"></i></span>
+                    <span>@tabItems[i].Title</span>
+                </button>
+            </li>
+        }
+    </ul>
+
+    <div class="tab__content">
+        @if (tabItems.Count > 0)
+        {
+            @tabItems[ActiveIndex].ChildContent
+        }
+    </div>
+
+    <!--This is needed: render the children so TabItemUI can register with AddTab -->
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+
+    private readonly List<TabItemUI> tabItems = new();
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+
+    private int ActiveIndex { get; set; }
+
+    public void AddTab(TabItemUI tab)
+    {
+        tabItems.Add(tab);
+        StateHasChanged();
+    }
+
+    private void SetActive(int idx) => ActiveIndex = idx;
+}

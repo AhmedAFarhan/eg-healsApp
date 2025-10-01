@@ -1,0 +1,35 @@
+﻿.button{
+    border : none;
+    outline : none;
+    background-color : transparent;
+    transition : 0.2s;
+    color : white;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+
+.button-primary-transparency {
+    color: var(--color-primary-light);
+}
+
+.button-primary-transparency:hover {
+    color: var(--color-primary-dark);
+}
+
+.button-secondary-transparency {
+    color: var(--color-secondary-light);
+}
+
+.button-secondary-transparency:hover {
+    color: var(--color-secondary-dark);
+}
+
+.button-tertiary-transparency {
+    color: var(--color-tertiary-light);
+}
+
+.button-tertiary-transparency:hover {
+    color: var(--color-tertiary-dark);
+}
+

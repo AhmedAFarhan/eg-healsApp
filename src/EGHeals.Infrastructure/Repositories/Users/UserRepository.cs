@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.DataAccess.Contracts;
 using BuildingBlocks.DataAccess.Helpers;
+using BuildingBlocks.DataAccessAbstraction.Queries;
 using EGHeals.Application.Contracts.Users;
 using System.Linq;
 using System.Linq.Expressions;
@@ -41,38 +42,66 @@ namespace EGHeals.Infrastructure.Repositories.Users
                                .FirstOrDefaultAsync(u => u.Username == username && !u.IsDeleted, cancellationToken);
         }
 
-        public async Task<IEnumerable<SystemUser>> GetSubUsersByOwnershipAsync(int pageIndex = 1,
-                                                                              int pageSize = 50,
-                                                                              string? filterQuery = null,
-                                                                              string? filterValue = null,
-                                                                              bool ascending = true,
-                                                                              Expression<Func<SystemUser, object>>? orderBy = null,
-                                                                              CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<SystemUser>> GetSubUsersAsync(QueryOptions<SystemUser> options,
+                                                                    bool ignoreOwnership = false,
+                                                                    CancellationToken cancellationToken = default)
         {
-            var query = _dbSet.AsQueryable().Where(x => !x.IsDeleted);
+            //Starting query
+            var query = _dbSet.AsQueryable().Where(x => !x.IsDeleted && x.UserType == UserType.SUBUSER);
 
             //Apply Ownership
-            query = await ApplyOwnership(query, false);
+            query = await ApplyOwnership(query, ignoreOwnership);
 
             query = query.Include(x => x.UserRoles)
                             .ThenInclude(x => x.Role);
 
-            //Filtering
-            var filterExpression = DynamicFilter.BuildDynamicFilter<SystemUser>(filterValue, string.IsNullOrWhiteSpace(filterQuery) ? "all" : filterQuery);
+            // Apply filtering
+            var filterExpression = options.QueryFilters.BuildFilterExpression();
+            if (filterExpression != null)
+            {
+                query = query.Where(filterExpression);
+            }
 
-            query = filterExpression is null ? query : query.Where(filterExpression);
+            // Apply sorting
+            query = options.ApplySorting(query);
 
-            // Ordering
-            query = orderBy != null ? (ascending ? query.OrderBy(orderBy) : query.OrderByDescending(orderBy)) : query.OrderBy(x => x.CreatedAt);
+            // Apply pagination
+            query = query.Skip(options.Skip).Take(options.Take);
 
-            //Paginations
-            query = query.OrderBy(x => x.CreatedAt).Skip((pageIndex - 1) * pageSize).Take(pageSize);
 
             return await query.AsNoTracking().AsSplitQuery().ToListAsync(cancellationToken);
         }
 
-        public async Task<SystemUser?> GetSubUserRolesByOwnershipAsync(Guid userId, Guid adminId, CancellationToken cancellationToken = default)
+        public async Task<long> GetSubUsersCountAsync(QueryFilters<SystemUser> filters,
+                                                      bool ignoreOwnership = false,
+                                                      CancellationToken cancellationToken = default)
         {
+            //Starting query
+            var query = _dbSet.AsQueryable().Where(x => !x.IsDeleted && x.UserType == UserType.SUBUSER);
+
+            //Apply Ownership
+            query = await ApplyOwnership(query, ignoreOwnership);
+
+            // Apply filtering
+            var filterExpression = filters.BuildFilterExpression();
+            if (filterExpression != null)
+            {
+                query = query.Where(filterExpression);
+            }
+
+            return await query.LongCountAsync(cancellationToken);
+        }
+
+        public async Task<SystemUser?> GetSubUserRolesAsync(Guid userId,
+                                                            bool ignoreOwnership = false,
+                                                            CancellationToken cancellationToken = default)
+        {
+            //Starting query
+            var query = _dbSet.AsQueryable().Where(x => !x.IsDeleted && x.UserType == UserType.SUBUSER);
+
+            //Apply Ownership
+            query = await ApplyOwnership(query, ignoreOwnership);
+
             return await _dbSet.AsQueryable().AsNoTracking()
                                              .AsSplitQuery().
                                              Include(x => x.UserRoles)
@@ -80,7 +109,7 @@ namespace EGHeals.Infrastructure.Repositories.Users
                                             .Include(x => x.UserRoles)
                                                 .ThenInclude(x => x.UserRolePermissions)
                                                     .ThenInclude(x => x.RolePermission)
-                                            .FirstOrDefaultAsync(x => x.Id == SystemUserId.Of(userId) /*&& x.OwnedBy == SystemUserId.Of(adminId)*/ && !x.IsDeleted);
+                                            .FirstOrDefaultAsync(x => x.Id == SystemUserId.Of(userId));
 
         }
     }

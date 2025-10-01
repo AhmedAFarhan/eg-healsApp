@@ -1,0 +1,14 @@
+@using EGHeals.Components.UI.Inputs.Base;
+@inherits EGHeals.Components.UI.Inputs.Base.InputBase<TimeSpan>
+
+<InputWrapperUI FontAwesomeIcon="@(string.IsNullOrEmpty(FontAwesomeIcon) ? "fa-solid fa-clock" : FontAwesomeIcon)" Id="@Id" Label="@Label" ShowValidationErrors="@ShowValidationErrors" ValidationMessages="@ValidationMessages">
+    <input id="@Id" type="time" class="@ValidationClass" placeholder="@Placeholder">
+</InputWrapperUI>
+
+@code{
+
+    private void HandleInput(ChangeEventArgs e)
+    {
+        
+    }
+}

@@ -1,31 +1,18 @@
-<button class="btn @GetVariantClass() @Class @(IsDisabled ? "disabled" : string.Empty)" type="@(IsSubmit ? "submit" : "button")" @onclick="@OnClick">@ChildContent</button>
+@using EGHeals.Components.UI.Buttons.Base;
+@inherits ButtonBase;
+
+<button class="button @GetVariantClass() @Class @(IsDisabled ? "disabled" : string.Empty)" type="@(IsSubmit ? "submit" : "button")" @onclick="@OnClick">
+    @if (!string.IsNullOrWhiteSpace(Icon))
+    {
+        <i class="@Icon"></i>
+    }
+    @ChildContent
+</button>
 
 @code {
 
-    [Parameter]
-    public RenderFragment ChildContent { get; set; } = default!;
-
-    [Parameter]
-    public bool IsSubmit { get; set; }
-
-    [Parameter]
-    public bool IsDisabled { get; set; } = false;
-
-    [Parameter]
-    public EventCallback OnClick { get; set; }
-
-    [Parameter]
-    public string? Class { get; set; }
-
-    [Parameter]
-    public MainButtonVariant Variant { get; set; } = MainButtonVariant.PRIMARY;
-
-    private string GetVariantClass() => Variant switch
-    {
-        MainButtonVariant.PRIMARY => "btn-primary",
-        MainButtonVariant.SECONDARY => "btn-secondary",
-        MainButtonVariant.TERTIARY => "btn-tertiary",
-        _ => "btn-primary"
-    };
+    [Parameter] public RenderFragment ChildContent { get; set; } = default!;
+   
+    [Parameter] public bool IsSubmit { get; set; }
 
 }

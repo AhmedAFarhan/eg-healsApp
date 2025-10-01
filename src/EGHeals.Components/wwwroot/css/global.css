@@ -111,6 +111,7 @@ input[type="number"],
 input[type="search"],
 input[type="password"],
 input[type="date"],
+input[type="time"],
 textarea,
 .select-input {
     border: none;
@@ -133,9 +134,15 @@ input[type="number"]:focus,
 input[type="search"]:focus,
 input[type="password"]:focus,
 input[type="date"]:focus,
+input[type="time"]:focus,
 textarea:focus {
     background-color: white;
     border: 0.13rem solid var(--color-secondary-dark);
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
 }
 
 h1{
@@ -166,6 +173,41 @@ h1{
 
 }
 
+.button:disabled,
+.button.disabled {
+    background: #ccc !important; /* gray background */
+    color: #666 !important; /* dark gray text */
+    opacity: 1 !important; /* full opacity */
+    cursor: not-allowed; /* forbidden cursor */
+    transform: none !important; /* stop hover/press effects */
+    box-shadow: none !important; /* remove glow */
+}
+
+/*********************** Variant *****************************/
+
+.button-primary {
+    background-color: var(--color-primary-light) !important;
+}
+
+.button-primary:hover {
+    background-color: var(--color-primary-dark) !important;
+}
+
+.button-secondary {
+    background-color: var(--color-secondary-light) !important;
+}
+
+.button-secondary:hover {
+    background-color: var(--color-secondary-dark) !important;
+}
+
+.button-tertiary {
+    background-color: var(--color-tertiary-light) !important;
+}
+
+.button-tertiary:hover {
+    background-color: var(--color-tertiary-dark) !important;
+}
 
 /****************************** Media Query **********************************/
 

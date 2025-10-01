@@ -1,0 +1,26 @@
+@using EGHeals.Components.UI.Buttons.Base;
+@inherits ButtonBase;
+
+<button class="button @(Transparency? GetVariantTransparencyClass() : GetVariantClass()) @Class @(IsDisabled ? "disabled" : string.Empty)" style="height:@($"{Size}rem"); width:@($"{Size}rem"); border-radius:@($"{Size}rem")">
+    <i class="@Icon" style="font-size:@($"{GetFontSize()}rem")"></i>
+</button>
+@code {
+
+    [Parameter] public double Size { get; set; } = default!;
+
+    [Parameter] public bool Transparency { get; set; } = false;
+
+    private double GetFontSize()
+    {
+        // Scale font size relative to button size
+        return Transparency ? Size : Size * 0.5; // e.g., half the button size
+    }
+
+    private string GetVariantTransparencyClass() => Variant switch
+    {
+        MainButtonVariant.PRIMARY => "button-primary-transparency",
+        MainButtonVariant.SECONDARY => "button-secondary-transparency",
+        MainButtonVariant.TERTIARY => "button-tertiary-transparency",
+        _ => "button-primary-transparency"
+    };
+}

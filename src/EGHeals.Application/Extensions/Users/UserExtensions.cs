@@ -21,7 +21,7 @@ namespace EGHeals.Application.Extensions.Users
                     UserRolePermissions : role.UserRolePermissions.Select(permission => new UserRolePermissionDto
                     (
                         Id : permission.Id.Value,
-                        PermissionName : permission.RolePermission.RolePermissionType.ToString()
+                        PermissionName : permission.RolePermission is not null ? permission.RolePermission.RolePermissionType.ToString() : "Permission"
                     ))
                 ))
             );

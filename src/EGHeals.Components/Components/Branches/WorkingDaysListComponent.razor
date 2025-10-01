@@ -1,0 +1,12 @@
+<GridUI Columns="3" Items="Users">
+    <SkeletonContent>
+        <div>loading..</div>
+    </SkeletonContent>
+    <CardContent>
+        <WorkingDayListItemComponent/>
+    </CardContent>
+</GridUI>
+
+@code{
+    [Parameter] public IEnumerable<int> Users { get; set; } = new List<int>() { 1,2,3,4};
+}

@@ -1,19 +1,46 @@
+@typeparam TItem
+
 <div class="grid-container @ContainerClass">
     <div class="grid @GetColumnsClass() @Class">
-        @ChildContent
+        @if (Items is null)
+        {
+            @for (int i = 0; i < SkeletonNum; i++)
+            {
+                @SkeletonContent
+            }
+        }
+        else if (!Items.Any())
+        {
+            <div>No Items Found!</div>
+        }
+        else
+        {
+            @foreach (var item in Items.ToList())
+            {
+                @CardContent(item)
+            }
+        }
     </div>
 </div>
 
 
 @code{
 
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public bool IsLoading { get; set; }
+
+    [Parameter] public IEnumerable<TItem> Items { get; set; } = default!;
+
+    [Parameter] public RenderFragment SkeletonContent { get; set; } = default!;
+
+    [Parameter] public RenderFragment<TItem> CardContent { get; set; } = default!;
 
     [Parameter] public string? ContainerClass { get; set; }
 
     [Parameter] public string? Class { get; set; }
 
     [Parameter] public int Columns { get; set; } = 2;
+
+    [Parameter] public int SkeletonNum { get; set; } = 7;
 
     private string GetColumnsClass() => Columns switch
     {

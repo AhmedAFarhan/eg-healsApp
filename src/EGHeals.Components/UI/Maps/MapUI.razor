@@ -1,0 +1,69 @@
+@inject IJSRuntime jSRuntime
+@implements IAsyncDisposable
+
+<div class="map-wrapper" style="position:relative; height:@Height; width:@Width;">
+    <!-- Google Map -->
+    <div id="@Id" style="height:100%; width:100%;"></div>
+
+    <!-- Static center marker -->
+    <div class="map-center-marker">
+        <MedicalLocationIcon ContainerClass="svg-icon-container" PathClass="svg-icon-path" />
+    </div>
+
+    @if (IsLoading)
+    {
+        <ProgressLoadingUI/>
+    }
+</div>
+
+@code{
+    private bool IsLoading;
+    
+    private DotNetObjectReference<MapUI>? dotNetRef;
+
+    [Parameter] public string Id { get; set; } = "map";
+
+    [Parameter] public string Width { get; set; } = "35rem";
+
+    [Parameter] public string Height { get; set; } = "25rem";
+
+    [Parameter] public int Zoom { get; set; } = 15;
+
+    [Parameter] public EventCallback<(string Address, double Lat, double Lng)> OnAddressChanged { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            IsLoading = true;
+
+            dotNetRef = DotNetObjectReference.Create(this);
+
+            StateHasChanged();
+
+            await jSRuntime.InvokeVoidAsync("mapInterop.initializeWithGeolocation", Id, dotNetRef, Zoom);
+        }
+    }
+
+    [JSInvokable]
+    public Task OnMapMoveStarted()
+    {
+        IsLoading = true;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    [JSInvokable]
+    public async Task OnAddressChangedHandler(string address, double lat, double lng)
+    {
+        IsLoading = false;
+        await OnAddressChanged.InvokeAsync((address, lat, lng));
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        dotNetRef?.Dispose();
+        await jSRuntime.InvokeVoidAsync("mapInterop.dispose", Id); // cleanup JS side
+    }
+
+}

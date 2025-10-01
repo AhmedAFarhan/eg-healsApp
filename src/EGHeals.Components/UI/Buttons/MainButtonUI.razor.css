@@ -1,4 +1,4 @@
-﻿.btn {
+﻿.button {
     position: relative;
     display: inline-block;
     padding: 0.5rem 1.5rem;
@@ -13,75 +13,45 @@
     overflow: hidden;
 }
 
-    /* Hover grow + shadow */
-    .btn:hover {
-        transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 8px 20px rgba(51, 106, 233, 0.4);
-    }
-
-    /* Press effect */
-    .btn:active {
-        transform: scale(0.97);
-    }
-
-    /* FULL ripple overlay */
-    .btn::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.3);
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        pointer-events: none;
-    }
-
-    /* Trigger when clicked */
-    .btn:active::after {
-        opacity: 1;
-        transition: opacity 0s; /* show instantly */
-    }
-
-    .btn:focus,
-    .btn:focus-visible {
-        outline: none !important;
-        box-shadow: none !important;
-    }
-
-    .btn:disabled,
-    .btn.disabled {
-        background: #ccc !important; /* gray background */
-        color: #666 !important; /* dark gray text */
-        opacity: 1 !important; /* full opacity */
-        cursor: not-allowed; /* forbidden cursor */
-        transform: none !important; /* stop hover/press effects */
-        box-shadow: none !important; /* remove glow */
-    }
-
-/*********************** Variant *****************************/
-
-.btn-primary {
-    background-color: var(--color-primary-light);
+/* Hover grow + shadow */
+.button:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(51, 106, 233, 0.4);
 }
 
-.btn-primary:hover {
-    background-color: var(--color-primary-dark);
+/* Press effect */
+.button:active {
+    transform: scale(0.97);
 }
 
-.btn-secondary {
-    background-color: var(--color-secondary-light);
+/* FULL ripple overlay */
+.button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
-.btn-secondary:hover {
-    background-color: var(--color-secondary-dark);
+/* Trigger when clicked */
+.button:active::after {
+    opacity: 1;
+    transition: opacity 0s; /* show instantly */
 }
 
-.btn-tertiary {
-    background-color: var(--color-tertiary-light);
+.button:focus,
+.button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
-.btn-tertiary:hover {
-    background-color: var(--color-tertiary-dark);
+.button i {
+    margin-inline-end: 0.5rem;
+    font-size: 1.1em;
+    vertical-align: middle;
 }

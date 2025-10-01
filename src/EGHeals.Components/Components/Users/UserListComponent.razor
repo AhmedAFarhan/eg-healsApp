@@ -1,24 +1,12 @@
 @using EGHeals.Components.Components.Users.Skeletons
 @using EGHeals.Models.Dtos.Users
-<GridUI Columns="4">
-    @if (Users is null)
-    {
-        @for (int i = 0; i < 6; i++)
-        {
-            <UserListItemSkeletonComponent />
-        }
-    }
-    else if (!Users.Any())
-    {
-        <div>No Items Found!</div>
-    }
-    else
-    {
-        @foreach (var user in Users.ToList())
-        {
-            <UserListItemComponent User="user" />
-        }
-    } 
+<GridUI Columns="4" Items="Users">
+    <SkeletonContent>
+        <UserSkeletonComponent />
+    </SkeletonContent>
+    <CardContent Context="user">
+        <UserListItemComponent User="user" />
+    </CardContent>
 </GridUI>
 
 @code{

@@ -1,12 +1,33 @@
-<GridCardUI>
+<GridCardUI OnFirstAction="@OnToggleActivationHandler" OnSecondAction="OnShowPermissionsHandler" FirstActionText="Activate" SecondActionText="Permissions">
     <div class="role">
-        <GlassWrapperUI class="role__icon-wrapper">
-            <ReceptionistIcon ContainerClass="role__receptionist-svg-icon-container" PathClass="role__receptionist-svg-icon-path" />
-        </GlassWrapperUI>
+        <FlipUI InnerClass="role__flipper" IsFlipped="isFlipped">
+            <Front>
+                <GlassWrapperUI class="role__icon-wrapper role__icon-wrapper--inactive">
+                    <ReceptionistIcon ContainerClass="role__receptionist-svg-icon-container" PathClass="role__receptionist-svg-icon-path" />
+                </GlassWrapperUI>
+            </Front>
+            <Back>
+                <GlassWrapperUI class="role__icon-wrapper role__icon-wrapper--active">
+                    <ReceptionistIcon ContainerClass="role__receptionist-svg-icon-container" PathClass="role__receptionist-svg-icon-path" />
+                </GlassWrapperUI>
+            </Back>
+        </FlipUI>
         <div class="role__name">Role</div>
     </div>
 </GridCardUI>
 
 @code {
+
+    private bool isFlipped = false;
+
+    private void OnToggleActivationHandler()
+    {
+        isFlipped = !isFlipped;
+    }
+
+    private void OnShowPermissionsHandler()
+    {
+
+    }
 
 }

@@ -14,11 +14,11 @@
     margin-bottom : 1rem;
 }
 
-.user ::deep .user__username {
+.user ::deep .user__title {
     margin-bottom: 0.5rem;
 }
 
-.user ::deep .user__role {
+.user ::deep .user__desc {
     margin-bottom: 1rem;
 }
 
@@ -27,7 +27,13 @@
     margin-bottom : 1rem;
     display: flex;
     width: 100%;
-    display : grid;
+    display : flex;
+
+/*    display : grid;
     grid-template-columns : 1fr 1fr;
-    gap : 0.5rem;
+    gap : 0.5rem;*/
+}
+
+.user ::deep .user__action:not(:last-child) {
+    margin-inline-end: 0.5rem;
 }
