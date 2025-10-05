@@ -1,7 +1,7 @@
 @using EGHeals.Components.UI.Buttons.Base;
 @inherits ButtonBase;
 
-<button class="button @(Transparency? GetVariantTransparencyClass() : GetVariantClass()) @Class @(IsDisabled ? "disabled" : string.Empty)" style="height:@($"{Size}rem"); width:@($"{Size}rem"); border-radius:@($"{Size}rem")">
+<button class="button @(Transparency? GetVariantTransparencyClass() : GetVariantClass()) @Class @(IsDisabled ? "disabled" : string.Empty)" style="height:@($"{Size}rem"); width:@($"{Size}rem"); border-radius:@($"{Size}rem")" @onclick="@OnClick">
     <i class="@Icon" style="font-size:@($"{GetFontSize()}rem")"></i>
 </button>
 @code {

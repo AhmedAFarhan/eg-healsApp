@@ -70,6 +70,7 @@
 
     <ItemGroup>
       <Folder Include="Components\Pages\Branches\" />
+      <Folder Include="Components\Pages\TeamMembers\" />
       <Folder Include="Components\Pages\Users\" />
     </ItemGroup>
 

@@ -1,0 +1,52 @@
+﻿.input-container {
+    font-size: 1.3rem;
+    width: 100%;
+}
+
+.input-control {
+    border: 0.13rem solid var(--color-primary-dark);
+    border-radius: 0.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    text-wrap: nowrap;
+    align-items: center;
+    margin-top: 0.5rem;
+    transition: 0.3s;
+}
+
+.input-control.read-only {
+    border: 0.13rem solid var(--color-very-dark-gray);
+}
+
+.input-icon {
+    margin-inline-start: 0.75rem;
+    font-size: 1.4rem;
+    color: var(--color-primary-dark);
+
+}
+
+.input-icon i {
+    transition: 0.3s;
+}
+
+.input-control.read-only .input-icon {
+    color: var(--color-very-dark-gray);
+}
+
+.err {
+    color: red;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0rem;
+    max-width: 30rem;
+}
+
+.input-control:focus-within {
+    border-color: var(--color-secondary-light);
+}
+
+.input-control:focus-within label,
+.input-control:focus-within i {
+    color: var(--color-secondary-light);
+}

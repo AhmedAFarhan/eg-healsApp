@@ -1,0 +1,11 @@
+@using EGHeals.Components.UI.Inputs.Base;
+@using EGHeals.Components.UI.Inputs.Wrappers
+@inherits EGHeals.Components.UI.Inputs.Base.InputBase<string>
+
+<LabeledInputWrapperUI FontAwesomeIcon="@FontAwesomeIcon" Id="@Id" Label="@Label" ShowValidationErrors="@ShowValidationErrors" ValidationMessages="@ValidationMessages" IsReadOnly="@IsReadOnly">
+    <input type="text" id="@Id" readonly="@IsReadOnly">
+</LabeledInputWrapperUI>
+
+@code{
+
+}

@@ -1,0 +1,12 @@
+@using EGHeals.Components.Components.TeamMembers.Forms
+@using EGHeals.Components.Components.TeamMembers
+<PageUI>
+    <div class="member-definition">
+        <div class="member-definition__info">
+            <FormTitleUI Title="Title" Description="Description" />
+            <TeamMemberFormComponent />
+        </div>
+        <TeamMemberAllowancesListComponent Class="member-definition__grid" ContainerClass="member-definition__grid-container" />
+        <MainButtonUI Icon="fa-solid fa-cloud-arrow-up" Class="save-btn">Save</MainButtonUI>        
+    </div>
+</PageUI>

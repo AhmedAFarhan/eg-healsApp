@@ -1,0 +1,15 @@
+﻿.form-content {
+/*    display: flex;
+    justify-content: center;
+    align-items: center;*/
+    height: 100%;
+}
+
+.form-content ::deep .edit-form {
+    padding : 0.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

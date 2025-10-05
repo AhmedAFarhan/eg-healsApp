@@ -21,7 +21,6 @@
                     </TableRowUI>
                 }
             }
-            @*else if (Items is null || !Items.Any()) *@
             else if (!HasData)
             {
                 <TableRowUI class="row-empty-state">
@@ -36,7 +35,7 @@
             }
         </tbody>
     </table>
-    @if (IsLoading && !IsInitialLoading)
+    @if (IsRefreshing && !IsInitialLoading)
     {
         <BarLoading IsCentralized="true" />
     }
@@ -56,7 +55,7 @@
     /// <summary>
     /// True when refreshing/changing page but table is already rendered.
     /// </summary>
-    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public bool IsRefreshing { get; set; }
 
     /// <summary>
     /// Number of skeleton rows to show on init.

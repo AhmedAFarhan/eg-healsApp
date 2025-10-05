@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Examinations\Forms\" />
     <Folder Include="Components\Radiology\" />
     <Folder Include="Pages\Index\" />
   </ItemGroup>

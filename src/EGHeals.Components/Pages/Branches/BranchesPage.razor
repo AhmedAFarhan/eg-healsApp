@@ -5,17 +5,14 @@
 <PageUI>
     <div class="branch-definition">
         <TabsUI>
-            <TabItemUI Title="Home">
-                <p>Welcome to the Home tab!</p>
+            <TabItemUI Title="Information" Icon="fa-solid fa-memo-circle-info">             
+                <BracnhSetupComponent />
             </TabItemUI>
-            <TabItemUI Title="Profile">
-                <p>This is your Profile info.</p>
-            </TabItemUI>
-            <TabItemUI Title="Settings">
-                <p>Change your settings here.</p>
+            <TabItemUI Title="Working Days" Icon="fa-solid fa-calendar-clock">
+                <WorkingDaysListComponent />
             </TabItemUI>
         </TabsUI>
-@*         <WorkingDaysListComponent /> *@
+        <MainButtonUI Icon="fa-solid fa-cloud-arrow-up" Class="save-btn">Save</MainButtonUI>
     </div>
 </PageUI>
 

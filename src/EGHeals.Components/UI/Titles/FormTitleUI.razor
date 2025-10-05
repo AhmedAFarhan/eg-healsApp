@@ -1,0 +1,17 @@
+<div class="header">
+    @if (!string.IsNullOrEmpty(Title))
+    {
+        <p class="header__title">@Title</p>
+    }
+    @if (!string.IsNullOrEmpty(Description))
+    {
+        <p class="header__desc">@Description</p>
+    }
+</div>
+
+@code{
+
+    [Parameter] public string? Title { get; set; }
+
+    [Parameter] public string? Description { get; set; }
+}

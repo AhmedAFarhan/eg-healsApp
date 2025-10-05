@@ -1,0 +1,20 @@
+@using EGHeals.Components.UI.Maps
+@using EGHeals.Models.Dtos.Users
+
+<ScrollContainerUI IsVisible="false">
+    <div class="form-content">
+        <EditForm Model="User" class="edit-form">
+            <FileUploadComponent />
+            <TextInputUI Label="Branch name*" FontAwesomeIcon="fa-solid fa-code-branch" />
+            <TextInputUI Label="Mobile*" FontAwesomeIcon="fa-solid fa-mobile-screen-button" />
+            <TextInputUI Label="Phone" FontAwesomeIcon="fa-solid fa-phone" />
+            <TextInputUI Label="How to reach" FontAwesomeIcon="fa-solid fa-map-location-dot" />
+        </EditForm>
+    </div>   
+</ScrollContainerUI>
+
+
+@code{
+
+    private LoginUserRequestDto User = new();
+}

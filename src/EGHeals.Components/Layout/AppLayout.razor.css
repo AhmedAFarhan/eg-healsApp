@@ -11,13 +11,12 @@
 
 .layout.authorized {
     grid-template-columns: 16rem auto 0rem;
-    grid-template-rows: 5.5rem auto;
+    grid-template-rows: 5.5rem 1fr;
 }
 
 main {
     padding: 0rem;
     background-color: var(--color-very-light-gray);
-    overflow: hidden;
     position: relative;
 }
 

@@ -1,0 +1,41 @@
+﻿.allowance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.allowance ::deep .allowance__flipper {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 0.5rem;
+}
+
+.allowance ::deep .allowance__icon-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.allowance ::deep .allowance__icon-wrapper--inactive {
+    background-color: var(--color-dark-gray);
+}
+
+.allowance ::deep .allowance__icon-wrapper--active {
+    background-color: var(--color-primary-light);
+}
+
+.allowance ::deep .allowance__svg-icon-path {
+    fill: white;
+}
+
+.allowance__name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-very-dark-gray);
+    margin-bottom : 0.5rem;
+}

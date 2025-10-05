@@ -1,0 +1,12 @@
+<div class="scrollable-container @(!IsVisible ? "hide-scrollbar" : string.Empty) @Class">
+    @ChildContent
+</div>
+
+@code{
+
+    [Parameter] public RenderFragment ChildContent { get; set; } = default!;
+
+    [Parameter] public string? Class { get; set; }
+
+    [Parameter] public bool IsVisible { get; set; } = true;
+}

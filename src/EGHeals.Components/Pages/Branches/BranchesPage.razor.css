@@ -1,3 +1,10 @@
-﻿.page{
-    padding : 5rem;
+﻿.branch-definition {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.branch-definition ::deep .save-btn {
+    margin-top: 1rem;
+    align-self: end;
 }

@@ -1,0 +1,27 @@
+@using EGHeals.Components.UI.Maps
+@using EGHeals.Components.Components.Branches.Forms
+
+<div class="branch-info">
+    <BranchFormComponent />
+    <div class="branch-info__map">
+        <div class="branch-info__address">
+            <span><i class="fa-solid fa-location-dot"></i></span>
+            <span>@address</span>
+        </div>
+        <MapUI Width="100%" Height="100%" OnAddressChanged="OnAddressChangedHandler" />
+    </div>
+</div>
+
+
+@code{
+    private string? ErrorMessage;
+    private string address = string.Empty;
+
+    private void OnAddressChangedHandler((string Address, double Lat, double Lng) data)
+    {
+        address = data.Address;
+        // latitude = data.Lat;
+        // longitude = data.Lng;
+    }
+
+}

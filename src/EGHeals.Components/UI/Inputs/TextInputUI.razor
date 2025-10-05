@@ -1,8 +1,9 @@
 @using EGHeals.Components.UI.Inputs.Base;
+@using EGHeals.Components.UI.Inputs.Wrappers
 @inherits EGHeals.Components.UI.Inputs.Base.InputBase<string>
 
-<InputWrapperUI FontAwesomeIcon="@FontAwesomeIcon" Id="@Id" Label="@Label" ShowValidationErrors="@ShowValidationErrors" ValidationMessages="@ValidationMessages">
-    <input id="@Id" type="text" class="@ValidationClass" @bind="BindValue" @oninput="HandleInput" placeholder="@Placeholder" />
+<InputWrapperUI FontAwesomeIcon="@FontAwesomeIcon" Id="@Id" Label="@Label" ShowValidationErrors="@ShowValidationErrors" ValidationMessages="@ValidationMessages" IsReadOnly="IsReadOnly">
+    <input id="@Id" type="text" class="default-input @ValidationClass" @bind="BindValue" @oninput="HandleInput" placeholder="@Placeholder" readonly="@IsReadOnly" />
 </InputWrapperUI>
 
 @code {

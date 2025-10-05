@@ -15,6 +15,9 @@ namespace EGHeals.Components.UI.Inputs.Base
         public string Label { get; set; } = default!;
 
         [Parameter]
+        public bool IsReadOnly { get; set; } = false;
+
+        [Parameter]
         public string Placeholder { get; set; } = default!;
 
         [Parameter]

@@ -8,12 +8,14 @@
     border-radius: 5rem;
 }
 
-.search input {
-    border: none;
-    padding-inline-start: 1.5rem;
-    padding-inline-end: 0.75rem;
-    border-radius: inherit;
-}
+    .search input {
+        border: none;
+        padding-inline-start: 1.5rem;
+        padding-inline-end: 0.75rem;
+        border-radius: inherit;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
 
 .search input:focus {
     border: none;

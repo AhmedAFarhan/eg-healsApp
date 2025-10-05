@@ -3,8 +3,9 @@
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 21rem 1fr;
     height: 100%;
+    width: 100%;
     column-gap: 1.5rem;
-    row-gap : 1rem;
+    row-gap: 1rem;
 }
 
 .roles-page ::deep .roles-page__back-btn {

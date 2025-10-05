@@ -1,0 +1,25 @@
+@using EGHeals.Components.UI.Inputs.Base;
+@inherits InputWrapperBase
+
+<div class="input-container">
+    <label for="@Id">
+        <span>@Label</span>
+    </label>
+    <div class="input-control @(IsReadOnly ? "read-only" : string.Empty)">       
+        <label class="input-icon" for="@Id">
+            @if (!string.IsNullOrEmpty(FontAwesomeIcon))
+            {
+                <span><i class="@FontAwesomeIcon"></i></span>
+            }
+        </label>
+        @ChildContent
+    </div>
+    @if (@ShowValidationErrors)
+    {
+        <div class="err">@ValidationMessages.FirstOrDefault()</div>
+    }
+</div>
+
+@code {
+
+}

@@ -1,8 +1,8 @@
-﻿.tab{
-    margin : 0rem;
-    padding : 0rem;    
-    width : 50rem;
-    height : 30rem;
+﻿.tab {
+    display: flex;
+    flex-direction: column;
+    flex : 1;
+    min-height : 0;
 }
 
 .tab__list{
@@ -46,5 +46,13 @@
     padding: 1rem;
     box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
     border-radius: 0.5rem;
-    border-start-start-radius : 0rem;
+    border-start-start-radius: 0rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height : 0;
+
+/*    overflow: auto;*/
+    /*    */
+    /*    min-height: 0;*/
 }

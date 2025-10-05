@@ -1,0 +1,28 @@
+<GridCardUI OnFirstAction="@OnToggleActivationHandler" FirstActionText="Activate">
+    <div class="allowance">
+        <FlipUI InnerClass="allowance__flipper" IsFlipped="isFlipped">
+            <Front>
+                <GlassWrapperUI class="allowance__icon-wrapper allowance__icon-wrapper--inactive">
+                    <AllowanceIcon  PathClass="allowance__svg-icon-path" />
+                </GlassWrapperUI>
+            </Front>
+            <Back>
+                <GlassWrapperUI class="allowance__icon-wrapper allowance__icon-wrapper--active">
+                    <AllowanceIcon  PathClass="allowance__svg-icon-path" />
+                </GlassWrapperUI>
+            </Back>
+        </FlipUI>
+        <div class="allowance__name">Allowance</div>
+        <LabeledTextInputUI Label="Cost" FontAwesomeIcon="fa-solid fa-circle-user" />
+    </div>
+</GridCardUI>
+
+@code {
+
+    private bool isFlipped = false;
+
+    private void OnToggleActivationHandler()
+    {
+        isFlipped = !isFlipped;
+    }
+}
