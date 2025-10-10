@@ -1,13 +1,20 @@
 @using EGHeals.Models.Dtos.Users
+@using EGHeals.Models.Dtos.Users.Responses
 @inject NavigationManager NavigationManager
 
-<GridCardUI OnFirstAction="@OnEditUserHandler" OnSecondAction="OnDeleteUserHandler">
+<GridCardUI OnFirstAction="@OnToggleActivationHandler" FirstActionText="Activate">
     <PopupActions>
         <GridCardContextPopupActionUI Text="Permissions" Icon="fa-regular fa-universal-access" OnClick="@OnShowPermissionsHandler" />
+        <GridCardContextPopupActionUI Text="Edit" Icon="fa-regular fa-universal-access" OnClick="@OnEditUserHandler" />
+        <GridCardContextPopupActionUI Text="Delete" Icon="fa-regular fa-universal-access" OnClick="@OnDeleteUserHandler" />
     </PopupActions>
     <ChildContent>
         <div class="user">
-            <div class="user__icon"><i class="fa-solid fa-user"></i></div>
+            <CardActivationFlipperUI IsFlipped="@isFlipped">
+                <Icon Context="p">
+                    <ReceptionistIcon ContainerClass="@p.ContainerClass" PathClass="@p.PathClass" />
+                </Icon>
+            </CardActivationFlipperUI>
             <div class="user__username">@User.Username</div>
             <div class="user__roles-container">
                 <div class="user__role-title">Roles : </div>
@@ -23,6 +30,8 @@
 </GridCardUI>
 
 @code{
+
+    private bool isFlipped = false;
 
     [Parameter] public bool InInit { get; set; } = false;
 
@@ -41,6 +50,11 @@
     private void OnShowPermissionsHandler()
     {
         NavigationManager.NavigateTo($"/user-roles/{User.Id}");
+    }
+
+    private void OnToggleActivationHandler()
+    {
+        isFlipped = !isFlipped;
     }
 
 }

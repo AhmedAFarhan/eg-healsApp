@@ -1,45 +1,57 @@
 @typeparam T
 
 <div class="table-container">
-    <table class="table-container__table">
+    <table class="table-container__table table-container__table--header">
+        @if (ColumnsDefinitions is not null)
+        {
+            @ColumnsDefinitions
+        }
+  
         <thead>
             @HeaderTemplate
-        </thead>
-        <tbody>
-            @if (IsInitialLoading)
+        </thead>     
+    </table>
+    <div class="table-body">
+        <table class="table-container__table table-container__table--body">
+            @if (ColumnsDefinitions is not null)
             {
-                @* Show skeleton rows instead of data *@
-                @for (int i = 0; i < SkeletonRows; i++)
+                @ColumnsDefinitions
+            }
+            <tbody>
+                @if (IsInitialLoading)
                 {
-                    <TableRowUI>
-                        @for (int j = 0; j < SkeletonColumns; j++)
-                        {
-                            <TableDataUI>
-                                <SkeletonUI Height="2.0rem" />
-                            </TableDataUI>
-                        }
+                    @* Show skeleton rows instead of data *@
+                    @for (int i = 0; i < SkeletonRows; i++)
+                    {
+                        <TableRowUI>
+                            @for (int j = 0; j < SkeletonColumns; j++)
+                            {
+                                <TableDataUI>
+                                    <SkeletonUI Height="2.0rem" />
+                                </TableDataUI>
+                            }
+                        </TableRowUI>
+                    }
+                }
+                else if (!HasData)
+                {
+                    <TableRowUI class="row-empty-state">
+                        <td colspan="@SkeletonColumns" class="table-container__empty-state">
+                            No items
+                        </td>
                     </TableRowUI>
                 }
-            }
-            else if (!HasData)
-            {
-                <TableRowUI class="row-empty-state">
-                    <td colspan="@SkeletonColumns" class="table-container__empty-state">
-                        No items
-                    </td>
-                </TableRowUI>
-            }
-            else
-            {
-                @RowTemplate
-            }
-        </tbody>
-    </table>
+                else
+                {
+                    @RowTemplate
+                }
+            </tbody>
+        </table>
+    </div>
     @if (IsRefreshing && !IsInitialLoading)
     {
         <BarLoading IsCentralized="true" />
     }
-
 </div>
 
 @code 
@@ -76,4 +88,10 @@
     /// Custom row template (tbody content).
     /// </summary>
     [Parameter] public RenderFragment? RowTemplate { get; set; }
+
+    /// <summary>
+    /// Custom row template (tbody content).
+    /// </summary>
+    [Parameter] public RenderFragment? ColumnsDefinitions { get; set; }
+
 }

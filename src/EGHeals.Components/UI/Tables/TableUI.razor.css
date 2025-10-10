@@ -1,9 +1,55 @@
 ﻿.table-container {
     padding: 0rem;
     margin: 0rem;
+    overflow: clip;
+    position: relative;
+    flex:1;
+    height : 100%;
+    display : flex;
+    flex-direction : column;
+    min-height : 0;
+}
+
+.table-body {
+    overflow: auto;
+    flex : 1;
+}
+
+.table-container__table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-collapse: separate;
+    font-size: 1.1rem;
+}
+
+.table-container__table--header {
+    margin: 0rem;
+    padding: 0rem;
+    background-color: aqua;
+    border-spacing: 0rem 0rem;
+    
+}
+
+.table-container__table--body {
+    border-spacing: 0rem 0.75rem;
+}
+
+.table-container__empty-state {
+    text-align: center;
+    height: 100%;
+}
+
+::deep .row-empty-state {
+    height: 100%;
+}
+
+/*.table-container {
+    padding: 0rem;
+    margin: 0rem;
     height: 100%;
     overflow: clip;
-    position : relative;
+    position: relative;
 }
 
 .table-container__table {
@@ -18,19 +64,21 @@
     border-spacing: 0 0rem;
 }
 
-.table-container__table tbody {
-    margin: 0rem;
-    padding: 0rem;
-    display: block;
+    .table-container__table tbody {
+        margin: 0rem;
+        padding: 0rem;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        display: block;
+    }
+
+.table-container__empty-state {
+    text-align: center;
     height: 100%;
-    overflow: auto;
 }
 
-.table-container__empty-state{
-    text-align : center;
-    height : 100%;
+::deep .row-empty-state {
+    height: 100%;
 }
-
-::deep .row-empty-state{
-    height : 100%;
-}
+*/

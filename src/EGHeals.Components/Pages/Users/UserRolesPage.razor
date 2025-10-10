@@ -1,20 +1,33 @@
+@using EGHeals.Application.Features.Users.Queries.GetRoles
 @using EGHeals.Application.Features.Users.Queries.GetUserByIdByOwnership
+@using EGHeals.Models.Dtos.Roles.Reponses
 @using EGHeals.Models.Dtos.Users
+@using EGHeals.Models.Dtos.Users.Requests
+@using EGHeals.Models.Dtos.Users.Responses
+@using EGHeals.Models.Models.Users
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Security.Cryptography
+@using System.Text.Json
+@using System.Text
 
 @inject GlobalExceptionService GlobalExceptionService
 @inject TaskHandlerService TaskHandlerService
 @inject NavigationManager NavigationManager
+@inject MessageBoxService MessageBoxService
 @inject ISender sender
 
 <PageUI>
     <div class="roles-page">
         <MainButtonUI Class="roles-page__back-btn" OnClick="@OnShowUsersHandler">Back To Users</MainButtonUI>
         <div class="roles-page__info">
-            <div class="roles-page__info-text">permission kind</div>
+            @if (subUser is not null)
+            {
+                <div class="roles-page__info-text">@subUser.Username</div>
+            }
             <div class="roles-page__info-text">permission kind</div>
         </div>        
         <UserRolesListComponent Roles="roles" Class="roles-page__grid" ContainerClass="roles-page__grid-container" />
-        <UserPermissionsListComponent Permissions="permissions" Class="roles-page__grid" ContainerClass="roles-page__grid-container" />
+        <UserPermissionsListComponent Permissions="userRolePermissions" Class="roles-page__grid" ContainerClass="roles-page__grid-container" />
         <MainButtonUI Class="roles-page__save-btn">Save</MainButtonUI>
     </div>
 </PageUI>
@@ -22,22 +35,25 @@
 @code{
 
     private bool isInit = false;
-    private IEnumerable<UserRoleResponseDto> roles = default!;
-    private IEnumerable<UserRolePermissionResponseDto> permissions = default!;
+    private UserResponseDto subUser = default!;
+    private IEnumerable<UserRoleResponseDto> userRoles = default!;
+    private IEnumerable<UserRolePermissionResponseDto> userRolePermissions = default!;
 
-    [Parameter] public Guid UserId { get; set; }
+    private IEnumerable<UserRoleModel> roles = default!;
+    private IEnumerable<UserRolePermissionModel> rolePermissions = default!;
+
+    [Parameter] public Guid? UserId { get; set; }
 
     private void OnShowUsersHandler()
     {
         NavigationManager.NavigateTo("/users");
     }
 
-    protected override async Task OnInitializedAsync()
+    private Task<EGResponse<UserResponseDto>?> GetUserRolesAndPermissionsAsync()
     {
-        //Get user roles and permissions
-        var result = await TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
+        return TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
         {
-            var query = new GetSubUserRolesByOwnershipQuery(UserId);
+            var query = new GetSubUserRolesByOwnershipQuery(UserId.Value);
 
             var response = await sender.Send(query);
 
@@ -48,14 +64,82 @@
         setLoading: () => isInit = true,
         stopLoading: () => isInit = false,
         setError: GlobalExceptionService.Handle);
+    }
 
-         //Get defined system roles and permissions
-
-
-        if (result is not null && result.Success)
+    private Task<EGResponse<IEnumerable<RoleResponseDto>>?> GetDefinedRolesAndPermissionsAsync()
+    {
+        return TaskHandlerService.RunAsync<EGResponse<IEnumerable<RoleResponseDto>>>(async () =>
         {
-            roles = result.Data.UserRoles;
-            permissions = result.Data.UserRoles.First().UserRolePermissions;
+            var query = new GetRolesQuery();
+
+            var response = await sender.Send(query);
+
+            var result = response.Adapt<EGResponse<IEnumerable<RoleResponseDto>>>();
+
+            return result;
+        },
+        setLoading: () => isInit = true,
+        stopLoading: () => isInit = false,
+        setError: GlobalExceptionService.Handle);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        var query = QueryHelpers.ParseQuery(uri.Query);
+
+        //Option 1: Handle encoded query data
+        if (query.TryGetValue("data", out var encoded))
+        {
+            var bytes = Convert.FromBase64String(encoded);
+            var json = Encoding.UTF8.GetString(bytes);
+            var user = JsonSerializer.Deserialize<AddSubUserRequestDto>(json);
+
+            //Get defined system roles and permissions
+            var definedRolesAndPermissionsResult = await GetDefinedRolesAndPermissionsAsync();
+
+            if (definedRolesAndPermissionsResult is not null && definedRolesAndPermissionsResult.Success)
+            {
+
+            }
+
+            //Show popup telling admin to select the sub user roles
+            MessageBoxService.Show(title: "User Role Configuration",
+                                   description: "Please select the user roles and permissions.",
+                                   msgBoxType: MsgBoxType.INFO,
+                                   btnText: "Ok");
+        }
+        // Option 2: Handle /user-roles/{guid}
+        else if (UserId.HasValue && UserId != Guid.Empty)
+        {
+            //Get user roles and permissions
+            //var getUserRolesAndPermissionsTask = GetUserRolesAndPermissionsAsync();
+
+            //Get defined system roles and permissions
+            //var getDefinedRolesAndPermissionsTask = GetDefinedRolesAndPermissionsAsync();
+
+            //Wait both to be completed
+            //await Task.WhenAll(getUserRolesAndPermissionsTask, getDefinedRolesAndPermissionsTask);
+
+            // Retrieve results
+            var UserRolesAndPermissionsResult = await GetUserRolesAndPermissionsAsync();// await getUserRolesAndPermissionsTask;
+            var definedRolesAndPermissionsResult = await GetDefinedRolesAndPermissionsAsync();// await getDefinedRolesAndPermissionsTask;
+
+            if ((UserRolesAndPermissionsResult is not null && UserRolesAndPermissionsResult.Success)
+                && (definedRolesAndPermissionsResult is not null && definedRolesAndPermissionsResult.Success))
+            {
+                subUser = UserRolesAndPermissionsResult.Data;
+                userRoles = subUser.UserRoles;
+                userRolePermissions = subUser.UserRoles.First().UserRolePermissions;
+
+                roles = definedRolesAndPermissionsResult.Data.Select(r => new UserRoleModel{ Role = r.Name });
+                //rolePermissions = roles.First().RolePermissions;
+            }
+        }
+        // Invalid Data Path
+        else
+        {
+
         }
     }
 }

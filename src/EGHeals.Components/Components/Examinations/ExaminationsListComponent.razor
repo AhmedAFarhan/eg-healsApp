@@ -1,18 +1,28 @@
 @using EGHeals.Models.Dtos.Examinations
+
 <TableUI T="ExaminationResponseDto"
          IsInitialLoading="IsInitialLoading"
          IsRefreshing="IsRefreshing"
          HasData="hasData"
          SkeletonRows="6"
          SkeletonColumns="5">
+    <ColumnsDefinitions>
+        <colgroup>
+    <col />
+    <col />
+    <col />
+    <col />
+    <col style="width: 5rem">
+    </colgroup>
+    </ColumnsDefinitions>
     <HeaderTemplate>
         <TableRowUI>
-                <TableHeaderUI>Examination</TableHeaderUI>
-                <TableHeaderUI>Device</TableHeaderUI>
-                <TableHeaderUI>Description</TableHeaderUI>
-                <TableHeaderUI>Cost</TableHeaderUI>
-                <TableHeaderUI></TableHeaderUI>
-            </TableRowUI>
+            <TableHeaderUI>Examination</TableHeaderUI>
+            <TableHeaderUI>Device</TableHeaderUI>
+            <TableHeaderUI>Description</TableHeaderUI>
+            <TableHeaderUI>Cost</TableHeaderUI>
+            <TableHeaderUI></TableHeaderUI>
+        </TableRowUI>
     </HeaderTemplate>
     <RowTemplate>
         @foreach (var examination in Examinations ?? Enumerable.Empty<ExaminationResponseDto>())
@@ -22,7 +32,9 @@
                 <TableDataUI>@examination.Device</TableDataUI>
                 <TableDataUI>@examination.Description</TableDataUI>
                 <TableDataUI>@examination.Cost</TableDataUI>
-                <TableDataUI>Actions</TableDataUI>
+                <TableDataUI>
+                    <IconButtonUI Icon="fa-solid fa-ellipsis-vertical" Size="2.3"/>
+                </TableDataUI>
             </TableRowUI>
         }
     </RowTemplate>
@@ -43,12 +55,12 @@
 
         var users = new List<ExaminationResponseDto>();
 
-        for (int i = 1; i <= 50; i++)
+        for (int i = 1; i <= 100; i++)
         {
             users.Add(new ExaminationResponseDto
             {
                 Id = Guid.NewGuid(),
-                Name = $"Examination {i}",
+                Name = i == 1 ? "ahmed abdou farhan mohhamed mohammed khaled": $"Examination {i}",
                 Device = $"Device Name",
                 Description = $"Description {i}",
                 Cost = i

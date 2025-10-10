@@ -1,8 +1,34 @@
-﻿.row {
-    margin: 0rem;
-    padding: 0.25rem 0rem;
-    display: table;
+﻿tr {
+    border-radius: 0.3rem;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-light-gray);
+}
+
+
+/*tr {
+    margin: 0.5rem 0rem;
+    padding: 0.0rem 0rem;
     width: 100%;
+    display: table;
     table-layout: fixed;
     content-visibility: auto;
 }
+
+tr:first-child {
+    margin: 0.25rem 0rem;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+tr:nth-child(even) {
+    background-color: var(--color-light-gray);
+}*/

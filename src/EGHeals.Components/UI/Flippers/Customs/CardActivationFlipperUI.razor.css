@@ -1,0 +1,28 @@
+﻿.flipper-content ::deep .flipper-content__flipper {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 0.5rem;
+}
+
+.flipper-content ::deep .flipper-content__icon-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.flipper-content ::deep .flipper-content__icon-wrapper--inactive {
+    background-color: var(--color-dark-gray);
+}
+
+.flipper-content ::deep .flipper-content__icon-wrapper--active {
+    background-color: var(--color-primary-light);
+}
+
+.flipper-content ::deep .flipper-content__svg-icon-container {
+}
+
+.flipper-content ::deep .flipper-content__svg-icon-path {
+    fill: white;
+}

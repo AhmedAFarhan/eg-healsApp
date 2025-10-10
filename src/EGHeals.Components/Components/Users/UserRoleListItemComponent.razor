@@ -1,6 +1,7 @@
+@using EGHeals.Models.Models.Users
 <GridCardUI OnFirstAction="@OnToggleActivationHandler" OnSecondAction="OnShowPermissionsHandler" FirstActionText="Activate" SecondActionText="Permissions">
     <div class="role">
-        <FlipUI InnerClass="role__flipper" IsFlipped="isFlipped">
+        <FlipUI InnerClass="role__flipper" IsFlipped="@Model.IsActive">
             <Front>
                 <GlassWrapperUI class="role__icon-wrapper role__icon-wrapper--inactive">
                     <ReceptionistIcon ContainerClass="role__receptionist-svg-icon-container" PathClass="role__receptionist-svg-icon-path" />
@@ -12,17 +13,17 @@
                 </GlassWrapperUI>
             </Back>
         </FlipUI>
-        <div class="role__name">Role</div>
+        <div class="role__name">@Model.Role</div>
     </div>
 </GridCardUI>
 
 @code {
 
-    private bool isFlipped = false;
+    [Parameter] public UserRoleModel Model { get; set; } = default!;
 
     private void OnToggleActivationHandler()
     {
-        isFlipped = !isFlipped;
+        Model.IsActive = !Model.IsActive;
     }
 
     private void OnShowPermissionsHandler()

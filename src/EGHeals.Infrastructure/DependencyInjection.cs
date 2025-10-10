@@ -1,8 +1,11 @@
 ﻿using BuildingBlocks.DataAccess.Contracts;
 using BuildingBlocks.DataAccess.FakeDatabase;
 using BuildingBlocks.DataAccess.PlatformTargets;
+using BuildingBlocks.DataAccess.Repository;
 using BuildingBlocks.DataAccess.UnitOfWork;
+using BuildingBlocks.DataAccessAbstraction.Repository;
 using BuildingBlocks.DataAccessAbstraction.UnitOfWork;
+using BuildingBlocks.Domain.Abstractions;
 using EGHeals.Application.Contracts.Users;
 using EGHeals.Infrastructure.Data;
 using EGHeals.Infrastructure.Data.Interceptors;

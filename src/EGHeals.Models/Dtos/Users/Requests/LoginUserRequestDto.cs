@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EGHeals.Models.Dtos.Users
+namespace EGHeals.Models.Dtos.Users.Requests
 {
     public class LoginUserRequestDto
     {

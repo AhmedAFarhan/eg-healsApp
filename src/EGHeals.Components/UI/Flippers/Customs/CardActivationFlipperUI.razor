@@ -1,0 +1,36 @@
+<div class="flipper-content">
+    <FlipUI InnerClass="flipper-content__flipper" IsFlipped="@IsFlipped">
+        <Front>
+            <GlassWrapperUI class="flipper-content__icon-wrapper flipper-content__icon-wrapper--inactive">
+                @Icon(new IconParameters
+                {
+                    ContainerClass = "flipper-content__svg-icon-container",
+                    PathClass = "flipper-content__svg-icon-path"
+                })
+            </GlassWrapperUI>
+        </Front>
+        <Back>
+            <GlassWrapperUI class="flipper-content__icon-wrapper flipper-content__icon-wrapper--active">
+                @Icon(new IconParameters
+                {
+                    ContainerClass = "flipper-content__svg-icon-container",
+                    PathClass = "flipper-content__svg-icon-path"
+                 })
+            </GlassWrapperUI>
+        </Back>
+    </FlipUI>
+</div>
+
+@code{
+
+    [Parameter] public bool IsFlipped { get; set; } = false;
+
+    [Parameter] public RenderFragment<IconParameters> Icon { get; set; } = default!;
+
+    public class IconParameters
+    {
+        public string ContainerClass { get; set; } = string.Empty;
+
+        public string PathClass { get; set; } = string.Empty;
+    }
+}

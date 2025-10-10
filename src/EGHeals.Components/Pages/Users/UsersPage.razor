@@ -2,20 +2,21 @@
 @using BuildingBlocks.Pagination
 @using EGHeals.Application.Features.Users.Queries.GetSubUsersByOwnership
 @using EGHeals.Domain.Models
-@using EGHeals.Models.Dtos.Users
+@using EGHeals.Models.Dtos.Users.Responses
 
 @inject TaskHandlerService TaskHandlerService
+@inject ModalPopupService ModalPopupService
 @inject GlobalExceptionService GlobalExceptionService
 @inject ISender sender
 
 <PageUI>
-    <div class="user-page">
+    <div class="page-content">
         <SkeltonLoadingContainer IsLoading="isInit">
             <Skeleton>
                 <MainButtonSkeletonUI />
             </Skeleton>
             <ChildContent>
-                <MainButtonUI Class="user-page__add-btn">New User</MainButtonUI>
+                <MainButtonUI OnClick="OnAddingUserHandler" Class="page-content__add-btn">New User</MainButtonUI>
             </ChildContent>
         </SkeltonLoadingContainer>        
         <UserListComponent Users="users"/>
@@ -60,5 +61,14 @@
             var pageSize = result.Data.PageSize;
             totalPages = (long)Math.Ceiling(count / (double)pageSize);
         }        
+    }
+
+    private void OnAddingUserHandler()
+    {
+        ModalPopupService.Show(builder =>
+        {
+            builder.OpenComponent<AddNewSubUserFormComponent>(0);
+            builder.CloseComponent();
+        }, "Create Sub-User", "Add a new sub-user to your account");
     }
 }

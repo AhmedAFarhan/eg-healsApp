@@ -21,6 +21,7 @@ namespace EGHeals.Components
             services.AddSingleton<ModalPopupService>();
             services.AddSingleton<GlobalExceptionService>();
             services.AddSingleton<TaskHandlerService>();
+            services.AddSingleton<MessageBoxService>();
 
             services.AddAuthorizationCore();
             services.AddScoped<CustomAuthStateProvider>();

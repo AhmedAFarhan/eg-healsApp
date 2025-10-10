@@ -55,5 +55,26 @@ namespace BuildingBlocks.DataAccess.UnitOfWork
                 dbContext.Dispose();
             }                
         }
+
+        public ISystemRepository<T, TId> GetSystemRepository<T, TId>() where T : SystemEntity<TId> where TId : class
+        {
+            if (!_repositories.ContainsKey(typeof(T)))
+            {
+                ISystemRepository<T, TId> repository;
+
+                if (platformTarget.Platform == PlatformType.MAUI)
+                {
+                    repository = new SystemRepository<T, TId, TContext>(dbContext);
+                }
+                else
+                {
+                    repository = new SystemRepository<T, TId, TContext>(dbContext);
+                }
+
+                _repositories[typeof(T)] = repository;
+            }
+
+            return (ISystemRepository<T, TId>)_repositories[typeof(T)];
+        }
     }
 }

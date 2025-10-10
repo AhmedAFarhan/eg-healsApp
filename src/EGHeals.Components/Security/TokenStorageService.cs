@@ -1,6 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using EGHeals.Components.Security.Abstractions;
-using EGHeals.Models.Dtos.Users;
+using EGHeals.Models.Dtos.Users.Responses;
 
 namespace EGHeals.Components.Security
 {

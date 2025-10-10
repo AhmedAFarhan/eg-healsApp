@@ -1,5 +1,5 @@
 ﻿using EGHeals.Components.Security.Abstractions;
-using EGHeals.Models.Dtos.Users;
+using EGHeals.Models.Dtos.Users.Responses;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 

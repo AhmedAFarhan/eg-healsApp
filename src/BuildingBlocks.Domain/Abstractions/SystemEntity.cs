@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Domain.Abstractions.Interfaces;
-using BuildingBlocks.Domain.Security;
 
 namespace BuildingBlocks.Domain.Abstractions
 {

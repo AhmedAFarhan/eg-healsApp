@@ -18,7 +18,7 @@ namespace EGHeals.Infrastructure.Helpers
                 }
                 else
                 {
-                    //SetupFakeDatabase();
+                    SetupFakeDatabase();
                 }
             }
             catch(Exception ex)

@@ -1,0 +1,64 @@
+@using EGHeals.Application.Dtos.Users
+@using EGHeals.Application.Features.Users.Commands.Login
+@using EGHeals.Components.Models.ModalPopups
+@using EGHeals.Components.Security
+@using EGHeals.Models.Dtos.Users.Requests
+@using System.Text.Json
+@using System.Security.Cryptography
+@using System.Text
+
+@inject TaskHandlerService TaskHandlerService
+@inject ISender sender
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+
+<EditForm Model="User" OnValidSubmit="OnValidSubmitHandler">
+    <DataAnnotationsValidator />
+    <VerticalAlignmentWrapper>
+        <TextInputUI FontAwesomeIcon="fa-solid fa-user" Label="Username*" Placeholder="Enter your username" @bind-Value="User.Username" ValidationFor="@(() => User.Username)" />
+        <PasswordInputUI FontAwesomeIcon="fa-solid fa-lock-keyhole" Label="Password*" Placeholder="Enter your password" @bind-Value="User.Password" ValidationFor="@(() => User.Password)" />
+        <PasswordInputUI FontAwesomeIcon="fa-solid fa-lock-keyhole" Label="Confirm Password*" Placeholder="Confirm your password" @bind-Value="User.ConfirmPassword" ValidationFor="@(() => User.ConfirmPassword)" />
+        <MainButtonUI Class="mt-3" IsSubmit="true">Login</MainButtonUI>
+    </VerticalAlignmentWrapper>
+</EditForm>
+
+@code
+{
+    private AddSubUserRequestDto User = new();
+
+    [CascadingParameter] public ModalContext Modal { get; set; } = default!;
+
+    private async Task OnValidSubmitHandler()
+    {
+        var json = JsonSerializer.Serialize(User);
+
+        var data = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
+
+        NavigationManager.NavigateTo($"/user-roles?data={Uri.EscapeDataString(data)}");
+
+        Modal.Close();
+
+        // var result = await TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
+        // {
+        //     var command = new LoginCommand(new LoginUserDto(User.Username, User.Password));
+
+        //     var response = await sender.Send(command);
+
+        //     var result = response.Adapt<EGResponse<UserResponseDto>>();
+
+        //     return result;
+        // },
+        // setLoading: Modal.StartLoading,
+        // stopLoading: Modal.StopLoading,
+        // setError: Modal.SetError);
+
+        // //user authorization
+        // if (result is not null && result.Success)
+        // {
+        //     // Notify Blazor
+        //     (AuthStateProvider as CustomAuthStateProvider)?.NotifyUserAuthentication(result.Data);
+
+        //     Modal.Close();
+        // }
+    }
+}

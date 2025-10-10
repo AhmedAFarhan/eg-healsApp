@@ -1,11 +1,13 @@
 @using EGHeals.Components.Components.Users.Skeletons
-@using EGHeals.Models.Dtos.Users
+@using EGHeals.Models.Dtos.Roles.Reponses
+@using EGHeals.Models.Models.Users
+
 <GridUI Columns="1" Class="@Class" ContainerClass="@ContainerClass" Items="Roles" SkeletonNum="2">
     <SkeletonContent>
         <UserSkeletonComponent />
     </SkeletonContent>
     <CardContent Context="role">
-        <UserRoleListItemComponent />
+        <UserRoleListItemComponent Model="role" />
     </CardContent>
 </GridUI>
 
@@ -13,7 +15,7 @@
 
     [Parameter] public bool IsLoading { get; set; }
 
-    [Parameter] public IEnumerable<UserRoleResponseDto> Roles { get; set; } = default!;
+    [Parameter] public IEnumerable<UserRoleModel> Roles { get; set; } = default!;
 
     [Parameter] public string? Class { get; set; }
 
