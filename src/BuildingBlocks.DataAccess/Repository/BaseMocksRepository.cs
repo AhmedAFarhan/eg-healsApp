@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace BuildingBlocks.DataAccess.Repository
 {
-    public class BaseMocksRepository<T, TId>(DatabaseSimulator _db, IUserContext userContext) : IBaseRepository<T, TId> where T : Entity<TId> where TId : class 
+    public class BaseMocksRepository<T, TId>(DatabaseSimulator _db, IUserContext userContext) : IBaseRepository<T, TId> where T : SystemEntity<TId> where TId : class 
     {
         protected List<T> table  = _db.Set<T>();
 

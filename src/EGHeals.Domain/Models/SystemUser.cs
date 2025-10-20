@@ -10,8 +10,11 @@
         public string? Mobile { get; private set; } = default!;
         public string PasswordHash { get; private set; } = default!;
         public UserType UserType { get; set; } = UserType.ADMIN;
+        public bool IsActive { get; set; } = true;
 
-        public static SystemUser Create(SystemUserId id, string username, string? email, string? mobile, string passwordHash, UserType userType)
+        /***************************************** Domain Business *****************************************/
+
+        public static SystemUser Create(SystemUserId id, string username, string? email, string? mobile, string passwordHash, UserType userType, bool isActive = true)
         {
             //Domain model validation
             Validation(username, email, mobile, passwordHash);           
@@ -24,6 +27,7 @@
                 Mobile = mobile,
                 PasswordHash = passwordHash,
                 UserType = userType,
+                IsActive = isActive
             };
 
             return user;
@@ -54,28 +58,77 @@
             }
         }
 
+        public void Activate()
+        {
+            if (IsActive)
+            {
+                throw new DomainException("User is already activated");
+            }
+
+            IsActive = true;
+        }
+        public void Deactivate()
+        {
+            if (!IsActive)
+            {
+                throw new DomainException("User is already deactivated");
+            }
+
+            IsActive = false;
+        }
+
         private static void Validation(string username, string? email, string? mobile, string passwordHash)
         {
-            ArgumentException.ThrowIfNullOrEmpty(username);
-            ArgumentException.ThrowIfNullOrWhiteSpace(username);
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(username.Length, 150);
-            ArgumentOutOfRangeException.ThrowIfLessThan(username.Length, 3);
-
-            if(email is not null)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrWhiteSpace(username))
             {
-                ArgumentException.ThrowIfNullOrWhiteSpace(email);
-                ArgumentOutOfRangeException.ThrowIfGreaterThan(email.Length, 150);
-                ArgumentOutOfRangeException.ThrowIfLessThan(username.Length, 6);
+                throw new ArgumentException("Username cannot be null, empty, or whitespace.", nameof(username));
+            }
+
+            if (username.Length < 3 || username.Length > 150)
+            {
+                throw new ArgumentOutOfRangeException(nameof(username), username.Length, "Username should be in range between 3 and 150 characters.");
+            }
+
+            if (email is not null)
+            {
+                if (!email.Contains('@'))
+                {
+                    throw new ArgumentException("Invalid email address", nameof(email));
+                }
+
+                if (string.IsNullOrEmpty(email) || string.IsNullOrWhiteSpace(email))
+                {
+                    throw new ArgumentException("Email cannot be null, empty, or whitespace.", nameof(email));
+                }
+
+                if (email.Length < 6 || email.Length > 150)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(email), email.Length, "Email should be in range between 6 and 150 characters.");
+                }
             }
 
             if (mobile is not null)
             {
-                ArgumentException.ThrowIfNullOrWhiteSpace(mobile);
-                ArgumentOutOfRangeException.ThrowIfNotEqual(mobile.Length, 11);
+                if (string.IsNullOrEmpty(mobile) || string.IsNullOrWhiteSpace(mobile))
+                {
+                    throw new ArgumentException("Mobile cannot be null, empty, or whitespace.", nameof(mobile));
+                }
+
+                if (!mobile.All(char.IsDigit))
+                {
+                    throw new ArgumentException("Mobile must contain digits only.", nameof(mobile));
+                }
+
+                if (mobile.Length != 11)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(mobile), mobile.Length, "Mobile number must be exactly 11 digits long.");
+                }
             }
 
-            ArgumentException.ThrowIfNullOrEmpty(passwordHash);
-            ArgumentException.ThrowIfNullOrWhiteSpace(passwordHash);            
+            if (string.IsNullOrEmpty(passwordHash) || string.IsNullOrWhiteSpace(passwordHash))
+            {
+                throw new ArgumentException("Password cannot be null, empty, or whitespace.", nameof(passwordHash));
+            }         
         }
     }
 }

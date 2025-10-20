@@ -9,3 +9,4 @@ global using BuildingBlocks.Pagination;
 global using BuildingBlocks.Responses;
 global using BuildingBlocks.Domain.ValueObjects;
 global using BuildingBlocks.DataAccessAbstraction.Models;
+global using BuildingBlocks.DataAccessAbstraction.Queries;

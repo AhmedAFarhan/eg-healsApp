@@ -16,7 +16,7 @@
                 <MainButtonSkeletonUI />
             </Skeleton>
             <ChildContent>
-                <MainButtonUI OnClick="OnAddingUserHandler" Class="page-content__add-btn">New User</MainButtonUI>
+                <MainButtonUI Icon="fa-solid fa-plus-large" OnClick="OnAddingUserHandler" Class="page-content__add-btn">New User</MainButtonUI>
             </ChildContent>
         </SkeltonLoadingContainer>        
         <UserListComponent Users="users"/>
@@ -35,7 +35,7 @@
 
     private bool isInit = false;
     private long totalPages = 0;
-    private IEnumerable<SubUserResponseDto> users = default!;
+    private List<SubUserResponseDto> users = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -56,19 +56,24 @@
 
         if (result is not null && result.Success)
         {
-            users = result.Data.Data;
+            users = result.Data.Data.ToList();
             var count = result.Data.Count;
             var pageSize = result.Data.PageSize;
             totalPages = (long)Math.Ceiling(count / (double)pageSize);
         }        
     }
 
-    private void OnAddingUserHandler()
+    private async Task OnAddingUserHandler()
     {
-        ModalPopupService.Show(builder =>
+        var x = await ModalPopupService.ShowDialog<bool>(builder =>
         {
             builder.OpenComponent<AddNewSubUserFormComponent>(0);
             builder.CloseComponent();
-        }, "Create Sub-User", "Add a new sub-user to your account");
+        }, "Create Sub-User", "Add a new sub-user to your account.");
+
+        if (x)
+        {
+            
+        }
     }
 }

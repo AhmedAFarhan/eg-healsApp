@@ -1,0 +1,33 @@
+@using EGHeals.Components.Components.Users.Skeletons
+@using EGHeals.Models.Dtos.Users
+@using EGHeals.Models.Dtos.Users.Responses
+@using EGHeals.Models.Models.Users
+
+<CascadingValue Value="DisableTransition">
+    <GridUI Columns="5" ContainerClass="@ContainerClass" Class="@Class" Items="Permissions">
+        <SkeletonContent>
+            <UserSkeletonComponent ActionsNum="1" DescNum="0" />
+        </SkeletonContent>
+        <CardContent Context="permission">
+            <RolePermissionListItemComponent Model="permission" OnActivationChanged="OnActivationChanged" OnGetRole="OnGetRole" />
+        </CardContent>
+    </GridUI>
+</CascadingValue>
+
+@code {
+
+    [Parameter] public bool IsLoading { get; set; }
+
+    [Parameter] public List<RolePermissionModel> Permissions { get; set; } = default!;
+
+    [Parameter] public EventCallback OnActivationChanged { get; set; }
+
+    [Parameter] public Func<RolePermissionModel, RoleModel> OnGetRole { get; set; } = default!;
+
+    [Parameter] public bool DisableTransition { get; set; }
+
+    [Parameter] public string? ContainerClass { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+
+}

@@ -9,8 +9,8 @@ namespace EGHeals.Application.Contracts.Users
         Task<SystemUser?> GetUserCredentialsAsync(string username, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<SystemUser>> GetSubUsersAsync(QueryOptions<SystemUser> options,
-                                                                               bool ignoreOwnership = false,
-                                                                               CancellationToken cancellationToken = default);
+                                                       bool ignoreOwnership = false,
+                                                       CancellationToken cancellationToken = default);
 
         Task<long> GetSubUsersCountAsync(QueryFilters<SystemUser> filters,
                                                                  bool ignoreOwnership = false,

@@ -1,0 +1,22 @@
+﻿.role {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1.0rem;
+}
+
+.role__name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-very-dark-gray);
+}
+
+.role ::deep .role__svg-accountant-container {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.role ::deep .role__svg-radiologist-container {
+    width: 3.0rem;
+    height: 3.0rem;
+}

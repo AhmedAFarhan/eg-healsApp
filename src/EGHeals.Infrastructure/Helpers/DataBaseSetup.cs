@@ -41,24 +41,39 @@ namespace EGHeals.Infrastructure.Helpers
 
             var passwordHasher = new PasswordHasher<SystemUser>();
 
-            var superAdminRole = Role.Create(RoleId.Of(Guid.NewGuid()), "SuperAdmin");
 
-            var adminRole = Role.Create(RoleId.Of(Guid.NewGuid()), "RadiologistAdmin");
+            var permission1Id = PermissionId.Of(Guid.NewGuid());
+            var permission1 = Permission.Create(permission1Id, "Permission 1");
 
-            var receptionistRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Receptionist");
-            receptionistRole.AddPermission(RolePermissionType.READ);
-            receptionistRole.AddPermission(RolePermissionType.DELETE);
-            receptionistRole.AddPermission(RolePermissionType.WRITE);
+            var permission2Id = PermissionId.Of(Guid.NewGuid());
+            var permission2 = Permission.Create(permission1Id, "Permission 3");
 
-            var radiologistRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Radiologist");
-            radiologistRole.AddPermission(RolePermissionType.READ);
-            radiologistRole.AddPermission(RolePermissionType.DELETE);
-            radiologistRole.AddPermission(RolePermissionType.WRITE);
+            var permission3Id = PermissionId.Of(Guid.NewGuid());
+            var permission3 = Permission.Create(permission1Id, "Permission 3");
 
-            var accountantRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Accountant");
-            accountantRole.AddPermission(RolePermissionType.READ);
-            accountantRole.AddPermission(RolePermissionType.DELETE);
-            accountantRole.AddPermission(RolePermissionType.WRITE);
+            var permission4Id = PermissionId.Of(Guid.NewGuid());
+            var permission4 = Permission.Create(permission1Id, "Permission 4");
+
+            var superAdminRoleId = RoleId.Of(Guid.NewGuid());
+            var superAdminRole = Role.Create(superAdminRoleId, "Super Admin", RoleType.NONE);
+
+            var adminRoleId = RoleId.Of(Guid.NewGuid());
+            var adminRole = Role.Create(adminRoleId, "Radiologist Admin", RoleType.NONE);
+
+            var receptionistRoleId = RoleId.Of(Guid.NewGuid());
+            var receptionistRole = Role.Create(receptionistRoleId, "Receptionist", RoleType.RADIOLOGY);
+
+            receptionistRole.AddPermission(permission1Id);
+            receptionistRole.AddPermission(permission2Id);
+
+            var radiologistRoleId = RoleId.Of(Guid.NewGuid());
+            var radiologistRole = Role.Create(radiologistRoleId, "Radiologist", RoleType.RADIOLOGY);
+
+            radiologistRole.AddPermission(permission1Id);
+            radiologistRole.AddPermission(permission1Id);
+
+            var accountantRoleId = RoleId.Of(Guid.NewGuid());
+            var accountantRole = Role.Create(accountantRoleId, "Accountant", RoleType.RADIOLOGY);
 
             var superAdminUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "superadmin", null, null, passwordHasher.HashPassword(null, "010011"), UserType.SUPER_ADMIN);
             superAdminUser.OwnershipId = superAdminUser.Id;
@@ -107,36 +122,50 @@ namespace EGHeals.Infrastructure.Helpers
 
                 var passwordHasher = new PasswordHasher<SystemUser>();
 
-                var superAdminRole = Role.Create(RoleId.Of(Guid.NewGuid()), "SuperAdmin");
+                var permission1Id = PermissionId.Of(Guid.NewGuid());
+                var permission1 = Permission.Create(permission1Id, "Permission 1");
 
-                var adminRole = Role.Create(RoleId.Of(Guid.NewGuid()), "RadiologistAdmin");
+                var permission2Id = PermissionId.Of(Guid.NewGuid());
+                var permission2 = Permission.Create(permission2Id, "Permission 2");
 
-                var receptionistRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Receptionist");
-                receptionistRole.AddPermission(RolePermissionType.READ);
-                receptionistRole.AddPermission(RolePermissionType.DELETE);
-                receptionistRole.AddPermission(RolePermissionType.WRITE);
+                var permission3Id = PermissionId.Of(Guid.NewGuid());
+                var permission3 = Permission.Create(permission3Id, "Permission 3");
 
-                var radiologistRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Radiologist");
-                radiologistRole.AddPermission(RolePermissionType.READ);
-                radiologistRole.AddPermission(RolePermissionType.DELETE);
-                radiologistRole.AddPermission(RolePermissionType.WRITE);
+                var permission4Id = PermissionId.Of(Guid.NewGuid());
+                var permission4 = Permission.Create(permission4Id, "Permission 4");
 
-                var accountantRole = Role.Create(RoleId.Of(Guid.NewGuid()), "Accountant");
-                accountantRole.AddPermission(RolePermissionType.READ);
-                accountantRole.AddPermission(RolePermissionType.DELETE);
-                accountantRole.AddPermission(RolePermissionType.WRITE);
+                var superAdminRoleId = RoleId.Of(Guid.NewGuid());
+                var superAdminRole = Role.Create(superAdminRoleId, "Super Admin", RoleType.NONE);
 
-                var superAdminUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "superadmin", null, null, passwordHasher.HashPassword(null, "010011"), UserType.SUPER_ADMIN);
+                var adminRoleId = RoleId.Of(Guid.NewGuid());
+                var adminRole = Role.Create(adminRoleId, "Radiologist Admin", RoleType.NONE);
+
+                var receptionistRoleId = RoleId.Of(Guid.NewGuid());
+                var receptionistRole = Role.Create(receptionistRoleId, "Receptionist", RoleType.RADIOLOGY);
+
+                receptionistRole.AddPermission(permission1Id);
+                receptionistRole.AddPermission(permission2Id);
+
+                var radiologistRoleId = RoleId.Of(Guid.NewGuid());
+                var radiologistRole = Role.Create(radiologistRoleId, "Radiologist", RoleType.RADIOLOGY);
+
+                radiologistRole.AddPermission(permission3Id);
+                radiologistRole.AddPermission(permission4Id);
+
+                var accountantRoleId = RoleId.Of(Guid.NewGuid());
+                var accountantRole = Role.Create(accountantRoleId, "Accountant", RoleType.RADIOLOGY);
+
+                var superAdminUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "superAdmin", null, null, passwordHasher.HashPassword(null, "010011"), UserType.SUPER_ADMIN);
                 superAdminUser.OwnershipId = superAdminUser.Id; 
                 var superAdminUserRole = superAdminUser.AddUserRole(superAdminRole.Id);
                 superAdminUserRole.OwnershipId = superAdminUser.Id;
 
-                var adminUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "admin", null, null, passwordHasher.HashPassword(null, "010011012"), UserType.ADMIN);
+                var adminUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "admin", null, null, passwordHasher.HashPassword(null, "010011"), UserType.ADMIN);
                 adminUser.OwnershipId = adminUser.Id;
                 var adminUserRole = adminUser.AddUserRole(adminRole.Id);
                 adminUserRole.OwnershipId = adminUser.Id;
 
-                var subUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "subuser", null, null, passwordHasher.HashPassword(null, "123"), UserType.SUBUSER);
+                var subUser = SystemUser.Create(SystemUserId.Of(Guid.NewGuid()), "subuser", null, null, passwordHasher.HashPassword(null, "010011"), UserType.SUBUSER);
                 subUser.OwnershipId = adminUser.Id;
                 var userRole = subUser.AddUserRole(receptionistRole.Id);
                 userRole.OwnershipId = adminUser.Id;
@@ -146,6 +175,11 @@ namespace EGHeals.Infrastructure.Helpers
                     var userRolePermission = userRole.AddPermission(permission.Id);
                     userRolePermission.OwnershipId = adminUser.Id;
                 }
+
+                await dbContext.Permissions.AddAsync(permission1);
+                await dbContext.Permissions.AddAsync(permission2);
+                await dbContext.Permissions.AddAsync(permission3);
+                await dbContext.Permissions.AddAsync(permission4);
 
                 await dbContext.Roles.AddAsync(superAdminRole);
                 await dbContext.Roles.AddAsync(adminRole);

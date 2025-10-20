@@ -7,7 +7,7 @@
         <UserSkeletonComponent />
     </SkeletonContent>
     <CardContent Context="role">
-        <UserRoleListItemComponent Model="role" />
+        <RoleListItemComponent Model="role" OnShowPermissions="OnShowPermissions" OnActivationChanged="OnActivationChanged" />
     </CardContent>
 </GridUI>
 
@@ -15,7 +15,11 @@
 
     [Parameter] public bool IsLoading { get; set; }
 
-    [Parameter] public IEnumerable<UserRoleModel> Roles { get; set; } = default!;
+    [Parameter] public List<RoleModel> Roles { get; set; } = default!;
+
+    [Parameter] public EventCallback<RoleModel> OnShowPermissions { get; set; }
+
+    [Parameter] public EventCallback OnActivationChanged { get; set; }
 
     [Parameter] public string? Class { get; set; }
 

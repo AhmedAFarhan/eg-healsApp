@@ -5,8 +5,12 @@
 
 .flip__inner {
     position: relative;
-    transition: transform 0.6s;
+    transition: transform var(--flip-duration, 0.6s);
     transform-style: preserve-3d;
+}
+
+.no-transition .flip__inner {
+    --flip-duration: 0s;
 }
 
 .flipped .flip__inner--vertical {

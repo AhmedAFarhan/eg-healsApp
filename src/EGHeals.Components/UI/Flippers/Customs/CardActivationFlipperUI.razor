@@ -2,20 +2,12 @@
     <FlipUI InnerClass="flipper-content__flipper" IsFlipped="@IsFlipped">
         <Front>
             <GlassWrapperUI class="flipper-content__icon-wrapper flipper-content__icon-wrapper--inactive">
-                @Icon(new IconParameters
-                {
-                    ContainerClass = "flipper-content__svg-icon-container",
-                    PathClass = "flipper-content__svg-icon-path"
-                })
+                @ChildContent
             </GlassWrapperUI>
         </Front>
         <Back>
-            <GlassWrapperUI class="flipper-content__icon-wrapper flipper-content__icon-wrapper--active">
-                @Icon(new IconParameters
-                {
-                    ContainerClass = "flipper-content__svg-icon-container",
-                    PathClass = "flipper-content__svg-icon-path"
-                 })
+            <GlassWrapperUI class="@($"flipper-content__icon-wrapper {GetVariantClass()}")">
+                @ChildContent
             </GlassWrapperUI>
         </Back>
     </FlipUI>
@@ -23,14 +15,17 @@
 
 @code{
 
-    [Parameter] public bool IsFlipped { get; set; } = false;
+    [Parameter] public bool IsFlipped { get; set; }
 
-    [Parameter] public RenderFragment<IconParameters> Icon { get; set; } = default!;
+    [Parameter] public AppColors ActiveColor { get; set; } = AppColors.PRIMARY;
 
-    public class IconParameters
+    [Parameter] public RenderFragment ChildContent { get; set; } = default!;
+
+    private string GetVariantClass() => ActiveColor switch
     {
-        public string ContainerClass { get; set; } = string.Empty;
-
-        public string PathClass { get; set; } = string.Empty;
-    }
+        AppColors.PRIMARY => "flipper-content__icon-wrapper--active-primary",
+        AppColors.SECONDARY => "flipper-content__icon-wrapper--active-secondary",
+        AppColors.TERTIARY => "flipper-content__icon-wrapper--active-tertiary",
+        _ => "flipper-content__icon-wrapper--active-primary"
+    };
 }

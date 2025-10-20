@@ -20,9 +20,6 @@
 
             builder.Property(x => x.UserType).HasDefaultValue(UserType.ADMIN).HasConversion(enums => enums.ToString(), dbEnums => (UserType)Enum.Parse(typeof(UserType), dbEnums));
 
-
-            //builder.Property(x => x.OwnedBy).HasConversion(id => id == null ? (Guid?)null : id.Value, dbId => dbId.HasValue ? SystemUserId.Of(dbId.Value) : null);
-
             /*************************** Relationships ****************************/
 
             builder.HasMany(o => o.UserRoles).WithOne().HasForeignKey(tb => tb.SystemUserId).OnDelete(DeleteBehavior.Restrict);

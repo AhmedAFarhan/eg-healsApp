@@ -14,8 +14,8 @@
    <VerticalAlignmentWrapper>
         <TextInputUI FontAwesomeIcon="fa-solid fa-user" Label="Username*" Placeholder="Enter your username" @bind-Value="User.Username" ValidationFor="@(() => User.Username)" />
         <PasswordInputUI FontAwesomeIcon="fa-solid fa-lock-keyhole" Label="Password*" Placeholder="Enter your password" @bind-Value="User.Password" ValidationFor="@(() => User.Password)" />
-        <MainButtonUI IsSubmit="true">Login</MainButtonUI>       
-   </VerticalAlignmentWrapper>
+        <MainButtonUI Class="mt-3" IsSubmit="true">Login</MainButtonUI>
+    </VerticalAlignmentWrapper>
 </EditForm>
 
 @code
@@ -46,7 +46,7 @@
             // Notify Blazor
             (AuthStateProvider as CustomAuthStateProvider)?.NotifyUserAuthentication(result.Data);
 
-            Modal.Close();
+            Modal?.Close?.Invoke(true);
         }
     }
 }

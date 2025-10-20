@@ -9,12 +9,12 @@ namespace EGHeals.Components.UI.Buttons.Base
         [Parameter] public bool IsDisabled { get; set; } = false;
         [Parameter] public EventCallback OnClick { get; set; }
         [Parameter] public string? Class { get; set; }
-        [Parameter] public MainButtonVariant Variant { get; set; } = MainButtonVariant.PRIMARY;
-        protected string GetVariantClass() => Variant switch
+        [Parameter] public AppColors Color { get; set; } = AppColors.PRIMARY;
+        protected string GetVariantClass() => Color switch
         {
-            MainButtonVariant.PRIMARY => "button-primary",
-            MainButtonVariant.SECONDARY => "button-secondary",
-            MainButtonVariant.TERTIARY => "button-tertiary",
+            AppColors.PRIMARY => "button-primary",
+            AppColors.SECONDARY => "button-secondary",
+            AppColors.TERTIARY => "button-tertiary",
             _ => "button-primary"
         };
     }

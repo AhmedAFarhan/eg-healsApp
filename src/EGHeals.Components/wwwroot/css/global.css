@@ -94,6 +94,11 @@ body [dir="rtl"] {
     -webkit-filter: blur(2px);
 }
 
+.fill-white {
+    fill: white;
+}
+
+
 ::-webkit-scrollbar {
     width: 0.6rem;
     height: 0.6rem;
@@ -224,7 +229,22 @@ h1{
 
 .mb-5 {margin-bottom: var(--space-5) !important;}
 
-/*********************** Variant *****************************/
+
+.active-card {
+    box-shadow: var(--color-secondary-light) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset !important;
+}
+
+.active-card-primary {
+    box-shadow: var(--color-primary-light) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset !important;
+}
+.active-card-secondary {
+    box-shadow: var(--color-secondary-light) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset !important;
+}
+.active-card-tertiary {
+    box-shadow: var(--color-tertiary-light) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset !important;
+}
+
+/*********************** Variant Colors *****************************/
 
 .button-primary {
     background-color: var(--color-primary-light) !important;

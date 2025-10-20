@@ -13,7 +13,7 @@ namespace EGHeals.Application.Extensions.Roles
                 RolePermissions: role.Permissions.Select(permission => new RolePermissionDto
                 (
                     Id: permission.Id.Value,
-                    Name: permission.RolePermissionType.ToString()
+                    PermissionName: permission.Permission.Name
                 ))
             ));
         }

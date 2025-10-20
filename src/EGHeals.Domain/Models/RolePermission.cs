@@ -2,14 +2,18 @@
 {
     public class RolePermission : SystemEntity<RolePermissionId>
     {
-        internal RolePermission(RoleId roleId, RolePermissionType rolePermissionType)
+        internal RolePermission(RoleId roleId, PermissionId permissionId, bool isActive = true)
         {
             Id = RolePermissionId.Of(Guid.NewGuid());
             RoleId = roleId;
-            RolePermissionType = rolePermissionType;
+            PermissionId = permissionId;
+            IsActive = isActive;
         }
 
         public RoleId RoleId { get; private set; } = default!;
-        public RolePermissionType RolePermissionType { get; private set; } = default!;
+        public PermissionId PermissionId { get; private set; } = default!;
+        public Permission Permission { get; private set; } = default!;/* NAVAIGATION PROPERTY */
+        public bool IsActive { get; set; } = true;
+
     }
 }

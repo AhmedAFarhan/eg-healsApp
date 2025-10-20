@@ -14,7 +14,7 @@ namespace BuildingBlocks.DataAccess.UnitOfWork
     {
         private readonly Dictionary<Type, object> _repositories = new();
 
-        public IBaseRepository<T, TId> GetRepository<T, TId>() where T : Entity<TId> where TId : class
+        public IBaseRepository<T, TId> GetRepository<T, TId>() where T : SystemEntity<TId> where TId : class
         {
             if (!_repositories.ContainsKey(typeof(T)))
             {
@@ -54,27 +54,6 @@ namespace BuildingBlocks.DataAccess.UnitOfWork
             {
                 dbContext.Dispose();
             }                
-        }
-
-        public ISystemRepository<T, TId> GetSystemRepository<T, TId>() where T : SystemEntity<TId> where TId : class
-        {
-            if (!_repositories.ContainsKey(typeof(T)))
-            {
-                ISystemRepository<T, TId> repository;
-
-                if (platformTarget.Platform == PlatformType.MAUI)
-                {
-                    repository = new SystemRepository<T, TId, TContext>(dbContext);
-                }
-                else
-                {
-                    repository = new SystemRepository<T, TId, TContext>(dbContext);
-                }
-
-                _repositories[typeof(T)] = repository;
-            }
-
-            return (ISystemRepository<T, TId>)_repositories[typeof(T)];
         }
     }
 }

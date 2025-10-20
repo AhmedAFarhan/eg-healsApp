@@ -27,7 +27,7 @@
     <input class="file-card__input" id="@inputId" type="file" accept="image/*" @onchange="OnInputFileChange" />
     @if (!string.IsNullOrEmpty(previewFile))
     {
-        <IconButtonUI OnClick="OnDeleteFileHandler" Icon="fa-solid fa-trash-xmark" Variant="MainButtonVariant.TERTIARY" Size="2" Class="file-card__delete" />
+        <IconButtonUI OnClick="OnDeleteFileHandler" Icon="fa-solid fa-trash-xmark" Color="AppColors.TERTIARY" Size="2" Class="file-card__delete" />
     }
     @if (isLoading)
     {

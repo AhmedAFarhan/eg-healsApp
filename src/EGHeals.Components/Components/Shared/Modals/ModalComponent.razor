@@ -3,7 +3,7 @@
 
 @if (isVisible)
 {
-    <DialogPopupUI OnClick="ModalPopupService.Close">
+    <DialogPopupUI OnClick="@(() => ModalPopupService.Close(isSuccess))">
         <div class="modal__header">
             @if (!string.IsNullOrEmpty(title))
             {
@@ -41,10 +41,11 @@
 
 @code
 {
-    private bool isVisible;
-    private bool isLoading;
-    private string? title;
-    private string? desc;
+    private bool isSuccess = false;
+    private bool isVisible = false;
+    private bool isLoading = false;
+    private string? title = string.Empty;
+    private string? desc = string.Empty;
     private List<string>? errors = default!;
     private string successMsg = string.Empty;
     private RenderFragment? content;
@@ -66,11 +67,17 @@
                 };
                 StateHasChanged(); 
             },
-            SetSuccess = (msg) => { successMsg = msg; StateHasChanged(); },
+            SetSuccess = (msg) =>
+            {
+                isSuccess = true;
+                successMsg = msg;
+                StateHasChanged();
+            },
             Close = ModalPopupService.Close
         };
 
         ModalPopupService.OnShow += Show;
+        ModalPopupService.OnShowDialog += ShowDialog;
         ModalPopupService.OnClose += Close;
     }
 
@@ -83,10 +90,17 @@
         StateHasChanged();
     }
 
+    private Task ShowDialog(RenderFragment modalContent, string? modalTitle = null, string? modalDesc = null)
+    {
+        Show(modalContent, modalTitle, modalDesc);
+        return Task.CompletedTask;
+    }
+
     private bool Close()
     {
         if (isLoading) return false;
 
+        isSuccess = false;
         isVisible = false;
         isLoading = false;
         title = null;

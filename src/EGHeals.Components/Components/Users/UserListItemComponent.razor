@@ -1,19 +1,21 @@
 @using EGHeals.Models.Dtos.Users
 @using EGHeals.Models.Dtos.Users.Responses
-@inject NavigationManager NavigationManager
 
-<GridCardUI OnFirstAction="@OnToggleActivationHandler" FirstActionText="Activate">
+@inject NavigationManager NavigationManager
+@inject ModalPopupService ModalPopupService
+@inject MessageBoxService MessageBoxService
+@inject TaskHandlerService TaskHandlerService
+
+<GridCardUI OnPrimaryAction="@OnToggleActivationHandler" PrimaryActionText="Activate">
     <PopupActions>
         <GridCardContextPopupActionUI Text="Permissions" Icon="fa-regular fa-universal-access" OnClick="@OnShowPermissionsHandler" />
-        <GridCardContextPopupActionUI Text="Edit" Icon="fa-regular fa-universal-access" OnClick="@OnEditUserHandler" />
-        <GridCardContextPopupActionUI Text="Delete" Icon="fa-regular fa-universal-access" OnClick="@OnDeleteUserHandler" />
+        <GridCardContextPopupActionUI Text="Edit" Icon="fa-regular fa-pen-to-square" OnClick="@OnEditUserHandler" />
+        <GridCardContextPopupActionUI Text="Delete" Icon="fa-regular fa-trash-xmark" OnClick="@OnDeleteUserHandler" />
     </PopupActions>
     <ChildContent>
         <div class="user">
             <CardActivationFlipperUI IsFlipped="@isFlipped">
-                <Icon Context="p">
-                    <ReceptionistIcon ContainerClass="@p.ContainerClass" PathClass="@p.PathClass" />
-                </Icon>
+                <i class="fa-solid fa-user user__icon"></i>
             </CardActivationFlipperUI>
             <div class="user__username">@User.Username</div>
             <div class="user__roles-container">
@@ -37,14 +39,19 @@
 
     [Parameter] public SubUserResponseDto User { get; set; } = default!;
 
-    private void OnEditUserHandler()
+    private async Task DeleteUserAsync()
     {
-
+        await Task.Delay(2000);
     }
 
     private void OnDeleteUserHandler()
     {
-
+        //Show popup telling admin to select the sub user roles
+        // MessageBoxService.Show(title: "Delete Sub-User",
+        //                        description: "Are you sure from deleting this user ?",
+        //                        msgBoxType: MsgBoxType.WARNING,
+        //                        btnText: "Delete",
+        //                        action: () => DeleteUserAsync());
     }
 
     private void OnShowPermissionsHandler()
@@ -57,4 +64,12 @@
         isFlipped = !isFlipped;
     }
 
+    private void OnEditUserHandler()
+    {
+        // ModalPopupService.Show(builder =>
+        // {
+        //     builder.OpenComponent<UpdateSubUserFormComponent>(0);
+        //     builder.CloseComponent();
+        // }, "Edit Sub-User", "Modify the details of an existing sub-user.");
+    }
 }

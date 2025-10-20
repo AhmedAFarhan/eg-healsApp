@@ -7,17 +7,9 @@
     margin-bottom : 0rem;
 }
 
-.user__icon {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 100%;
-    background-color: var(--color-primary-light);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.75rem;
-    margin-bottom: 0.3rem;
+.user__icon{
+    color : white;
+    font-size : 2rem;
 }
 
 .user__username {
@@ -50,33 +42,4 @@
     font-weight: 600;   
     background-color: var(--color-light-gray);
     color: var(--color-very-dark-gray);
-}
-
-.user ::deep .user__flipper {
-    width: 5rem;
-    height: 5rem;
-    margin-bottom: 0.5rem;
-}
-
-.user ::deep .user__icon-wrapper {
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.user ::deep .user__icon-wrapper--inactive {
-    background-color: var(--color-dark-gray);
-}
-
-.user ::deep .user__icon-wrapper--active {
-    background-color: var(--color-primary-light);
-}
-
-.user ::deep .user__svg-icon-container {
-}
-
-.user ::deep .user__svg-icon-path {
-    fill: white;
 }

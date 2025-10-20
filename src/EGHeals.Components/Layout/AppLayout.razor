@@ -8,6 +8,7 @@
 @inject LoadingService LoadingService
 @inject GlobalExceptionService GlobalExceptionService
 @inject AuthenticationStateProvider AuthStateProvider
+@inject MessageBoxService MessageBoxService
 
 <ErrorBoundary @ref="currentErrorBoundary">
     <ErrorContent Context="error">
@@ -31,7 +32,7 @@
                     @ChildContent
                     @if (isLoading)
                     {
-                        <BarLoading IsCentralized="true" Color="LoaderColor.SECONDARY" IsOverlayed="true" />
+                        <BarLoading IsCentralized="true" Color="AppColors.SECONDARY" IsOverlayed="true" />
                     }
                 </main>
             </div>
@@ -84,25 +85,10 @@
     {
         if (ex is null) return;
 
-        ModalPopupService.Show(builder =>
-        {
-            builder.OpenComponent<MessageBoxComponent>(0);
-
-            // String parameters
-            builder.AddAttribute(1, "Title", ex.Title);
-            builder.AddAttribute(2, "BtnText", "Ok");
-
-            // Enum parameter
-            builder.AddAttribute(3, "Type", MsgBoxType.ERROR);
-
-            // Child content
-            builder.AddAttribute(4, "ChildContent", (RenderFragment)(childBuilder =>
-            {
-                childBuilder.AddContent(0, ex.Message);
-            }));
-
-            builder.CloseComponent();
-        });
+        MessageBoxService.ShowAsync(title: ex.Title,
+                                    description: ex.Message,
+                                    msgBoxType: MsgBoxType.ERROR,
+                                    btnText: "Ok");
     }
 
     private void OnAuthenticationStateChanged(Task<AuthenticationState> task)

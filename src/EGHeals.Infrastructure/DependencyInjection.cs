@@ -6,10 +6,12 @@ using BuildingBlocks.DataAccess.UnitOfWork;
 using BuildingBlocks.DataAccessAbstraction.Repository;
 using BuildingBlocks.DataAccessAbstraction.UnitOfWork;
 using BuildingBlocks.Domain.Abstractions;
+using EGHeals.Application.Contracts.Roles;
 using EGHeals.Application.Contracts.Users;
 using EGHeals.Infrastructure.Data;
 using EGHeals.Infrastructure.Data.Interceptors;
 using EGHeals.Infrastructure.Helpers;
+using EGHeals.Infrastructure.Repositories.Roles;
 using EGHeals.Infrastructure.Repositories.Users;
 using EGHeals.Infrastructure.Repositories.Users.Mocks;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -53,6 +55,27 @@ namespace EGHeals.Infrastructure
                     var dbSimulator = sp.GetRequiredService<DatabaseSimulator>();
                     var userContext = sp.GetRequiredService<IUserContext>();
                     return new UserMockRepository(dbSimulator, userContext);
+                }
+            });
+
+            services.AddScoped<IRoleRepository>(sp =>
+            {
+                var platform = sp.GetRequiredService<IPlatformTarget>();
+                if (platform.Platform == PlatformType.MAUI)
+                {
+                    var db = sp.GetRequiredService<ApplicationDbContext>();
+                    var userContext = sp.GetRequiredService<IUserContext>();
+                    return new RoleRepository<ApplicationDbContext>(db, userContext);
+                }
+                else
+                {
+                    var db = sp.GetRequiredService<ApplicationDbContext>();
+                    var userContext = sp.GetRequiredService<IUserContext>();
+                    return new RoleRepository<ApplicationDbContext>(db, userContext);
+
+                    //var dbSimulator = sp.GetRequiredService<DatabaseSimulator>();
+                    //var userContext = sp.GetRequiredService<IUserContext>();
+                    //return new UserMockRepository(dbSimulator, userContext);
                 }
             });
 

@@ -17,21 +17,21 @@
         <div class="card-content__content">
             @ChildContent
         </div>
-        @if (OnFirstAction.HasDelegate || OnSecondAction.HasDelegate)
+        @if (OnPrimaryAction.HasDelegate || OnSecondaryAction.HasDelegate)
         {
             <div class="card-content__actions">
-                @if (OnFirstAction.HasDelegate)
+                @if (OnPrimaryAction.HasDelegate)
                 {
-                    <button class="card-content__action--1" @onclick="OnFirstAction">
-                        <span><i class="fa-regular fa-pen-to-square"></i></span>
-                        <span>@FirstActionText</span>
+                    <button class="card-content__action--1" @onclick="OnPrimaryAction">
+                        <span><i class="@PrimaryActionIcon"></i></span>
+                        <span>@PrimaryActionText</span>
                     </button>
                 }
-                @if (OnSecondAction.HasDelegate)
+                @if (OnSecondaryAction.HasDelegate)
                 {
-                    <button class="card-content__action--2" @onclick="OnSecondAction">
-                        <span><i class="fa-regular fa-trash-xmark"></i></span>
-                        <span>@SecondActionText</span>
+                    <button class="card-content__action--2" @onclick="OnSecondaryAction">
+                        <span><i class="@SecondaryActionIcon"></i></span>
+                        <span>@SecondaryActionText</span>
                     </button>
                 }               
             </div>
@@ -51,13 +51,17 @@
 
     [Parameter] public string? CardClass { get; set; }
 
-    [Parameter] public EventCallback OnFirstAction { get; set; }
+    [Parameter] public EventCallback OnPrimaryAction { get; set; }
 
-    [Parameter] public EventCallback OnSecondAction { get; set; }
+    [Parameter] public EventCallback OnSecondaryAction { get; set; }
 
-    [Parameter] public string FirstActionText { get; set; } = "Edit";
+    [Parameter] public string PrimaryActionText { get; set; } = "Edit";
 
-    [Parameter] public string SecondActionText { get; set; } = "Delete";
+    [Parameter] public string SecondaryActionText { get; set; } = "Delete";
+
+    [Parameter] public string PrimaryActionIcon { get; set; } = "fa-regular fa-pen-to-square";
+
+    [Parameter] public string SecondaryActionIcon { get; set; } = "fa-regular fa-trash-xmark";
 
     private void OnTogglePopupHandler() => showPopup ^= true;
 }

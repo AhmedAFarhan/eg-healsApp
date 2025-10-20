@@ -16,12 +16,15 @@ namespace EGHeals.Application.Extensions.Users
                 OwnershipId: user.OwnershipId.Value,
                 UserRoles : user.UserRoles.Select(role => new UserRoleDto
                 (
-                    Id : role.Id.Value,
+                    Id: role.Id.Value,
+                    RoleId: role.Role.Id.Value,
                     RoleName : role.Role.Name,
                     UserRolePermissions : role.UserRolePermissions.Select(permission => new UserRolePermissionDto
                     (
                         Id : permission.Id.Value,
-                        PermissionName : permission.RolePermission is not null ? permission.RolePermission.RolePermissionType.ToString() : "Permission"
+                        //PermissionId: permission.RolePermission is not null ? permission.RolePermission.Permission.Id.Value : Guid.Empty,
+                        RolePermissionId: permission.RolePermission.Id.Value,
+                        PermissionName : permission.RolePermission is not null ? permission.RolePermission.Permission.Name : "Permission"
                     ))
                 ))
             );

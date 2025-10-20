@@ -1,4 +1,4 @@
 ﻿namespace EGHeals.Application.Dtos.Users
 {
-    public record UserRoleDto(Guid Id, string RoleName, IEnumerable<UserRolePermissionDto> UserRolePermissions);
+    public record UserRoleDto(Guid Id, Guid RoleId, string RoleName, IEnumerable<UserRolePermissionDto> UserRolePermissions);
 }

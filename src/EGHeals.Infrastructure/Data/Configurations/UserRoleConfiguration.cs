@@ -20,6 +20,7 @@
             builder.HasMany(o => o.UserRolePermissions).WithOne().HasForeignKey(tb => tb.UserRoleId).OnDelete(DeleteBehavior.Restrict);
 
             //builder.HasOne<Role>().WithMany().HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Restrict); // incase we don't need navigation property
+            builder.HasOne(u => u.Role).WithMany().HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne<SystemUser>().WithMany().HasForeignKey(x => x.OwnershipId).OnDelete(DeleteBehavior.Restrict);
 

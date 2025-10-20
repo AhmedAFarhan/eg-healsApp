@@ -1,9 +1,6 @@
 ﻿using BuildingBlocks.DataAccess.Contracts;
-using BuildingBlocks.DataAccess.Helpers;
 using BuildingBlocks.DataAccessAbstraction.Queries;
 using EGHeals.Application.Contracts.Users;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace EGHeals.Infrastructure.Repositories.Users
 {
@@ -109,6 +106,7 @@ namespace EGHeals.Infrastructure.Repositories.Users
                                             .Include(x => x.UserRoles)
                                                 .ThenInclude(x => x.UserRolePermissions)
                                                     .ThenInclude(x => x.RolePermission)
+                                                        .ThenInclude(x => x.Permission)
                                             .FirstOrDefaultAsync(x => x.Id == SystemUserId.Of(userId));
 
         }

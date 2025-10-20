@@ -3,6 +3,7 @@
 @inject TaskHandlerService TaskHandlerService
 @inject LoadingService LoadingService
 @inject GlobalExceptionService GlobalExceptionService
+@inject MessageBoxService MessageBoxService
 
 <div class="auth">
     <div class="auth__side auth__side--left">
@@ -17,7 +18,7 @@
             <h3>Integrated Platform for Medical Operations</h3>
             <p>Our healthcare platform is designed to create a connected, technology-driven medical community. Whether you manage a medical center, clinic, laboratory, or pharmacy, this system helps you streamline operations, improve efficiency, and stay connected with patients and partners. By subscribing, you can easily manage your daily activities while benefiting from powerful features that simplify workflows and enhance the overall healthcare experience.</p>
             <MainButtonUI OnClick="OnLoginHandler" Class="auth__btn">Login</MainButtonUI>
-@*             <MainButtonUI OnClick="OnTestHandler" Class="auth__btn">Login2</MainButtonUI> *@
+            <MainButtonUI OnClick="OnTestHandler2" Class="auth__btn">Login2</MainButtonUI>
         </div>
         <div class="auth__ribbon">
             <div class="auth__ribbon-container">
@@ -83,28 +84,19 @@
         setError: GlobalExceptionService.Handle);
     }
 
-    private void OnTestHandler2()
-
+    private async Task OnTestHandler2()
     {
-        ModalPopupService.Show(builder =>
+        var x = await MessageBoxService.ShowAsync(title: "Test",
+                            description: "Test",
+                            msgBoxType: MsgBoxType.ERROR,
+                            btnText: "Ok");
+
+        if (x)
         {
-            builder.OpenComponent<MessageBoxComponent>(0);
 
-            // String parameters
-            builder.AddAttribute(1, "Title", "Operation Failed");
-            builder.AddAttribute(2, "BtnText", "Retry");
+        }
 
-            // Enum parameter
-            builder.AddAttribute(3, "Type", MsgBoxType.ERROR);
-
-            // Child content
-            builder.AddAttribute(4, "ChildContent", (RenderFragment)(childBuilder =>
-            {
-                childBuilder.AddContent(0, "You can put custom markup here instead of Description.");
-            }));
-
-            builder.CloseComponent();
-        });
+        var cc = 0;
     }
 
     private void OnTestHandler3()

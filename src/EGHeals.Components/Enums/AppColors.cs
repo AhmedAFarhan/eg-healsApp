@@ -1,8 +1,9 @@
 ﻿namespace EGHeals.Components.Enums
 {
-    public enum LoaderColor
+    public enum AppColors
     {
         PRIMARY,
-        SECONDARY
+        SECONDARY,
+        TERTIARY
     }
 }

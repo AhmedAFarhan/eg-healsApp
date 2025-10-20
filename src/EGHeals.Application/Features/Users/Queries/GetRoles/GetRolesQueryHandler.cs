@@ -1,6 +1,7 @@
-﻿using EGHeals.Application.Dtos.Roles;
+﻿using EGHeals.Application.Contracts.Roles;
+using EGHeals.Application.Dtos.Roles;
 using EGHeals.Application.Extensions.Roles;
-using EGHeals.Domain.ValueObjects;
+using EGHeals.Domain.Enums;
 
 namespace EGHeals.Application.Features.Users.Queries.GetRoles
 {
@@ -8,9 +9,9 @@ namespace EGHeals.Application.Features.Users.Queries.GetRoles
     {
         public async Task<EGResponse<IEnumerable<RoleDto>>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
         {
-            var repo = unitOfWork.GetSystemRepository<Role, RoleId>();
+            var repo = unitOfWork.GetCustomRepository<IRoleRepository>();
 
-            var roles = await repo.GetAllAsync(includes: [r => r.Permissions]);
+            var roles = await repo.GetRolesAsync(RoleType.RADIOLOGY, cancellationToken: cancellationToken);
 
             var rolesDtos = roles.ToRolesDtos();
 

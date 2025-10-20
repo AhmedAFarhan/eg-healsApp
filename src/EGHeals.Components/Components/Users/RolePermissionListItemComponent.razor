@@ -1,0 +1,49 @@
+@using EGHeals.Components.Identity
+@using EGHeals.Models.Models.Users
+
+<GridCardUI OnPrimaryAction="@OnToggleActivationHandler"
+            PrimaryActionText="@Model.ActivationBtnText"
+            PrimaryActionIcon="@Model.ActivationBtnIcon">
+    <div class="permission">
+        <CardActivationFlipperUI IsFlipped="@Model.IsActive" ActiveColor="GetAppColor()">
+            <AccessibilityIcon ContainerClass="permission__svg-icon-container" />
+        </CardActivationFlipperUI>       
+        <div class="permission__name">@Model.Name</div>
+    </div>
+</GridCardUI>
+
+@code {
+
+    [Parameter] public RolePermissionModel Model { get; set; } = default!;
+
+    [Parameter] public EventCallback OnActivationChanged { get; set; }
+
+    [Parameter] public Func<RolePermissionModel, RoleModel> OnGetRole { get; set; } = default!;
+
+    private void OnToggleActivationHandler()
+    {
+        Model.ToggleActivation();
+
+        var role = OnGetRole.Invoke(Model);
+
+        if (role is not null)
+        {
+            var anyActivePermission = role.RolePermissions.Any(x => x.IsActive);
+
+            if ((anyActivePermission && !role.IsActive) || (!anyActivePermission && role.IsActive))
+            {
+                role.ToggleActivation();
+            }
+        }
+
+        OnActivationChanged.InvokeAsync();
+    }
+
+    private AppColors GetAppColor() => Model.RoleName switch
+    {
+        RoleDefinition.Receptionist => AppColors.PRIMARY,
+        RoleDefinition.Radiologist => AppColors.SECONDARY,
+        RoleDefinition.Accountant => AppColors.TERTIARY,
+        _ => AppColors.PRIMARY
+    };
+}

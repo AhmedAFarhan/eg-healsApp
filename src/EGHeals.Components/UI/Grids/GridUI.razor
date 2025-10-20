@@ -11,11 +11,14 @@
         }
         else if (!Items.Any())
         {
-            <div>No Items Found!</div>
+            <div class="not-found">
+                <img src="_content/EGHeals.Components/assets/images/not-found-128.png" />
+                <p>No Items Found!</p>
+            </div>
         }
         else
         {
-            @foreach (var item in Items.ToList())
+            @foreach (var item in Items)
             {
                 @CardContent(item)
             }
@@ -28,7 +31,7 @@
 
     [Parameter] public bool IsLoading { get; set; }
 
-    [Parameter] public IEnumerable<TItem> Items { get; set; } = default!;
+    [Parameter] public List<TItem> Items { get; set; } = default!;
 
     [Parameter] public RenderFragment SkeletonContent { get; set; } = default!;
 

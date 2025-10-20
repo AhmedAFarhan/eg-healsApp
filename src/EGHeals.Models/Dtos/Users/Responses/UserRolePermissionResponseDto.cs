@@ -1,4 +1,4 @@
 ﻿namespace EGHeals.Models.Dtos.Users.Responses
 {
-    public record UserRolePermissionResponseDto(Guid Id, string PermissionName);
+    public record UserRolePermissionResponseDto(Guid Id, Guid RolePermissionId, string PermissionName);
 }

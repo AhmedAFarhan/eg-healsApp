@@ -18,7 +18,7 @@
         <TextInputUI FontAwesomeIcon="fa-solid fa-user" Label="Username*" Placeholder="Enter your username" @bind-Value="User.Username" ValidationFor="@(() => User.Username)" />
         <PasswordInputUI FontAwesomeIcon="fa-solid fa-lock-keyhole" Label="Password*" Placeholder="Enter your password" @bind-Value="User.Password" ValidationFor="@(() => User.Password)" />
         <PasswordInputUI FontAwesomeIcon="fa-solid fa-lock-keyhole" Label="Confirm Password*" Placeholder="Confirm your password" @bind-Value="User.ConfirmPassword" ValidationFor="@(() => User.ConfirmPassword)" />
-        <MainButtonUI Class="mt-3" IsSubmit="true">Login</MainButtonUI>
+        <MainButtonUI Icon="fa-solid fa-plus-large" Class="mt-3" IsSubmit="true">Add</MainButtonUI>
     </VerticalAlignmentWrapper>
 </EditForm>
 
@@ -30,13 +30,25 @@
 
     private async Task OnValidSubmitHandler()
     {
-        var json = JsonSerializer.Serialize(User);
+        await TaskHandlerService.RunAsync(async () =>
+        {
+            await Task.Delay(1000);
+        },
+        setLoading: Modal.StartLoading,
+        stopLoading: Modal.StopLoading,
+        setError: Modal.SetError,
+        SuccessMsg : "Done",
+        setSuccess: Modal.SetSuccess);
 
-        var data = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
+        //user authorization
 
-        NavigationManager.NavigateTo($"/user-roles?data={Uri.EscapeDataString(data)}");
+        // var json = JsonSerializer.Serialize(User);
 
-        Modal.Close();
+        // var data = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
+
+        // NavigationManager.NavigateTo($"/user-roles?data={Uri.EscapeDataString(data)}");
+
+        // Modal?.Close?.Invoke(true);
 
         // var result = await TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
         // {

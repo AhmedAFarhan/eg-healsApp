@@ -1,5 +1,6 @@
 ﻿.grid-container {
     overflow: hidden;
+    position : relative;
 } 
 
 .grid {
@@ -10,9 +11,33 @@
     max-height: 100%;
 }
 
+.not-found{
+    position : absolute;
+    top : 50%;
+    inset-inline-start : 50%;
+    transform : translate(-50%, -50%);
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    flex-direction : column;
+}
+
+.not-found img{
+    margin-bottom : 0.5rem;
+}
+
+.not-found p {
+    padding: 0rem;
+    margin: 0rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-very-dark-gray);
+}
+
 .grid-cols-1 {
     grid-template-columns: repeat(1, 1fr);
 } 
+
 .grid-cols-2 {
     grid-template-columns: repeat(2, 1fr);
 }

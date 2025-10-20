@@ -1,4 +1,4 @@
-<div class="flip @Class @(IsFlipped ? "flipped" : "")">
+<div class="flip @(DisableTransition ? "no-transition" : "") @Class @(IsFlipped ? "flipped" : "")">
     <!-- Front (original icon) -->
     <div class="flip__inner @InnerClass @(IsHorizontal ? "flip__inner--horizontal" : "flip__inner--vertical")">
         <div class="flip__front">
@@ -21,6 +21,8 @@
     [Parameter] public RenderFragment Front { get; set; } = default!;
 
     [Parameter] public RenderFragment Back { get; set; } = default!;
+
+    [CascadingParameter] public bool DisableTransition { get; set; }
 
     [Parameter] public string? Class { get; set; } = default!;
 

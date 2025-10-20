@@ -16,11 +16,11 @@
         return Transparency ? Size : Size * 0.5; // e.g., half the button size
     }
 
-    private string GetVariantTransparencyClass() => Variant switch
+    private string GetVariantTransparencyClass() => Color switch
     {
-        MainButtonVariant.PRIMARY => "button-primary-transparency",
-        MainButtonVariant.SECONDARY => "button-secondary-transparency",
-        MainButtonVariant.TERTIARY => "button-tertiary-transparency",
+        AppColors.PRIMARY => "button-primary-transparency",
+        AppColors.SECONDARY => "button-secondary-transparency",
+        AppColors.TERTIARY => "button-tertiary-transparency",
         _ => "button-primary-transparency"
     };
 }

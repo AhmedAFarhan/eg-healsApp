@@ -10,14 +10,23 @@
     border-radius: 100%;
     display: flex;
     justify-content: center;
+    align-items : center;
 }
 
 .flipper-content ::deep .flipper-content__icon-wrapper--inactive {
     background-color: var(--color-dark-gray);
 }
 
-.flipper-content ::deep .flipper-content__icon-wrapper--active {
+.flipper-content ::deep .flipper-content__icon-wrapper--active-primary {
     background-color: var(--color-primary-light);
+}
+
+.flipper-content ::deep .flipper-content__icon-wrapper--active-secondary {
+    background-color: var(--color-secondary-light);
+}
+
+.flipper-content ::deep .flipper-content__icon-wrapper--active-tertiary {
+    background-color: var(--color-tertiary-light);
 }
 
 .flipper-content ::deep .flipper-content__svg-icon-container {

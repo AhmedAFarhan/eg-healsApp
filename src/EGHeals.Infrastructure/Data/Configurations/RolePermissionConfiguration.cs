@@ -9,9 +9,14 @@
 
             builder.Property(x => x.RoleId).HasConversion(id => id.Value, dbId => RoleId.Of(dbId));
 
-            builder.Property(x => x.RolePermissionType).HasDefaultValue(RolePermissionType.READ).HasConversion(enums => enums.ToString(), dbEnums => (RolePermissionType)Enum.Parse(typeof(RolePermissionType), dbEnums));
+            builder.Property(x => x.PermissionId).HasConversion(id => id.Value, dbId => PermissionId.Of(dbId));
 
-            builder.HasIndex(x => new { x.RoleId, x.RolePermissionType }).IsUnique();
+            builder.HasIndex(x => new { x.RoleId, x.PermissionId }).IsUnique();
+
+            /*************************** Relationships ****************************/
+
+            //builder.HasOne<Permission>().WithMany().HasForeignKey(x => x.PermissionId).OnDelete(DeleteBehavior.Restrict); //incase we don't have navigation property
+            builder.HasOne(r => r.Permission).WithMany().HasForeignKey(x => x.PermissionId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

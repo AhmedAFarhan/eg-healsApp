@@ -7,8 +7,11 @@
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasConversion(id => id.Value, dbId => RoleId.Of(dbId));
 
-            builder.HasIndex(x => x.Name).IsUnique();
             builder.Property(x => x.Name).HasMaxLength(150).IsRequired();
+
+            builder.Property(x => x.RoleType).HasDefaultValue(RoleType.NONE).HasConversion(enums => enums.ToString(), dbEnums => (RoleType)Enum.Parse(typeof(RoleType), dbEnums));
+
+            builder.HasIndex(x => new { x.Name , x.RoleType }).IsUnique();
 
             /*************************** Relationships ****************************/
 

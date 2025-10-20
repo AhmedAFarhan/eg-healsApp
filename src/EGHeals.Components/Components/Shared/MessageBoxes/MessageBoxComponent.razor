@@ -1,3 +1,6 @@
+@using EGHeals.Components.Models.ModalPopups
+
+@inject TaskHandlerService TaskHandlerService
 
 <div class="message-box">
     <div class="message-box__header">
@@ -9,18 +12,22 @@
     <div class="message-box__desc">
         @ChildContent
     </div>
-    <MainButtonUI OnClick="OnClick" Variant="@GetVariantClass(Type)">@BtnText</MainButtonUI>
+    <MainButtonUI OnClick="OnClick" Color="@GetVariantClass(Type)">@BtnText</MainButtonUI>
 </div>
 
 @code{
 
-    private MainButtonVariant variant = MainButtonVariant.PRIMARY;
+    private AppColors Color = AppColors.PRIMARY;
+
+    [CascadingParameter] public ModalContext Modal { get; set; } = default!;
 
     [Parameter] public string Title { get; set; } = default!;
 
     [Parameter] public RenderFragment ChildContent { get; set; } = default!;
 
     [Parameter] public string BtnText { get; set; } = "Ok";
+
+    [Parameter] public string SuccessMsg { get; set; } = "Success";
 
     [Parameter] public MsgBoxType Type { get; set; } = MsgBoxType.INFO;
 
@@ -42,11 +49,12 @@
         _ => "fa-sharp fa-solid fa-info"
     };
 
-    private MainButtonVariant GetVariantClass(MsgBoxType type) => type switch
+    private AppColors GetVariantClass(MsgBoxType type) => type switch
     {
-        MsgBoxType.INFO => MainButtonVariant.PRIMARY,
-        MsgBoxType.WARNING => MainButtonVariant.SECONDARY,
-        MsgBoxType.ERROR => MainButtonVariant.TERTIARY,
-        _ => MainButtonVariant.PRIMARY
+        MsgBoxType.INFO => AppColors.PRIMARY,
+        MsgBoxType.WARNING => AppColors.SECONDARY,
+        MsgBoxType.ERROR => AppColors.TERTIARY,
+        _ => AppColors.PRIMARY
     };
+
 }

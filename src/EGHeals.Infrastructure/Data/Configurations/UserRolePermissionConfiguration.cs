@@ -13,9 +13,12 @@
 
             builder.Property(x => x.RolePermissionId).HasConversion(id => id.Value, dbId => RolePermissionId.Of(dbId));
 
+            builder.HasIndex(x => new { x.UserRoleId, x.RolePermissionId }).IsUnique();
+
             /*************************** Relationships ****************************/
 
             //builder.HasOne<RolePermission>().WithMany().HasForeignKey(x => x.RolePermissionId).OnDelete(DeleteBehavior.Restrict); // incase we don't need navigation property
+            builder.HasOne(u => u.RolePermission).WithMany().HasForeignKey(x => x.RolePermissionId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne<SystemUser>().WithMany().HasForeignKey(x => x.OwnershipId).OnDelete(DeleteBehavior.Restrict);
         }

@@ -6,7 +6,7 @@
 
 @code {
 
-    [Parameter] public LoaderColor Color { get; set; } = LoaderColor.PRIMARY;
+    [Parameter] public AppColors Color { get; set; } = AppColors.PRIMARY;
 
     [Parameter] public bool IsCentralized { get; set; } = true;
 
@@ -14,8 +14,8 @@
 
     private string ColorClass => Color switch
     {
-        LoaderColor.PRIMARY => "primary-color",
-        LoaderColor.SECONDARY => "secondary-color",
+        AppColors.PRIMARY => "primary-color",
+        AppColors.SECONDARY => "secondary-color",
         _ => "primary-color"
     };
 }

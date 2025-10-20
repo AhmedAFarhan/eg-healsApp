@@ -6,9 +6,9 @@ namespace EGHeals.Components.Services
 {
     public class MessageBoxService(ModalPopupService modalPopupService)
     {
-        public void Show(string title, string description, string btnText, MsgBoxType msgBoxType, Action? action = null)
+        public Task<bool> ShowAsync(string title, string description, string btnText, MsgBoxType msgBoxType)
         {
-            modalPopupService.Show(builder =>
+            return modalPopupService.ShowDialog<bool>(builder =>
             {
                 builder.OpenComponent<MessageBoxComponent>(0);
 
@@ -20,16 +20,10 @@ namespace EGHeals.Components.Services
                 builder.AddAttribute(3, "Type", msgBoxType);
 
                 // On click parameter
-                builder.AddAttribute(4, "OnClick",EventCallback.Factory.Create(this, () => 
+                builder.AddAttribute(4, "OnClick", EventCallback.Factory.Create(this, () => 
                 {
-                    if (action is null)
-                    {
-                        modalPopupService.Close();
-                    }
-                    else
-                    {
-                        action.Invoke();
-                    }
+                    modalPopupService.Close(true);
+                    //tcs.TrySetResult(true);
                 }));
 
                 // Child content
