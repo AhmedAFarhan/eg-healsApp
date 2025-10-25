@@ -1,6 +1,4 @@
-@using EGHeals.Application.Dtos.Users
-@using EGHeals.Application.Features.Users.Commands.Login
-@using EGHeals.Components.Models.ModalPopups
+@using EGHeals.Components.Components.Shared.Modals.Contexts
 @using EGHeals.Components.Security
 @using EGHeals.Models.Dtos.Users.Requests
 @using System.Text.Json
@@ -8,7 +6,6 @@
 @using System.Text
 
 @inject TaskHandlerService TaskHandlerService
-@inject ISender sender
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
 

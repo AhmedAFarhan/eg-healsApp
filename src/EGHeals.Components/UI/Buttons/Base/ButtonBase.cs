@@ -1,4 +1,4 @@
-﻿using EGHeals.Components.Enums;
+﻿using EGHeals.Models.Enums;
 using Microsoft.AspNetCore.Components;
 
 namespace EGHeals.Components.UI.Buttons.Base
@@ -9,12 +9,12 @@ namespace EGHeals.Components.UI.Buttons.Base
         [Parameter] public bool IsDisabled { get; set; } = false;
         [Parameter] public EventCallback OnClick { get; set; }
         [Parameter] public string? Class { get; set; }
-        [Parameter] public AppColors Color { get; set; } = AppColors.PRIMARY;
+        [Parameter] public ApplicationColor Color { get; set; } = ApplicationColor.PRIMARY;
         protected string GetVariantClass() => Color switch
         {
-            AppColors.PRIMARY => "button-primary",
-            AppColors.SECONDARY => "button-secondary",
-            AppColors.TERTIARY => "button-tertiary",
+            ApplicationColor.PRIMARY => "button-primary",
+            ApplicationColor.SECONDARY => "button-secondary",
+            ApplicationColor.TERTIARY => "button-tertiary",
             _ => "button-primary"
         };
     }

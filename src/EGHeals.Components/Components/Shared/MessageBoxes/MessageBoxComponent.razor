@@ -1,4 +1,5 @@
-@using EGHeals.Components.Models.ModalPopups
+@using EGHeals.Components.Components.Shared.Modals.Contexts
+@using EGHeals.Models.Enums
 
 @inject TaskHandlerService TaskHandlerService
 
@@ -17,7 +18,7 @@
 
 @code{
 
-    private AppColors Color = AppColors.PRIMARY;
+    private ApplicationColor Color = ApplicationColor.PRIMARY;
 
     [CascadingParameter] public ModalContext Modal { get; set; } = default!;
 
@@ -49,12 +50,12 @@
         _ => "fa-sharp fa-solid fa-info"
     };
 
-    private AppColors GetVariantClass(MsgBoxType type) => type switch
+    private ApplicationColor GetVariantClass(MsgBoxType type) => type switch
     {
-        MsgBoxType.INFO => AppColors.PRIMARY,
-        MsgBoxType.WARNING => AppColors.SECONDARY,
-        MsgBoxType.ERROR => AppColors.TERTIARY,
-        _ => AppColors.PRIMARY
+        MsgBoxType.INFO => ApplicationColor.PRIMARY,
+        MsgBoxType.WARNING => ApplicationColor.SECONDARY,
+        MsgBoxType.ERROR => ApplicationColor.TERTIARY,
+        _ => ApplicationColor.PRIMARY
     };
 
 }

@@ -1,8 +1,9 @@
 @using System.Globalization
-@using BuildingBlocks.Exceptions
-@using EGHeals.Components.Components.Navigations
 @using EGHeals.Components.Components.Shared.Modals
-@using EGHeals.Components.Components.SplashScreen;
+@using EGHeals.Components.Components.Shared.Navigations
+@using EGHeals.Components.Components.Shared.SplashScreen
+@using EGHeals.Models.Enums
+@using EGHeals.Services.Exceptions
 
 @inject ModalPopupService ModalPopupService
 @inject LoadingService LoadingService
@@ -32,7 +33,7 @@
                     @ChildContent
                     @if (isLoading)
                     {
-                        <BarLoading IsCentralized="true" Color="AppColors.SECONDARY" IsOverlayed="true" />
+                        <BarLoading IsCentralized="true" Color="ApplicationColor.SECONDARY" IsOverlayed="true" />
                     }
                 </main>
             </div>
@@ -81,12 +82,12 @@
         StateHasChanged();
     }
 
-    private void OnExceptionHandler(AppException ex)
+    private void OnExceptionHandler(string errTitle, string errMsg)
     {
-        if (ex is null) return;
+        // if (ex is null) return;
 
-        MessageBoxService.ShowAsync(title: ex.Title,
-                                    description: ex.Message,
+        MessageBoxService.ShowAsync(title: errTitle,
+                                    description: errMsg,
                                     msgBoxType: MsgBoxType.ERROR,
                                     btnText: "Ok");
     }

@@ -1,13 +1,12 @@
-﻿@using EGHeals.Application.Dtos.Users
-@using EGHeals.Application.Features.Users.Commands.Login
-@using EGHeals.Components.Models.ModalPopups
+﻿@using EGHeals.Components.Components.Shared.Modals.Contexts
 @using EGHeals.Components.Security
 @using EGHeals.Models.Dtos.Users.Requests
 @using EGHeals.Models.Dtos.Users.Responses
+@using EGHeals.Services.Responses
 
 @inject TaskHandlerService TaskHandlerService
-@inject ISender sender
 @inject AuthenticationStateProvider AuthStateProvider
+@inject EGService EGService;
 
 <EditForm Model="User" OnValidSubmit="OnValidSubmitHandler">
    <DataAnnotationsValidator/>
@@ -26,27 +25,23 @@
 
     private async Task OnValidSubmitHandler()
     {
-        var result = await TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
+        var result = await TaskHandlerService.RunAsync<string>(async () =>
         {
-            var command = new LoginCommand(new LoginUserDto(User.Username, User.Password));
-
-            var response = await sender.Send(command);
-
-            var result = response.Adapt<EGResponse<UserResponseDto>>();
-
-            return result;
+            return await EGService.PostAsync<string, LoginUserRequestDto>("api/users/login", User);
         }, 
-        setLoading: Modal.StartLoading,
-        stopLoading: Modal.StopLoading,
-        setError : Modal.SetError);
+        onStart: Modal.StartLoading,
+        onFinish: Modal.StopLoading);
 
         //user authorization
-        if (result is not null && result.Success)
+        if (!result.Success)
         {
-            // Notify Blazor
-            (AuthStateProvider as CustomAuthStateProvider)?.NotifyUserAuthentication(result.Data);
-
-            Modal?.Close?.Invoke(true);
+            Modal.SetError?.Invoke(result.Errors);
+            return;
         }
+
+        // Notify Blazor the user is authenticated
+        (AuthStateProvider as CustomAuthStateProvider)?.NotifyUserAuthentication(result.Data);
+
+        Modal?.Close?.Invoke(true);
     }
 }

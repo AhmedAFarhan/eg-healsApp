@@ -1,12 +1,10 @@
-@using BuildingBlocks.Exceptions
-@using EGHeals.Application.Features.Users.Queries.GetRoles
-@using EGHeals.Application.Features.Users.Queries.GetUserByIdByOwnership
 @using EGHeals.Models.Dtos.Roles.Reponses
 @using EGHeals.Models.Dtos.Users
 @using EGHeals.Models.Dtos.Users.Requests
 @using EGHeals.Models.Dtos.Users.Responses
+@using EGHeals.Models.Enums
 @using EGHeals.Models.Models.Users
-@using Microsoft.AspNetCore.WebUtilities
+@* @using Microsoft.AspNetCore.WebUtilities *@
 @using System.Security.Cryptography
 @using System.Text.Json
 @using System.Text
@@ -15,7 +13,7 @@
 @inject TaskHandlerService TaskHandlerService
 @inject NavigationManager NavigationManager
 @inject MessageBoxService MessageBoxService
-@inject ISender sender
+
 
 <PageUI>
     <div class="roles-page">
@@ -125,81 +123,81 @@
         return JsonSerializer.Deserialize<AddSubUserRequestDto>(json);
     }
 
-    private Task<EGResponse<UserResponseDto>?> GetUserRolesAndPermissionsAsync()
-    {
-        return TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
-        {
-            var query = new GetSubUserRolesByOwnershipQuery(UserId.Value);
+    // private Task<EGResponse<UserResponseDto>?> GetUserRolesAndPermissionsAsync()
+    // {
+    //     return TaskHandlerService.RunAsync<EGResponse<UserResponseDto>>(async () =>
+    //     {
+    //         var query = new GetSubUserRolesByOwnershipQuery(UserId.Value);
 
-            var response = await sender.Send(query);
+    //         var response = await sender.Send(query);
 
-            var result = response.Adapt<EGResponse<UserResponseDto>>();
+    //         var result = response.Adapt<EGResponse<UserResponseDto>>();
 
-            return result;
-        },
-        setLoading: () => isInit = true,
-        stopLoading: () => isInit = false,
-        setError: GlobalExceptionService.Handle);
-    }
+    //         return result;
+    //     },
+    //     setLoading: () => isInit = true,
+    //     stopLoading: () => isInit = false,
+    //     setError: GlobalExceptionService.Handle);
+    // }
 
-    private Task<EGResponse<IEnumerable<RoleResponseDto>>?> GetDefinedRolesAndPermissionsAsync()
-    {
-        return TaskHandlerService.RunAsync<EGResponse<IEnumerable<RoleResponseDto>>>(async () =>
-        {
-            var query = new GetRolesQuery();
+    // private Task<EGResponse<IEnumerable<RoleResponseDto>>?> GetDefinedRolesAndPermissionsAsync()
+    // {
+    //     return TaskHandlerService.RunAsync<EGResponse<IEnumerable<RoleResponseDto>>>(async () =>
+    //     {
+    //         var query = new GetRolesQuery();
 
-            var response = await sender.Send(query);
+    //         var response = await sender.Send(query);
 
-            var result = response.Adapt<EGResponse<IEnumerable<RoleResponseDto>>>();
+    //         var result = response.Adapt<EGResponse<IEnumerable<RoleResponseDto>>>();
 
-            return result;
-        },
-        setLoading: () => isInit = true,
-        stopLoading: () => isInit = false,
-        setError: GlobalExceptionService.Handle);
-    }
+    //         return result;
+    //     },
+    //     setLoading: () => isInit = true,
+    //     stopLoading: () => isInit = false,
+    //     setError: GlobalExceptionService.Handle);
+    // }
 
     private async Task InitializeForNewUserAsync(string encodedData)
     {
-        var user = DecodeUserFromQuery(encodedData);
+        // var user = DecodeUserFromQuery(encodedData);
 
-        //Get defined system roles and permissions
-        var definedRolesAndPermissionsResult = await GetDefinedRolesAndPermissionsAsync();
+        // //Get defined system roles and permissions
+        // var definedRolesAndPermissionsResult = await GetDefinedRolesAndPermissionsAsync();
 
-        if (definedRolesAndPermissionsResult is not null && definedRolesAndPermissionsResult.Success)
-        {
-            var definedRoles = definedRolesAndPermissionsResult.Data;
-            roles = MapDefinedRolesToModels(definedRoles);
-            var firstRole = roles.First();
-            firstRole.IsSelected = true;
-            rolePermissions = firstRole.RolePermissions;
-            displayedRolePermissions = firstRole.Name;
-        }
+        // if (definedRolesAndPermissionsResult is not null && definedRolesAndPermissionsResult.Success)
+        // {
+        //     var definedRoles = definedRolesAndPermissionsResult.Data;
+        //     roles = MapDefinedRolesToModels(definedRoles);
+        //     var firstRole = roles.First();
+        //     firstRole.IsSelected = true;
+        //     rolePermissions = firstRole.RolePermissions;
+        //     displayedRolePermissions = firstRole.Name;
+        // }
 
-        //Show popup telling admin to select the sub user roles
-        _= MessageBoxService.ShowAsync(title: "User Role Configuration",
-                                       description: "Please select the user roles and permissions.",
-                                       msgBoxType: MsgBoxType.INFO,
-                                       btnText: "Ok");
+        // //Show popup telling admin to select the sub user roles
+        // _= MessageBoxService.ShowAsync(title: "User Role Configuration",
+        //                                description: "Please select the user roles and permissions.",
+        //                                msgBoxType: MsgBoxType.INFO,
+        //                                btnText: "Ok");
     }
 
     private async Task InitializeForExistingUserAsync()
     {
-        var UserRolesAndPermissionsResult = await GetUserRolesAndPermissionsAsync();// await getUserRolesAndPermissionsTask;
-        var definedRolesAndPermissionsResult = await GetDefinedRolesAndPermissionsAsync();// await getDefinedRolesAndPermissionsTask;
+        // var UserRolesAndPermissionsResult = await GetUserRolesAndPermissionsAsync();// await getUserRolesAndPermissionsTask;
+        // var definedRolesAndPermissionsResult = await GetDefinedRolesAndPermissionsAsync();// await getDefinedRolesAndPermissionsTask;
 
-        if ((UserRolesAndPermissionsResult is not null && UserRolesAndPermissionsResult.Success)
-            && (definedRolesAndPermissionsResult is not null && definedRolesAndPermissionsResult.Success))
-        {
-            subUser = UserRolesAndPermissionsResult.Data;
-            var subUserRoles = subUser.UserRoles;
+        // if ((UserRolesAndPermissionsResult is not null && UserRolesAndPermissionsResult.Success)
+        //     && (definedRolesAndPermissionsResult is not null && definedRolesAndPermissionsResult.Success))
+        // {
+        //     subUser = UserRolesAndPermissionsResult.Data;
+        //     var subUserRoles = subUser.UserRoles;
 
-            var definedRoles = definedRolesAndPermissionsResult.Data;
-            roles = MapDefinedRolesToModels(definedRoles, subUserRoles);
+        //     var definedRoles = definedRolesAndPermissionsResult.Data;
+        //     roles = MapDefinedRolesToModels(definedRoles, subUserRoles);
 
-            rolePermissions = roles.First().RolePermissions;
-            displayedRolePermissions = roles.First().Name;
-        }
+        //     rolePermissions = roles.First().RolePermissions;
+        //     displayedRolePermissions = roles.First().Name;
+        // }
     }
 
     private async Task OnSaveHandlerAsync()
@@ -209,24 +207,24 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-        var query = QueryHelpers.ParseQuery(uri.Query);
+        // var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        // var query = QueryHelpers.ParseQuery(uri.Query);
 
-        //Option 1: Handle encoded query data
-        if (query.TryGetValue("data", out var encoded))
-        {            
-            await InitializeForNewUserAsync(encoded!);
-        }
-        // Option 2: Handle /user-roles/{guid}
-        else if (UserId.HasValue && UserId != Guid.Empty)
-        {
-            await InitializeForExistingUserAsync();
-        }
-        // Invalid Data Path
-        else
-        {
-            GlobalExceptionService.Handle(new AppException("Not Found", 404, new List<string> { "Invalid user data or query." }));
-            OnNavigateBackToUsersHandler();
-        }
+        // //Option 1: Handle encoded query data
+        // if (query.TryGetValue("data", out var encoded))
+        // {            
+        //     await InitializeForNewUserAsync(encoded!);
+        // }
+        // // Option 2: Handle /user-roles/{guid}
+        // else if (UserId.HasValue && UserId != Guid.Empty)
+        // {
+        //     await InitializeForExistingUserAsync();
+        // }
+        // // Invalid Data Path
+        // else
+        // {
+        //     GlobalExceptionService.Handle(new AppException("Not Found", 404, new List<string> { "Invalid user data or query." }));
+        //     OnNavigateBackToUsersHandler();
+        // }
     }
 }

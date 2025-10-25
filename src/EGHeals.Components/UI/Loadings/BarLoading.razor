@@ -1,3 +1,4 @@
+@using EGHeals.Models.Enums
 <div class="loader-container @(IsCentralized ? "centralized" : "")">
     <div class="loading-overlay @(IsOverlayed ? "centralized" : "")"></div>
     <div class="loader @(ColorClass)"></div>
@@ -6,7 +7,7 @@
 
 @code {
 
-    [Parameter] public AppColors Color { get; set; } = AppColors.PRIMARY;
+    [Parameter] public ApplicationColor Color { get; set; } = ApplicationColor.PRIMARY;
 
     [Parameter] public bool IsCentralized { get; set; } = true;
 
@@ -14,8 +15,8 @@
 
     private string ColorClass => Color switch
     {
-        AppColors.PRIMARY => "primary-color",
-        AppColors.SECONDARY => "secondary-color",
+        ApplicationColor.PRIMARY => "primary-color",
+        ApplicationColor.SECONDARY => "secondary-color",
         _ => "primary-color"
     };
 }

@@ -1,4 +1,5 @@
 @using EGHeals.Components.Identity
+@using EGHeals.Models.Enums
 @using EGHeals.Models.Models.Users
 
 <GridCardUI OnPrimaryAction="@OnToggleActivationHandler"
@@ -39,11 +40,11 @@
         OnActivationChanged.InvokeAsync();
     }
 
-    private AppColors GetAppColor() => Model.RoleName switch
+    private ApplicationColor GetAppColor() => Model.RoleName switch
     {
-        RoleDefinition.Receptionist => AppColors.PRIMARY,
-        RoleDefinition.Radiologist => AppColors.SECONDARY,
-        RoleDefinition.Accountant => AppColors.TERTIARY,
-        _ => AppColors.PRIMARY
+        RoleDefinition.Receptionist => ApplicationColor.PRIMARY,
+        RoleDefinition.Radiologist => ApplicationColor.SECONDARY,
+        RoleDefinition.Accountant => ApplicationColor.TERTIARY,
+        _ => ApplicationColor.PRIMARY
     };
 }

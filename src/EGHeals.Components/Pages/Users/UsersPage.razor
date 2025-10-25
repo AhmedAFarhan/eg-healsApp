@@ -1,13 +1,8 @@
-@using BuildingBlocks.DataAccessAbstraction.Queries
-@using BuildingBlocks.Pagination
-@using EGHeals.Application.Features.Users.Queries.GetSubUsersByOwnership
-@using EGHeals.Domain.Models
 @using EGHeals.Models.Dtos.Users.Responses
-
 @inject TaskHandlerService TaskHandlerService
 @inject ModalPopupService ModalPopupService
 @inject GlobalExceptionService GlobalExceptionService
-@inject ISender sender
+
 
 <PageUI>
     <div class="page-content">
@@ -39,28 +34,28 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await TaskHandlerService.RunAsync<EGResponse<PaginatedResult<SubUserResponseDto>>>(async () =>
-        {
-            //var query = new GetSubUsersByOwnershipQuery(new PaginationRequest());
-            var query = new GetSubUsersByOwnershipQuery(new QueryOptions<SystemUser>());
+        // var result = await TaskHandlerService.RunAsync<EGResponse<PaginatedResult<SubUserResponseDto>>>(async () =>
+        // {
+        //     //var query = new GetSubUsersByOwnershipQuery(new PaginationRequest());
+        //     var query = new GetSubUsersByOwnershipQuery(new QueryOptions<SystemUser>());
 
-            var response = await sender.Send(query);
+        //     var response = await sender.Send(query);
 
-            var result = response.Adapt<EGResponse<PaginatedResult<SubUserResponseDto>>>();
+        //     var result = response.Adapt<EGResponse<PaginatedResult<SubUserResponseDto>>>();
 
-            return result;
-        },
-        setLoading: () => isInit = true,
-        stopLoading: () => isInit = false,
-        setError: GlobalExceptionService.Handle);
+        //     return result;
+        // },
+        // setLoading: () => isInit = true,
+        // stopLoading: () => isInit = false,
+        // setError: GlobalExceptionService.Handle);
 
-        if (result is not null && result.Success)
-        {
-            users = result.Data.Data.ToList();
-            var count = result.Data.Count;
-            var pageSize = result.Data.PageSize;
-            totalPages = (long)Math.Ceiling(count / (double)pageSize);
-        }        
+        // if (result is not null && result.Success)
+        // {
+        //     users = result.Data.Data.ToList();
+        //     var count = result.Data.Count;
+        //     var pageSize = result.Data.PageSize;
+        //     totalPages = (long)Math.Ceiling(count / (double)pageSize);
+        // }        
     }
 
     private async Task OnAddingUserHandler()

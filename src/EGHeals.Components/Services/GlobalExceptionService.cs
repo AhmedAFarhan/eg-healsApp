@@ -1,12 +1,11 @@
-﻿
-using BuildingBlocks.Exceptions;
+﻿using EGHeals.Services.Exceptions;
 
 namespace EGHeals.Components.Services
 {
     public class GlobalExceptionService
     {
-        public event Action<AppException>? OnException;
+        public event Action<string, string>? OnException;
 
-        public void Handle(AppException ex) => OnException?.Invoke(ex);
+        public void Handle(string errTitle, string errMsg) => OnException?.Invoke(errTitle, errMsg);
     }
 }

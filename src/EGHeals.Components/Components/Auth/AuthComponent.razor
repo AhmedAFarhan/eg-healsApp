@@ -1,4 +1,4 @@
-@using BuildingBlocks.Exceptions
+@using EGHeals.Models.Enums
 @inject ModalPopupService ModalPopupService
 @inject TaskHandlerService TaskHandlerService
 @inject LoadingService LoadingService
@@ -18,7 +18,7 @@
             <h3>Integrated Platform for Medical Operations</h3>
             <p>Our healthcare platform is designed to create a connected, technology-driven medical community. Whether you manage a medical center, clinic, laboratory, or pharmacy, this system helps you streamline operations, improve efficiency, and stay connected with patients and partners. By subscribing, you can easily manage your daily activities while benefiting from powerful features that simplify workflows and enhance the overall healthcare experience.</p>
             <MainButtonUI OnClick="OnLoginHandler" Class="auth__btn">Login</MainButtonUI>
-            <MainButtonUI OnClick="OnTestHandler2" Class="auth__btn">Login2</MainButtonUI>
+@*             <MainButtonUI OnClick="OnTestHandler2" Class="auth__btn">Login2</MainButtonUI> *@
         </div>
         <div class="auth__ribbon">
             <div class="auth__ribbon-container">
@@ -74,14 +74,14 @@
 
     private async Task OnTestHandler()
     {
-        await TaskHandlerService.RunAsync(async () =>
-        {
-            await Task.Delay(3000);
-            throw new AppException("Server Error", 500, new List<string> { "Something went wrong" });
-        }, 
-        setLoading: LoadingService.Show,
-        stopLoading: LoadingService.Hide,
-        setError: GlobalExceptionService.Handle);
+        // await TaskHandlerService.RunAsync(async () =>
+        // {
+        //     await Task.Delay(3000);
+        //     // throw new AppException("Server Error", 500, new List<string> { "Something went wrong" });
+        // }, 
+        // setLoading: LoadingService.Show,
+        // stopLoading: LoadingService.Hide,
+        // setError: GlobalExceptionService.Handle);
     }
 
     private async Task OnTestHandler2()
@@ -101,7 +101,7 @@
 
     private void OnTestHandler3()
     {
-        throw new AppException(string.Empty, 500, new List<string> { "Something went wrong" });
+        // throw new AppException(string.Empty, 500, new List<string> { "Something went wrong" });
     }
 
 }

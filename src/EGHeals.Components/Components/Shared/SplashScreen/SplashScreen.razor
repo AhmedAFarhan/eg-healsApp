@@ -1,0 +1,22 @@
+@using EGHeals.Models.Enums
+
+<div class="splash">
+    <EGHealsLogoComponent Class="icon-content" HeaderClass="title" Wrapper="logo-wrapper" ContainerClass="svg-app-icon-container" PathClass="svg-app-icon-path" />
+    <BarLoading IsCentralized="false" Color="ApplicationColor.SECONDARY" />
+</div>
+
+@code {
+
+    [Parameter]
+    public EventCallback OnCompleted { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(0);
+
+        //await DataBaseSetup.SetupAsync();
+
+        // Notify App.razor when done
+        await OnCompleted.InvokeAsync();
+    }
+}

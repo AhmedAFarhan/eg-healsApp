@@ -1,0 +1,36 @@
+@using EGHeals.Models.Models.Shared.Navigations
+
+<li class="list-item @(NavMenuItem.IsActive ? "active" : string.Empty)">
+
+    <a href="@NavMenuItem.Address" class="list-item__title-link" @onclick="@(() => OnItemClicked.InvokeAsync((NavMenuItem, null)))">
+        <i class="@NavMenuItem.Icon"></i>
+        <span class="list-item__title-name">@NavMenuItem.Title</span>
+        <BadgeUI Class="list-item__badge" Value="NavMenuItem.Counter" />
+        @if (NavMenuItem.NavSubMenuItems is not null)
+        {
+            <i class="fa-solid fa-angle-down arrow"></i>
+        }
+    </a>
+
+    @if (NavMenuItem.NavSubMenuItems is not null)
+    {
+        <div class="list-item__submenu @(NavMenuItem.IsExpanded ? "expanded" : string.Empty)">
+            @foreach (var subNaveMenuItem in NavMenuItem.NavSubMenuItems)
+            {
+                <a href="@subNaveMenuItem.Address" class="list-item__submenu-link @(subNaveMenuItem.IsActive ? "active" : string.Empty)" @onclick="@(() => OnItemClicked.InvokeAsync((subNaveMenuItem, NavMenuItem)))">
+                    @subNaveMenuItem.Title
+                    <BadgeUI Class="list-item__badge" Value="subNaveMenuItem.Counter" />
+                </a>
+            }
+        </div>
+    }
+</li>
+
+@code {
+
+    [Parameter]
+    public SectionNavMenuItem NavMenuItem { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<(SectionNavMenuItem Item, SectionNavMenuItem? Parent)> OnItemClicked { get; set; }
+}

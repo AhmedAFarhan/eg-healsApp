@@ -1,3 +1,4 @@
+@using EGHeals.Models.Enums
 @inject IJSRuntime jSRuntime
 @inject ModalPopupService ModalPopupService
 @inject TaskHandlerService TaskHandlerService
@@ -27,7 +28,7 @@
     <input class="file-card__input" id="@inputId" type="file" accept="image/*" @onchange="OnInputFileChange" />
     @if (!string.IsNullOrEmpty(previewFile))
     {
-        <IconButtonUI OnClick="OnDeleteFileHandler" Icon="fa-solid fa-trash-xmark" Color="AppColors.TERTIARY" Size="2" Class="file-card__delete" />
+        <IconButtonUI OnClick="OnDeleteFileHandler" Icon="fa-solid fa-trash-xmark" Color="ApplicationColor.TERTIARY" Size="2" Class="file-card__delete" />
     }
     @if (isLoading)
     {
@@ -60,51 +61,51 @@
 
     private async Task OnInputFileChange(ChangeEventArgs e)
     {
-        //Reset data
-        errorMessage = string.Empty;
-        previewFile = string.Empty;
-        fileName = string.Empty;
+        // //Reset data
+        // errorMessage = string.Empty;
+        // previewFile = string.Empty;
+        // fileName = string.Empty;
 
-        //Load data
-        var result = await TaskHandlerService.RunAsync<(long fileSize, string? base64, string? fileName)>(async () =>
-        {
-            // Get file size
-            var fileSize = await jSRuntime.InvokeAsync<long>("fileUploader.getFileSize", inputId);
+        // //Load data
+        // var result = await TaskHandlerService.RunAsync<(long fileSize, string? base64, string? fileName)>(async () =>
+        // {
+        //     // Get file size
+        //     var fileSize = await jSRuntime.InvokeAsync<long>("fileUploader.getFileSize", inputId);
 
-            // Get base64 content
-            var base64 = await jSRuntime.InvokeAsync<string>("fileUploader.readFileAsBase64", inputId);
+        //     // Get base64 content
+        //     var base64 = await jSRuntime.InvokeAsync<string>("fileUploader.readFileAsBase64", inputId);
 
-            // Get file name
-            var fileName = await jSRuntime.InvokeAsync<string>("fileUploader.getFileName", inputId);
+        //     // Get file name
+        //     var fileName = await jSRuntime.InvokeAsync<string>("fileUploader.getFileName", inputId);
 
-            (long fileSize, string? base64, string? fileName) result = (fileSize, base64, fileName);
+        //     (long fileSize, string? base64, string? fileName) result = (fileSize, base64, fileName);
 
-            return result;
-        },
-        setLoading: () => isLoading = true,
-        stopLoading: () => isLoading = false,
-        setError: GlobalExceptionService.Handle);
+        //     return result;
+        // },
+        // setLoading: () => isLoading = true,
+        // stopLoading: () => isLoading = false,
+        // setError: GlobalExceptionService.Handle);
 
-        // Check file size        
-        if (result.fileSize > MaxFileSizeMB * 1024 * 1024)
-        {
-            errorMessage = $"File size should be {MaxFileSizeMB}MB max.";
-            return;
-        }
+        // // Check file size        
+        // if (result.fileSize > MaxFileSizeMB * 1024 * 1024)
+        // {
+        //     errorMessage = $"File size should be {MaxFileSizeMB}MB max.";
+        //     return;
+        // }
 
-        if (string.IsNullOrEmpty(result.base64))
-        {
-            errorMessage = "Failed to read file.";
-            return;
-        }
+        // if (string.IsNullOrEmpty(result.base64))
+        // {
+        //     errorMessage = "Failed to read file.";
+        //     return;
+        // }
 
-        // Get file name
-        fileName = result.fileName;
+        // // Get file name
+        // fileName = result.fileName;
 
-        previewFile = result.base64;
+        // previewFile = result.base64;
 
-        // Notify parent
-        //await OnFileUploaded.InvokeAsync(base64);
+        // // Notify parent
+        // //await OnFileUploaded.InvokeAsync(base64);
     }
 
     private void OnImageLoaded()

@@ -1,4 +1,4 @@
-﻿using EGHeals.Models.Models.Users.NewFolder;
+﻿using EGHeals.Models.Models.Users.Base;
 
 namespace EGHeals.Models.Models.Users
 {

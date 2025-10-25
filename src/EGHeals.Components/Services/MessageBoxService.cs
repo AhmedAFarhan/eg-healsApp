@@ -1,5 +1,5 @@
 ﻿using EGHeals.Components.Components.Shared.MessageBoxes;
-using EGHeals.Components.Enums;
+using EGHeals.Models.Enums;
 using Microsoft.AspNetCore.Components;
 
 namespace EGHeals.Components.Services

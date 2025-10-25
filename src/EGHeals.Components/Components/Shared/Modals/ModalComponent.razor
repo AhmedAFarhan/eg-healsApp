@@ -1,4 +1,4 @@
-@using EGHeals.Components.Models.ModalPopups
+@using EGHeals.Components.Components.Shared.Modals.Contexts
 @inject ModalPopupService ModalPopupService
 
 @if (isVisible)
@@ -57,14 +57,15 @@
         {
             StartLoading = () => { isLoading = true; StateHasChanged(); },
             StopLoading = () => { isLoading = false; StateHasChanged(); },
-            SetError = (ex) => 
-            { 
-                errors = ex switch
-                {
-                    null => null,
-                    { Errors: null } => new List<string> { ex.Message },
-                    _ => ex.Errors
-                };
+            SetError = (errs) => 
+            {
+                errors = errs;
+                // errors = ex switch
+                // {
+                //     null => null,
+                //     { Errors: null } => new List<string> { ex.Message },
+                //     _ => ex.Errors
+                // };
                 StateHasChanged(); 
             },
             SetSuccess = (msg) =>

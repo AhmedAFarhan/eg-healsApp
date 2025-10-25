@@ -1,4 +1,5 @@
 @using EGHeals.Components.Identity
+@using EGHeals.Models.Enums
 @using EGHeals.Models.Models.Users
 
 <GridCardUI CardClass="@(Model.IsSelected? GetVariantActiveCard() : string.Empty)"
@@ -12,19 +13,19 @@
     <div class="role">
         @if (RoleDefinition.Receptionist == Model.Name)
         {
-            <CardActivationFlipperUI IsFlipped="@Model.IsActive" ActiveColor="AppColors.PRIMARY">
+            <CardActivationFlipperUI IsFlipped="@Model.IsActive" ActiveColor="ApplicationColor.PRIMARY">
                 <ReceptionistIcon />
             </CardActivationFlipperUI>
         }
         else if (RoleDefinition.Radiologist == Model.Name)
         {
-            <CardActivationFlipperUI IsFlipped="@Model.IsActive" ActiveColor="AppColors.SECONDARY">
+            <CardActivationFlipperUI IsFlipped="@Model.IsActive" ActiveColor="ApplicationColor.SECONDARY">
                 <RadiologistIcon ContainerClass="role__svg-radiologist-container" />
             </CardActivationFlipperUI>
         }
         else if (RoleDefinition.Accountant == Model.Name)
         {
-            <CardActivationFlipperUI IsFlipped="@Model.IsActive" ActiveColor="AppColors.TERTIARY">
+            <CardActivationFlipperUI IsFlipped="@Model.IsActive" ActiveColor="ApplicationColor.TERTIARY">
                 <AccountantIcon ContainerClass="role__svg-accountant-container" />
             </CardActivationFlipperUI>
         }

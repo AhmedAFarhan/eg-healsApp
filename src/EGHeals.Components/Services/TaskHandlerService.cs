@@ -1,9 +1,113 @@
-﻿using BuildingBlocks.Exceptions;
+﻿using EGHeals.Services.Exceptions;
+using EGHeals.Services.Responses;
+using EGHeals.Services.Responses.Abstractions;
 
 namespace EGHeals.Components.Services
 {
     public class TaskHandlerService
     {
+        public async Task<EGResponse<string>> RunAsync(Func<Task> taskFunc)
+        {
+            try
+            {
+                await taskFunc();
+
+                return new EGResponse<string>
+                {
+                    Success = true,
+                    Message = "Success Operation."
+                };
+            }
+            catch(Exception ex)
+            {
+                return new EGResponse<string>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Errors = new List<string> { ex.Message }
+                };
+            }
+            finally
+            {
+
+            }
+        }
+        public async Task<EGResponse<string>> RunAsync(Func<Task> taskFunc, Action onStart, Action onFinish)
+        {
+            try
+            {
+                onStart.Invoke();
+
+                await taskFunc();
+
+                return new EGResponse<string>
+                {
+                    Success = true,
+                    Message = "Success Operation."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new EGResponse<string>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Errors = new List<string> { ex.Message }
+                };
+            }
+            finally
+            {
+                onFinish.Invoke();
+            }
+        }
+        public async Task<EGResponse<T>> RunAsync<T>(Func<Task<EGResponse<T>>> taskFunc)
+        {
+            try
+            {
+                var result = await taskFunc();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new EGResponse<T>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Errors = new List<string> { ex.Message }
+                };
+            }
+            finally
+            {
+
+            }
+        }
+        public async Task<EGResponse<T>> RunAsync<T>(Func<Task<EGResponse<T>>> taskFunc, Action onStart, Action onFinish)
+        {
+            try
+            {
+                onStart.Invoke();
+
+                var result = await taskFunc();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new EGResponse<T>
+                {
+                    Success = false,
+                    Message = ex.Message,
+                    Errors = new List<string> { ex.Message }
+                };
+            }
+            finally
+            {
+                onFinish.Invoke();
+            }
+        }
+
+
         public async Task RunAsync(Func<Task> taskFunc, Action? setLoading = null, Action? stopLoading = null, Action<AppException>? setError = null, Action<string>? setSuccess = null, string? SuccessMsg = null)
         {
             try
@@ -20,9 +124,9 @@ namespace EGHeals.Components.Services
 
                 setSuccess?.Invoke(SuccessMsg);
             }
-            catch (AppException ex)
+            catch (Exception ex)
             {
-                setError?.Invoke(ex);
+                setError?.Invoke(new AppException("Error", 500, new List<string>() { ex.Message}));
             }
             finally
             {
@@ -48,10 +152,9 @@ namespace EGHeals.Components.Services
 
                 return result;
             }
-            catch (AppException ex)
+            catch (Exception ex)
             {
-                setError?.Invoke(ex);
-
+                setError?.Invoke(new AppException("Error", 500, new List<string>() { ex.Message }));
                 return default;
             }
             finally

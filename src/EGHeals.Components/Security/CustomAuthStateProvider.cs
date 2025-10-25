@@ -1,6 +1,6 @@
 ﻿using EGHeals.Components.Security.Abstractions;
-using EGHeals.Models.Dtos.Users.Responses;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace EGHeals.Components.Security
@@ -11,23 +11,23 @@ namespace EGHeals.Components.Security
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var user = await tokenStorage.GetTokenAsync();
+            var token = await tokenStorage.GetTokenAsync();
 
-            if (user is null)
+            if (token is null)
             {
                 return new AuthenticationState(_anonymous);
             }
 
-            var principal = BuildClaimsPrincipal(user);
+            var principal = BuildClaimsPrincipal(token);
 
             return new AuthenticationState(principal);
         }
 
-        public async Task NotifyUserAuthentication(UserResponseDto user)
+        public async Task NotifyUserAuthentication(string token)
         {
-            await tokenStorage.SaveTokenAsync(user);
+            await tokenStorage.SaveTokenAsync(token);
 
-            var principal = BuildClaimsPrincipal(user);
+            var principal = BuildClaimsPrincipal(token);
 
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
         }
@@ -40,27 +40,12 @@ namespace EGHeals.Components.Security
         }
 
         /*****************************  HELPERS  ****************************/
-        private ClaimsPrincipal BuildClaimsPrincipal(UserResponseDto user)
+        private ClaimsPrincipal BuildClaimsPrincipal(string token)
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
+            var handler = new JwtSecurityTokenHandler();
+            var tokenClaims = handler.ReadJwtToken(token);
 
-            claims.Add(new Claim("OwnershipId", user.OwnershipId.ToString()));
-
-            foreach (var role in user.UserRoles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role.RoleName));
-
-                foreach (var permission in role.UserRolePermissions)
-                {
-                    claims.Add(new Claim("Permission", permission.PermissionName));
-                }
-            }
-
-            var identity = new ClaimsIdentity(claims, "CustomAuth");
+            var identity = new ClaimsIdentity(tokenClaims.Claims, "jwt");
 
             return new ClaimsPrincipal(identity);
         }

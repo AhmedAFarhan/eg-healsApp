@@ -1,3 +1,4 @@
+@using EGHeals.Models.Enums
 <div class="flipper-content">
     <FlipUI InnerClass="flipper-content__flipper" IsFlipped="@IsFlipped">
         <Front>
@@ -17,15 +18,15 @@
 
     [Parameter] public bool IsFlipped { get; set; }
 
-    [Parameter] public AppColors ActiveColor { get; set; } = AppColors.PRIMARY;
+    [Parameter] public ApplicationColor ActiveColor { get; set; } = ApplicationColor.PRIMARY;
 
     [Parameter] public RenderFragment ChildContent { get; set; } = default!;
 
     private string GetVariantClass() => ActiveColor switch
     {
-        AppColors.PRIMARY => "flipper-content__icon-wrapper--active-primary",
-        AppColors.SECONDARY => "flipper-content__icon-wrapper--active-secondary",
-        AppColors.TERTIARY => "flipper-content__icon-wrapper--active-tertiary",
+        ApplicationColor.PRIMARY => "flipper-content__icon-wrapper--active-primary",
+        ApplicationColor.SECONDARY => "flipper-content__icon-wrapper--active-secondary",
+        ApplicationColor.TERTIARY => "flipper-content__icon-wrapper--active-tertiary",
         _ => "flipper-content__icon-wrapper--active-primary"
     };
 }
