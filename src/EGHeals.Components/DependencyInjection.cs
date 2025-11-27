@@ -1,5 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using EGHeals.Components.Identity;
 using EGHeals.Components.Security;
 using EGHeals.Components.Security.Abstractions;
 using EGHeals.Components.Services;
@@ -19,11 +18,14 @@ namespace EGHeals.Components
             services.AddSingleton<GlobalExceptionService>();
             services.AddSingleton<TaskHandlerService>();
             services.AddSingleton<MessageBoxService>();
+            services.AddSingleton<AuthEventsService>();
 
             services.AddAuthorizationCore();
             services.AddScoped<CustomAuthStateProvider>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
             services.AddScoped<ITokenStorageService, TokenStorageService>();
+
+            services.AddScoped<AuthMessageHandler>();
 
             return services;
         }

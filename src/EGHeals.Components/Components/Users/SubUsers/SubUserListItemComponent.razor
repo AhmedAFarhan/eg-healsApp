@@ -1,10 +1,16 @@
 @using EGHeals.Models.Dtos.Users
 @using EGHeals.Models.Dtos.Users.Responses
+@using EGHeals.Models.Enums
+@using EGHeals.Services.EndPoints
 
 @inject NavigationManager NavigationManager
 @inject ModalPopupService ModalPopupService
 @inject MessageBoxService MessageBoxService
 @inject TaskHandlerService TaskHandlerService
+@inject LoadingService LoadingService
+@inject EGService EGService;
+@inject GlobalExceptionService GlobalExceptionService
+
 
 <GridCardUI OnPrimaryAction="@OnToggleActivationHandler" PrimaryActionText="Activate">
     <PopupActions>
@@ -21,9 +27,9 @@
             <div class="user__roles-container">
                 <div class="user__role-title">Roles : </div>
                 <ul class="user__roles">
-                    @foreach (var role in User.UserRoles)
+                    @foreach (var role in User.Roles)
                     {
-                        <li class="user__role">@role.RoleName</li>
+                        <li class="user__role">@role.Name</li>
                     }
                 </ul>
             </div>
@@ -59,9 +65,31 @@
         NavigationManager.NavigateTo($"/user-roles/{User.Id}");
     }
 
-    private void OnToggleActivationHandler()
+    private async Task OnToggleActivationHandler()
     {
-        isFlipped = !isFlipped;
+        var success = await MessageBoxService.ShowAsync(title: "User Activation",
+                                                        description: "Are you sure from activating this user ?",
+                                                        msgBoxType: MsgBoxType.INFO,
+                                                        btnText: "Yes");
+        if (success)
+        {
+            // Activate user
+            var result = await TaskHandlerService.RunAsync<Guid?>(async () =>
+            {
+                return await EGService.PutAsync<Guid?>(EGEndPoints.Users.Activate(User.Id));
+            },
+            onStart: LoadingService.Show,
+            onFinish: LoadingService.Hide);
+
+            if (!result.Success)
+            {
+                GlobalExceptionService.Handle(result.Message, result.Errors.First(), (ResponseType) result.Code);
+                return;
+            }
+
+            isFlipped = !isFlipped;
+        }
+
     }
 
     private void OnEditUserHandler()

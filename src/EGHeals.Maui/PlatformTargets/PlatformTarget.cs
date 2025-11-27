@@ -1,9 +1,9 @@
-﻿using BuildingBlocks.DataAccess.PlatformTargets;
+﻿//using BuildingBlocks.DataAccess.PlatformTargets;
 
-namespace EGHeals.Maui.PlatformTargets
-{
-    public class PlatformTarget : IPlatformTarget
-    {
-        public PlatformType Platform => PlatformType.MAUI;
-    }
-}
+//namespace EGHeals.Maui.PlatformTargets
+//{
+//    public class PlatformTarget : IPlatformTarget
+//    {
+//        public PlatformType Platform => PlatformType.MAUI;
+//    }
+//}

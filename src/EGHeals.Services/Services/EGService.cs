@@ -1,11 +1,5 @@
 ﻿using EGHeals.Services.ApiRequests;
 using EGHeals.Services.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EGHeals.Services.Services
 {
@@ -36,6 +30,32 @@ namespace EGHeals.Services.Services
             try
             {
                 var result = isFormData ? await _requestHandler.PostFormDataRequest<EGResponse<TOut> , TIn>(url, dto) : await _requestHandler.PostRequest<EGResponse<TOut>, TIn>(url, dto);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<EGResponse<TOut>> PutAsync<TOut, TIn>(string url, TIn dto, bool isFormData = false)
+        {
+            try
+            {
+                var result = await _requestHandler.PutRequest<EGResponse<TOut>, TIn>(url, dto);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<EGResponse<TOut>> PutAsync<TOut>(string url)
+        {
+            try
+            {
+                var result = await _requestHandler.PutRequest<EGResponse<TOut>>(url);
                 return result;
             }
             catch (Exception ex)

@@ -1,9 +1,7 @@
-﻿using BuildingBlocks.DataAccess.PlatformTargets;
-using EGHeals.Application;
-using EGHeals.Application.Contracts.Users;
-using EGHeals.Components;
-using EGHeals.Components.Identity;
-using EGHeals.Maui.PlatformTargets;
+﻿using EGHeals.Components;
+using EGHeals.Components.Security;
+using EGHeals.Services.ApiRequests;
+using EGHeals.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 namespace EGHeals.Maui
@@ -25,11 +23,24 @@ namespace EGHeals.Maui
 
             builder.Services.AddMauiBlazorWebView();
 
-            builder.Services.AddSingleton<IPlatformTarget, PlatformTarget>();
+            //builder.Services.AddSingleton<IPlatformTarget, PlatformTarget>();
 
-            builder.Services.AddApplicationServices();
+            builder.Services.AddComponentsServices();
 
-            builder.Services.AddComponentsServices(builder.Configuration);
+            builder.Services.AddScoped(sp =>
+            {
+                var handler = sp.GetRequiredService<AuthMessageHandler>();
+                handler.InnerHandler = new HttpClientHandler();
+
+                return new HttpClient(handler)
+                {
+                    BaseAddress = new Uri("https://localhost:7080/")
+                };
+            });
+
+            builder.Services.AddScoped<RequestHandler>();
+
+            builder.Services.AddScoped<EGService>();
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();

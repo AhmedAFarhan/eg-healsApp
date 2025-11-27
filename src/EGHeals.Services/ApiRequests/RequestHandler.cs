@@ -18,21 +18,10 @@ namespace EGHeals.Services.ApiRequests
                 var result = await response.Content.ReadFromJsonAsync<TOut>();
                 return result;
             }
-            catch
+            catch(Exception ex)
             {
                 throw;
             }
-
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var result = await response.Content.ReadFromJsonAsync<TOut>();
-            //    return result;
-            //}
-            //else
-            //{
-            //    var message = await response.Content.ReadAsStringAsync();
-            //    throw new Exception(message);
-            //}
         }
         public async Task<TOut> DeleteRequest<TOut>(string Uri)
         {
@@ -69,6 +58,11 @@ namespace EGHeals.Services.ApiRequests
         public async Task<TOut> PutRequest<TOut, TIn>(string Uri, TIn dto)
         {
             var response = await _httpClient.PutAsJsonAsync<TIn>(Uri, dto);
+            return await DataDeserialization<TOut>(response);
+        }
+        public async Task<TOut> PutRequest<TOut>(string Uri)
+        {
+            var response = await _httpClient.PutAsync(Uri, null);
             return await DataDeserialization<TOut>(response);
         }
 

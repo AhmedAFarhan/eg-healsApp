@@ -1,6 +1,5 @@
-﻿using EGHeals.Services.Exceptions;
+﻿using EGHeals.Models.Exceptions;
 using EGHeals.Services.Responses;
-using EGHeals.Services.Responses.Abstractions;
 
 namespace EGHeals.Components.Services
 {
@@ -10,6 +9,8 @@ namespace EGHeals.Components.Services
         {
             try
             {
+                await Task.Delay(2000);
+
                 await taskFunc();
 
                 return new EGResponse<string>
@@ -38,6 +39,8 @@ namespace EGHeals.Components.Services
             {
                 onStart.Invoke();
 
+                await Task.Delay(2000);
+
                 await taskFunc();
 
                 return new EGResponse<string>
@@ -64,6 +67,8 @@ namespace EGHeals.Components.Services
         {
             try
             {
+                await Task.Delay(2000);
+
                 var result = await taskFunc();
 
                 return result;
@@ -87,6 +92,8 @@ namespace EGHeals.Components.Services
             try
             {
                 onStart.Invoke();
+
+                await Task.Delay(2000);
 
                 var result = await taskFunc();
 

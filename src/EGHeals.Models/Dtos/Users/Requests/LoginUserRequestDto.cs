@@ -14,5 +14,9 @@ namespace EGHeals.Models.Dtos.Users.Requests
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters long.")]
         [MaxLength(150, ErrorMessage = "Password cannot exceed 150 characters.")]
         public string Password { get; set; } = default!;
+
+        public string ClientId { get; set; } = string.Empty;
+        public string ClientSecret { get; set; } = string.Empty;
+
     }
 }

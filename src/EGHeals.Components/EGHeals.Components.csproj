@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -13,15 +13,18 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.0" PrivateAssets="none" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.19" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="10.0.0" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Components\Examinations\Forms\" />
-    <Folder Include="Components\Radiology\" />
+    <Folder Include="Components\RadiologyCenter\" />
     <Folder Include="Pages\Index\" />
+    <Folder Include="Pages\RadiologyCeneter\" />
+    <Folder Include="Pages\Shared\" />
   </ItemGroup>
 
   <ItemGroup>

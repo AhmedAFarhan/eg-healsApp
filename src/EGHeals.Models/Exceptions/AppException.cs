@@ -1,4 +1,4 @@
-﻿namespace EGHeals.Services.Exceptions
+﻿namespace EGHeals.Models.Exceptions
 {
     public class AppException : Exception
     {

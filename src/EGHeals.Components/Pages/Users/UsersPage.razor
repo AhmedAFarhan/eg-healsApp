@@ -1,8 +1,16 @@
+@using EGHeals.Components.Components.Users.SubUsers
 @using EGHeals.Models.Dtos.Users.Responses
+@using EGHeals.Models.Enums
+@using EGHeals.Models.Pagination
+@using EGHeals.Models.Queries
+@using EGHeals.Services.EndPoints
+
 @inject TaskHandlerService TaskHandlerService
 @inject ModalPopupService ModalPopupService
 @inject GlobalExceptionService GlobalExceptionService
-
+@inject EGService EGService;
+@using EGHeals.Components.Security
+@inject AuthenticationStateProvider AuthStateProvider
 
 <PageUI>
     <div class="page-content">
@@ -14,7 +22,7 @@
                 <MainButtonUI Icon="fa-solid fa-plus-large" OnClick="OnAddingUserHandler" Class="page-content__add-btn">New User</MainButtonUI>
             </ChildContent>
         </SkeltonLoadingContainer>        
-        <UserListComponent Users="users"/>
+        <SubUserListComponent Users="users"/>
         <SkeltonLoadingContainer IsLoading="isInit">
             <Skeleton>
                 <PaginationSkeletonUI />
@@ -34,41 +42,41 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // var result = await TaskHandlerService.RunAsync<EGResponse<PaginatedResult<SubUserResponseDto>>>(async () =>
-        // {
-        //     //var query = new GetSubUsersByOwnershipQuery(new PaginationRequest());
-        //     var query = new GetSubUsersByOwnershipQuery(new QueryOptions<SystemUser>());
+        var result = await TaskHandlerService.RunAsync<PaginatedResult<SubUserResponseDto>>(async () =>
+        {
+            var query = new QueryOptions();
+            return await EGService.PostAsync<PaginatedResult<SubUserResponseDto>, QueryOptions>(EGEndPoints.Users.GetSubUsers, query);
+        },
+        onStart: () => isInit = true,
+        onFinish: () => isInit = false);
 
-        //     var response = await sender.Send(query);
+        //user authorization
+        if (!result.Success)
+        {
+            GlobalExceptionService.Handle(result.Message, result.Errors.First(), (ResponseType)result.Code);
+            users = new List<SubUserResponseDto>();
+            return;
+        }
 
-        //     var result = response.Adapt<EGResponse<PaginatedResult<SubUserResponseDto>>>();
-
-        //     return result;
-        // },
-        // setLoading: () => isInit = true,
-        // stopLoading: () => isInit = false,
-        // setError: GlobalExceptionService.Handle);
-
-        // if (result is not null && result.Success)
-        // {
-        //     users = result.Data.Data.ToList();
-        //     var count = result.Data.Count;
-        //     var pageSize = result.Data.PageSize;
-        //     totalPages = (long)Math.Ceiling(count / (double)pageSize);
-        // }        
+        users = result.Data.Data.ToList();
+        var count = result.Data.Count;
+        var pageSize = result.Data.PageSize;
+        totalPages = (long)Math.Ceiling(count / (double)pageSize);     
     }
 
     private async Task OnAddingUserHandler()
     {
-        var x = await ModalPopupService.ShowDialog<bool>(builder =>
-        {
-            builder.OpenComponent<AddNewSubUserFormComponent>(0);
-            builder.CloseComponent();
-        }, "Create Sub-User", "Add a new sub-user to your account.");
+        (AuthStateProvider as CustomAuthStateProvider)?.NotifyUserLogout();
 
-        if (x)
-        {
+        // var x = await ModalPopupService.ShowDialog<bool>(builder =>
+        // {
+        //     builder.OpenComponent<AddNewSubUserFormComponent>(0);
+        //     builder.CloseComponent();
+        // }, "Create Sub-User", "Add a new sub-user to your account.");
+
+        // if (x)
+        // {
             
-        }
+        // }
     }
 }

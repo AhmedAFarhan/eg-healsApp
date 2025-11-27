@@ -1,11 +1,12 @@
 ﻿using EGHeals.Components.Security.Abstractions;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace EGHeals.Components.Security
 {
-    public class CustomAuthStateProvider(ITokenStorageService tokenStorage) : AuthenticationStateProvider
+    public class CustomAuthStateProvider(ITokenStorageService tokenStorage, NavigationManager navigation) : AuthenticationStateProvider
     {
         private readonly ClaimsPrincipal _anonymous = new ClaimsPrincipal(new ClaimsIdentity());
 
@@ -13,7 +14,7 @@ namespace EGHeals.Components.Security
         {
             var token = await tokenStorage.GetTokenAsync();
 
-            if (token is null)
+            if (token is null || IsTokenExpired(token))
             {
                 return new AuthenticationState(_anonymous);
             }
@@ -37,8 +38,20 @@ namespace EGHeals.Components.Security
             await tokenStorage.RemoveTokenAsync();
 
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(_anonymous)));
+
+            // Redirect to login
+            navigation.NavigateTo("/", forceLoad: false);
         }
 
+        public bool IsTokenExpired(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+
+            // exp is in UTC
+            return jwt.ValidTo < DateTime.UtcNow;
+        }
+        
         /*****************************  HELPERS  ****************************/
         private ClaimsPrincipal BuildClaimsPrincipal(string token)
         {
@@ -49,5 +62,7 @@ namespace EGHeals.Components.Security
 
             return new ClaimsPrincipal(identity);
         }
+
+        
     }
 }

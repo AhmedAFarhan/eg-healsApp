@@ -2,6 +2,7 @@
 @using EGHeals.Components.Security
 @using EGHeals.Models.Dtos.Users.Requests
 @using EGHeals.Models.Dtos.Users.Responses
+@using EGHeals.Services.EndPoints
 @using EGHeals.Services.Responses
 
 @inject TaskHandlerService TaskHandlerService
@@ -19,7 +20,7 @@
 
 @code
 {
-    private LoginUserRequestDto User = new();
+    private LoginUserRequestDto User = new() { Username = "radiology@radiology.com", Password = "011010012" };
 
     [CascadingParameter] public ModalContext Modal { get; set; } = default!;
 
@@ -27,7 +28,7 @@
     {
         var result = await TaskHandlerService.RunAsync<string>(async () =>
         {
-            return await EGService.PostAsync<string, LoginUserRequestDto>("api/users/login", User);
+            return await EGService.PostAsync<string, LoginUserRequestDto>(EGEndPoints.Auth.Login, User);
         }, 
         onStart: Modal.StartLoading,
         onFinish: Modal.StopLoading);

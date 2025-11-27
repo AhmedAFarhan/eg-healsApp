@@ -1,9 +1,8 @@
-using EGHeals.Components;
-using EGHeals.Components.Identity;
+﻿using EGHeals.Components;
+using EGHeals.Components.Security;
 using EGHeals.Services.ApiRequests;
 using EGHeals.Services.Services;
 using EGHeals.Web;
-using EGHeals.Web.PlatformTargets;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -11,14 +10,23 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7080/") });
+builder.Services.AddComponentsServices();
 
-builder.Services.AddSingleton<RequestHandler>();
+builder.Services.AddScoped(sp =>
+{
+    var handler = sp.GetRequiredService<AuthMessageHandler>();
+    handler.InnerHandler = new HttpClientHandler();
 
-builder.Services.AddSingleton<EGService>();
+    return new HttpClient(handler)
+    {
+        BaseAddress = new Uri("https://localhost:7080/")
+    };
+});
+
+builder.Services.AddScoped<RequestHandler>();
+
+builder.Services.AddScoped<EGService>();
 
 //builder.Services.AddSingleton<IPlatformTarget, PlatformTarget>();
-
-builder.Services.AddComponentsServices();
 
 await builder.Build().RunAsync();

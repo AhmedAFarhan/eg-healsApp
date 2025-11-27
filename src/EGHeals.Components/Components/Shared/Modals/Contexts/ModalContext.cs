@@ -1,5 +1,4 @@
-﻿using EGHeals.Services.Exceptions;
-
+﻿
 namespace EGHeals.Components.Components.Shared.Modals.Contexts
 {
     public class ModalContext
