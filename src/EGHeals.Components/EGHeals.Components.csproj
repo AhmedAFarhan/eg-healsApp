@@ -20,11 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Examinations\Forms\" />
-    <Folder Include="Components\RadiologyCenter\" />
-    <Folder Include="Pages\Index\" />
-    <Folder Include="Pages\RadiologyCeneter\" />
-    <Folder Include="Pages\Shared\" />
+    <Folder Include="Features\Shared\Branches\Models\" />
+    <Folder Include="Features\Shared\TeamMembers\Models\" />
+    <Folder Include="Features\Shared\Users\Models\" />
   </ItemGroup>
 
   <ItemGroup>

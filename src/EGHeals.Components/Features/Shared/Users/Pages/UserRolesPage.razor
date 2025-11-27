@@ -17,7 +17,7 @@
 
 <PageUI>
     <div class="roles-page">
-        <MainButtonUI Icon="fa-solid fa-backward-step" Class="roles-page__back-btn" OnClick="@OnNavigateBackToUsersHandler">Back To Users</MainButtonUI>
+        <ButtonUI Icon="fa-solid fa-backward-step" Class="roles-page__back-btn" OnClick="@OnNavigateBackToUsersHandler">Back To Users</ButtonUI>
 
         <div class="roles-page__info">
             @if (subUser is not null)
@@ -43,7 +43,7 @@
                                       ContainerClass="roles-page__grid-container" 
                                       DisableTransition="@isSwitchingPermissions" />
 
-        <MainButtonUI Icon="fa-solid fa-cloud-arrow-up" OnClick="OnSaveHandlerAsync" Class="roles-page__save-btn">Save</MainButtonUI>
+        <ButtonUI Icon="fa-solid fa-cloud-arrow-up" OnClick="OnSaveHandlerAsync" Class="roles-page__save-btn">Save</ButtonUI>
     </div>
 </PageUI>
 
